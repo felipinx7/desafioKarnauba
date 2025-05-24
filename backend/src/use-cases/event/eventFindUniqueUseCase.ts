@@ -2,7 +2,7 @@ import { ICityRepository } from "../../domain/repositorys/ICityRepository";
 import { IEventRepository } from "../../domain/repositorys/IPlaceEvent";
 import { ServerError } from "../../infra/utils/serverError";
 
-export class EventDeleteUseCase {
+export class EventFindUniqueUseCase {
     constructor(
         private eventRepository: IEventRepository,
         private cityRepository: ICityRepository
@@ -12,9 +12,9 @@ export class EventDeleteUseCase {
         const isEventExist = await this.eventRepository.getEventById(id);
         if (!isEventExist) throw new ServerError("Event not found", 404);
 
-        const isCityRepository = await this.cityRepository.findUnique(isEventExist.cityId);
-        if (!isCityRepository) throw new ServerError("City not found", 404);
-
-        await this.eventRepository.deleteEvent(id);
+        const isCityExist = await this.cityRepository.findUnique(isEventExist.cityId);
+        if (!isCityExist) throw new ServerError("City not found", 404);
+        
+        return isEventExist;
     }
 }

@@ -27,7 +27,7 @@ export class CityController {
         const { id } = fastify.req.params as { id: string };
         const data = await this.multipart.handleDataMultipart(fastify.req, "city");
         const updatedCity = await this.cityUpdateUseCase.execute(data, id);
-        fastify.res.send({message: "City updated", updatedCity});
+        fastify.res.send({message: "Updated city", updatedCity});
     }
 
     async deleteCity(fastify: FastifyContextDTO){

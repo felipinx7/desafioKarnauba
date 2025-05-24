@@ -30,7 +30,7 @@ export class PlaceController {
         const { id } = fastify.req.params as { id: string };
         const data = await this.multipart.handleDataMultipart(fastify.req, "place");
         const updatedPlace = await this.updateUseCase.execute(data, id);
-        fastify.res.send({message: "Place updated", ...updatedPlace})
+        fastify.res.send({message: "Updated place", ...updatedPlace})
     }
 
     async delete(fastify: FastifyContextDTO){

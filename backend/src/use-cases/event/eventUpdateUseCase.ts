@@ -5,7 +5,7 @@ import { eventSchema } from "../../infra/schemas/eventSchema";
 import { ServerError } from "../../infra/utils/serverError";
 import { updateDefineFields } from "../../infra/utils/updateDefinedFields";
 
-export class EventCreateUseCase {
+export class EventUpdateUseCase {
     constructor(
         private eventRepository: IEventRepository,
         private cityRepository: ICityRepository

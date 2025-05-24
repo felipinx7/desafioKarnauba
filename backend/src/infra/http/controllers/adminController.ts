@@ -25,12 +25,12 @@ export class AdminController {
     async update(fastify: FastifyContextDTO){
         const data = fastify.req.body as adminDTO;
         const admin = await this.adminUpdateUseCase.execute(data, fastify.req);
-        return fastify.res.status(200).send({message: "Admin updated", admin});
+        return fastify.res.status(200).send({message: "Updated admin", admin});
     }
 
     async delete(fastify: FastifyContextDTO){
         await this.adminDeleteUseCase.execute(fastify.req);
-        return fastify.res.status(200).send({message: "Admin deleted"});
+        return fastify.res.status(200).send({message: "Deleted admin"});
     }
 
     async findUnique(fastify: FastifyContextDTO){
@@ -51,9 +51,7 @@ export class AdminController {
     }
 
     async logout(fastify: FastifyContextDTO) {
-    fastify.res.clearCookie("token", {
-        path: "/",
-    });
-    return fastify.res.status(200).send({ message: "Logout successful" });
+        fastify.res.clearCookie("token", { path: "/",});
+        return fastify.res.status(200).send({ message: "Logout successful" });
     }   
 }
