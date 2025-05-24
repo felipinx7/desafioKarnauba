@@ -43,15 +43,25 @@ export class IPrismaCityRepository implements ICityRepository {
         return city;
     }
 
-    async existsEventInCity(): Promise<boolean> {
-        const event = await prisma.event.findMany({})
-        if (event.length === 0) return false;
+    async existsEventInCity(id: string): Promise<boolean> {
+        const existEvents = await prisma.city.findUnique({
+            where: {id},
+            include: {
+                events: true
+            }
+        })
+        if (existEvents?.events.length === 0) return false;
         return true;
     }
 
-    async existsPlaceInCity(): Promise<boolean> {
-        const place = await prisma.place.findMany({})
-        if (place.length === 0) return false;
+    async existsPlaceInCity(id: string): Promise<boolean> {
+        const existPlace = await prisma.city.findUnique({
+            where: {id},
+            include: {
+                places: true
+            }
+        })
+        if (existPlace?.places.length === 0) return false;
         return true;
     }
 
@@ -66,19 +76,7 @@ export class IPrismaCityRepository implements ICityRepository {
         return cities
     }
 
-    async getCityByName(name: string): Promise<City | null> {
-        const city = await prisma.city.findUnique({
-            where: {name},
-            include: {
-                places: true,
-                events: true
-            }
-        })
-
-        return city;
-    }
-
-    async getCityById(id: string): Promise<City | null> {
+    async findUnique(id: string): Promise<City | null> {
         const city = await prisma.city.findUnique({
             where: {id},
             include: {

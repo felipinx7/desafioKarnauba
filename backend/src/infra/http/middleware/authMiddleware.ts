@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { env } from "process";
 import { userData } from "../../types/userData";
 
-export function authMiddleware(req: FastifyRequest){
+export async function authMiddleware(req: FastifyRequest){
     const token = req.cookies.token;
     if (!token) throw new ServerError("Unauthorized", 401);
 

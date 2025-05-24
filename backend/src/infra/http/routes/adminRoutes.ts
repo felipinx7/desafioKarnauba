@@ -1,5 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { adminInstace } from "../instances/adminInstance";
+import { authGuard } from "../../utils/authGuard";
 
 export function adminRegister(fastify: FastifyInstance){
     fastify.post('/admin/register', (req, res) => adminInstace.create({req, res}));
@@ -22,13 +23,13 @@ export function adminLogin(fastify: FastifyInstance){
 }
 
 export function adminUpdate(fastify: FastifyInstance){
-    fastify.put('/admin/update', (req, res) => adminInstace.update({req, res}));
+    fastify.put('/admin/update', authGuard, (req, res) => adminInstace.update({req, res}));
 }
 
 export function adminDelete(fastify: FastifyInstance){
-    fastify.delete('/admin/delete', (req, res) => adminInstace.delete({req, res}));
+    fastify.delete('/admin/delete', authGuard, (req, res) => adminInstace.delete({req, res}));
 }
 
 export function adminFindUnique(fastify: FastifyInstance){
-    fastify.get('/admin/findUnique', (req, res) => adminInstace.findUnique({req, res}));
+    fastify.get('/admin', authGuard, (req, res) => adminInstace.findUnique({req, res}));
 }

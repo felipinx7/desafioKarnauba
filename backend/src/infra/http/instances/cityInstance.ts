@@ -1,0 +1,20 @@
+import { CityCreateUseCase } from "../../../use-cases/city/cityCreateUseCase";
+import { CityDeleteUseCase } from "../../../use-cases/city/cityDeleteUseCase";
+import { CityFindAllUseCase } from "../../../use-cases/city/cityFindAllUseCase";
+import { CityFindUniqueUseCase } from "../../../use-cases/city/cityFindUniqueUseCase";
+import { CityUpdateUseCase } from "../../../use-cases/city/cityUpdateUseCase";
+import { IPrismaCityRepository } from "../../database/IPrismaCityRepository";
+import { PhotoStorageService } from "../../services/photoStorageService";
+import { CityController } from "../controllers/cityController";
+import { Multipart } from "../plugins/multipart";
+
+const prismaCityRepository = new IPrismaCityRepository();
+const photoStorageService = new PhotoStorageService();
+const cityCreateUseCase = new CityCreateUseCase(prismaCityRepository);
+const cityUpdateUseCase = new CityUpdateUseCase(prismaCityRepository)
+const cityDeleteUseCase = new CityDeleteUseCase(prismaCityRepository);
+const cityFindAllUseCase = new CityFindAllUseCase(prismaCityRepository);
+const cityFindUniqueUseCase = new CityFindUniqueUseCase(prismaCityRepository);
+const multipart = new Multipart(photoStorageService);
+
+export const cityInstance = new CityController(multipart, cityCreateUseCase, cityUpdateUseCase, cityDeleteUseCase, cityFindUniqueUseCase, cityFindAllUseCase)

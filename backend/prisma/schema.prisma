@@ -22,8 +22,8 @@ model Admin {
 
 model City {
   id          String   @id
-  name        String   @unique
-  location    String
+  name        String
+  location    String   @unique
   description String
   photoURL    String
   instagram   String?  // opcional

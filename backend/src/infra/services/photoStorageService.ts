@@ -28,9 +28,12 @@ export class PhotoStorageService implements PhotoStorageInterface{
             event: this.uploadsEvent,
             place: this.uploadsPlace,
         };
-        const uniqueName = `${randomUUID()}-${data.filename}`;
         const typePath = uploadPaths[type as keyof typeof uploadPaths];
-        await writeFile(typePath, data.buffer);
+        if (!typePath) throw new ServerError("Invalid upload type", 400)
+
+        const uniqueName = `${randomUUID()}-${data.filename}`;
+        const path = join(typePath, uniqueName)
+        await writeFile(path, data.buffer);
         return uniqueName;
     }
 }

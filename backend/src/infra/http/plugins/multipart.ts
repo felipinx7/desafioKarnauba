@@ -1,7 +1,6 @@
 import { FastifyRequest } from "fastify";
 import { PhotoStorageService } from "../../services/photoStorageService";
 import { PhotoStorageType } from "../../dto/photoStorageDTO";
-import { ServerError } from "../../utils/serverError";
 
 export class Multipart {
     constructor(private photoStorage: PhotoStorageService){};
@@ -16,7 +15,7 @@ export class Multipart {
                 const buffer = await part.toBuffer();
                 const { filename, mimetype} = part;
                 photoURL = await this.photoStorage.save({buffer, filename, mimetype}, type);
-                rawFields[photoURL] = photoURL;
+                rawFields.photoURL = photoURL;
             } else if (part.type === "field"){
                 rawFields[part.fieldname] = part.value;
             }

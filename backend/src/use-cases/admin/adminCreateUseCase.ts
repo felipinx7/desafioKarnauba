@@ -18,7 +18,7 @@ export class AdminCreateUseCase {
         const { name, email, password } = parsedData.data;
 
         const isAdminExist = await this.adminRepository.getAdminByEmail(email);
-        if (!isAdminExist) throw new ServerError("Admin already exists", 409);
+        if (isAdminExist) throw new ServerError("Admin already exists", 409);
 
         const id = randomUUID();
         const hashedPassword = await bcrypt.hash(password, 10);

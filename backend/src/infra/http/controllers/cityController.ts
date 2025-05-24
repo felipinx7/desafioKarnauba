@@ -1,0 +1,49 @@
+import fastify from "fastify";
+import { CityCreateUseCase } from "../../../use-cases/city/cityCreateUseCase";
+import { CityDeleteUseCase } from "../../../use-cases/city/cityDeleteUseCase";
+import { CityFindAllUseCase } from "../../../use-cases/city/cityFindAllUseCase";
+import { CityFindUniqueUseCase } from "../../../use-cases/city/cityFindUniqueUseCase";
+import { CityUpdateUseCase } from "../../../use-cases/city/cityUpdateUseCase";
+import { FastifyContextDTO } from "../../dto/fastifyContextDTO";
+import { Multipart } from "../plugins/multipart";
+
+export class CityController {
+    constructor(
+        private readonly multipart: Multipart,
+        private readonly cityCreateUseCase: CityCreateUseCase,
+        private readonly cityUpdateUseCase: CityUpdateUseCase,
+        private readonly cityDeleteUseCase: CityDeleteUseCase,
+        private readonly cityFindUniqueUseCase: CityFindUniqueUseCase,
+        private readonly cityFindAllUseCase: CityFindAllUseCase
+    ){}
+
+    async createCity(fastify: FastifyContextDTO){
+        const data = await this.multipart.handleDataMultipart(fastify.req, "city");
+        const city = await this.cityCreateUseCase.execute(data);
+        fastify.res.status(201).send({message: "City created", ...city });
+    }
+
+    async updateCity(fastify: FastifyContextDTO){
+        const { id } = fastify.req.params as { id: string };
+        const data = await this.multipart.handleDataMultipart(fastify.req, "city");
+        const updatedCity = await this.cityUpdateUseCase.execute(data, id);
+        fastify.res.send({message: "City updated", updatedCity});
+    }
+
+    async deleteCity(fastify: FastifyContextDTO){
+        const { id } = fastify.req.params as { id: string };
+        await this.cityDeleteUseCase.execute(id);
+        fastify.res.send("City deleted");
+    }
+
+    async findUniqueCity(fastify: FastifyContextDTO){
+        const { id } = fastify.req.params as { id: string };
+        const city = await this.cityFindUniqueUseCase.execute(id);
+        fastify.res.send(city);
+    }
+
+    async findAllCity(fastify: FastifyContextDTO){
+        const citys = await this.cityFindAllUseCase.execute();
+        fastify.res.send(citys)
+    }
+}

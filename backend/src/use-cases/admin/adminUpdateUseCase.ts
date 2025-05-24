@@ -18,13 +18,15 @@ export class AdminUpdateUseCase {
         const parsedData = adminSchema.partial().safeParse(data);
         if (!parsedData.success) throw new ServerError("Bad Request");
 
-        const { email, password } = parsedData.data;
+        const { email, password } = parsedData.data!;
 
         const isAdminExist = await this.adminRepositoy.getAdminById(user.id);
         if (!isAdminExist) throw new ServerError("Admin not found", 404);
 
-        const isEmailExist = await this.adminRepositoy.getAdminByEmail(email ?? '');
-        if (!isEmailExist) throw new ServerError("This email is alredy in use", 409);
+        if (email !== isAdminExist.email){
+            const isEmailExist = await this.adminRepositoy.getAdminByEmail(email ?? '');
+            if (isEmailExist) throw new ServerError("This email is alredy in use", 409);
+        }
 
         updateDefineFields(isAdminExist, parsedData.data);
         if (password) isAdminExist.password = await bcrypt.hash(password, 10);
