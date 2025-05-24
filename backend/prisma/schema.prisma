@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Category {
+  restaurant
+  hotel
+  tourist_attractions
+}
+
+model Admin {
+  id       String @id
+  name     String
+  email    String @unique
+  password String
+}
+
+model City {
+  id          String   @id
+  name        String   @unique
+  location    String
+  description String
+  photoURL    String
+  instagram   String?  // opcional
+  places      Place[]
+  events      Event[]
+}
+
+model Place {
+  id          String   @id
+  name        String
+  phone       String?
+  instagram   String?
+  location    String
+  description String
+  photoURL    String
+  category    Category
+  cityId      String
+  city        City     @relation(fields: [cityId], references: [id])
+}
+
+model Event {
+  id          String   @id
+  name        String
+  date        DateTime
+  active      Boolean
+  instagram   String?
+  description String
+  photoURL    String
+  cityId      String
+  city        City     @relation(fields: [cityId], references: [id])
+}
