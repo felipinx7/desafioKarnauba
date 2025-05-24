@@ -16,7 +16,7 @@ export class CityCreateUseCase {
         const { name, location, description, photoURL, instagram } = parsedData.data!;
         const id = randomUUID();
 
-        const city = new City(name, location, description, photoURL, [], [], instagram, id);
+        const city = new City(name, location, description, photoURL, id, [], [], instagram);
         await this.cityRepository.createCity(city);
 
         return city;

@@ -31,7 +31,7 @@ export class IPrismaPlaceRepository  implements IPlaceRepository {
                 description: data.description,
                 photoURL: data.photoURL,
                 instagram: data.instagram,
-                phone: data.phone,
+                phone: data.phone ?? null,
                 category: data.category,
             }
         })

@@ -8,8 +8,8 @@ export class Place {
         public photoURL: string,
         public category: Category,
         public cityId: string,
-        public phone?: string,
-        public instagram?: string,
-        public readonly id?: string
+        public readonly id: string,
+        public phone: string | null,
+        public instagram: string |null,
     ){}
 }

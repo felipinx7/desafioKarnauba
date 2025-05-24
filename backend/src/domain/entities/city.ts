@@ -7,9 +7,9 @@ export class City {
         public location: string,
         public description: string,
         public photoURL: string,
+        public readonly id: string,
         public places?: Place[],
         public events?: Events[],
         public instagram?: string | null,
-        public readonly id?: string
     ){}
 }

@@ -49,4 +49,11 @@ export class AdminController {
             maxAge: 3600 * 24 * 7
         }).status(200).send({message: "Admin logged in"});
     }
+
+    async logout(fastify: FastifyContextDTO) {
+    fastify.res.clearCookie("token", {
+        path: "/",
+    });
+    return fastify.res.status(200).send({ message: "Logout successful" });
+    }   
 }

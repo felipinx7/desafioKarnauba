@@ -5,8 +5,8 @@ export class Events {
         public active: boolean = false,
         public description: string,
         public photoURL: string,
+        public readonly id: string,
         public cityId: string,
         public instagram?: string | null,
-        public readonly id?: string
     ){}
 }

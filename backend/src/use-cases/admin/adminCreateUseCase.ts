@@ -23,7 +23,7 @@ export class AdminCreateUseCase {
         const id = randomUUID();
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const admin = new Admin(name, email, hashedPassword, id);
+        const admin = new Admin(id, name, email, hashedPassword);
         await this.adminRepository.createAdmin(admin);
 
         return admin;    
