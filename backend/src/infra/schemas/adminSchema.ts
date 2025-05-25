@@ -10,4 +10,5 @@ export const adminSchema = z.object({
 export const adminLoginSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8),
+    remenberMe: z.boolean().optional().default(false)
 });

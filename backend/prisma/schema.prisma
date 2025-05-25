@@ -17,7 +17,8 @@ model Admin {
   id       String @id
   name     String
   email    String @unique
-  password String
+  password String? 
+  googleId String? @unique
 }
 
 model City {
@@ -26,7 +27,7 @@ model City {
   location    String 
   description String
   photos      Photo[]
-  instagram   String?  // opcional
+  instagram   String?
   places      Place[]
   events      Event[]
 }

@@ -7,7 +7,7 @@ export function adminRegister(fastify: FastifyInstance){
 }
 
 export function adminLogin(fastify: FastifyInstance){
-    fastify.post('/admin/login',{
+    fastify.post('/admin/login', {
         config: {
             rateLimit: {
                 max: 5,
@@ -15,7 +15,7 @@ export function adminLogin(fastify: FastifyInstance){
                 errorResponseBuilder: () => {
                    return {
                     statusCode: 429,
-                    message: "Too many requests, please try again later.",}
+                    message: "Too many requests, please try again later."}
                 }
             }
         }
@@ -36,4 +36,23 @@ export function adminFindUnique(fastify: FastifyInstance){
 
 export function adminLogOut(fastify: FastifyInstance){
     fastify.delete('/admin/logout', (req, res) => adminInstace.logout({req, res}))
+}
+
+export function adminCreateGoogle(fastify: FastifyInstance){
+    fastify.post('/admin/register/google', (req, res) => adminInstace.createWithGoogle({req, res}))
+}
+
+export function adminLoginGoogle(fastify: FastifyInstance){
+    fastify.post('/admin/login/google', {
+        config: {
+            rateLimit: {
+                max: 5,
+                timeWindow: 15 * 60 * 1000,
+                errorResponseBuilder: () => ({
+                    statusCode: 429,
+                    message: "Too many requests, please try again later"
+                })
+            }
+        }
+    }, (req, res) => adminInstace.createWithGoogle({req, res}))
 }

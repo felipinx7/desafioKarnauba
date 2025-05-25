@@ -6,4 +6,5 @@ export interface IAdminRepository {
     deleteAdmin(id: string): Promise<Admin | null>;
     getAdminByEmail(email: string): Promise<Admin | null>;
     getAdminById(id: string): Promise<Admin | null>;
+    upsertGoogleAdminInput(data: Admin): Promise<Admin | null>
 };

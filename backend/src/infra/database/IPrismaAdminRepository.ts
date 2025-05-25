@@ -50,4 +50,18 @@ export class IPrismaAdminReposotory implements IAdminRepository {
 
         return admin;
     }
+
+    async upsertGoogleAdminInput(data: Admin): Promise<Admin | null> {
+        const admin = await prisma.admin.upsert({
+            where: {email: data.email},
+            update: {},
+            create: {
+                id: data.id,
+                name: data.name,
+                googleId: data.googleId,
+                email: data.email
+            }
+        })
+        return admin
+    }
 } 

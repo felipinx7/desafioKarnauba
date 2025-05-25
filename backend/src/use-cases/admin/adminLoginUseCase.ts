@@ -13,17 +13,20 @@ export class AdminLoginUseCase {
         const parsedData = adminLoginSchema.safeParse(data);
         if (!parsedData.success) throw new ServerError("Bad Request");
 
-        const { email, password } = parsedData.data;
+        const { email, password, remenberMe } = parsedData.data;
+
         const isAdminExist = await this.adminRepository.getAdminByEmail(email);
         if (!isAdminExist) throw new ServerError("invalid credentials");
+
+        if (!isAdminExist.password) throw new ServerError("This account has been registered with Google");
 
         const isPassword = await bcrypt.compare(password, isAdminExist.password);
         if (!isPassword) throw new ServerError("invalid credentials");
 
         const token = jwt.sign({id: isAdminExist.id}, env.JWT_SECRET, {
-            expiresIn: '1d'
+            expiresIn: remenberMe ? '30d': '1d'
         });
 
-        return token;
+        return {token, remenberMe};
     }
 }
