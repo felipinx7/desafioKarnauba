@@ -5,22 +5,23 @@ import { PhotoStorageType } from "../../dto/photoStorageDTO";
 export class Multipart {
     constructor(private photoStorage: PhotoStorageService){};
 
-    async handleDataMultipart(req: FastifyRequest, type: PhotoStorageType){
+    async handleDataMultipart(req: FastifyRequest, type: PhotoStorageType, updatedPhoto: boolean = false){
         const data = req.parts();
         let rawFields: any = {};
-        let photoURL: string
+        let photoURLs: string[] = [];
 
         for await(const part of data){
             if(part.type === "file" && part.filename){
                 const buffer = await part.toBuffer();
                 const { filename, mimetype} = part;
-                photoURL = await this.photoStorage.save({buffer, filename, mimetype}, type);
-                rawFields.photoURL = photoURL;
+                const url = await this.photoStorage.save({buffer, filename, mimetype}, type);
+                photoURLs.push(url);
             } else if (part.type === "field"){
                 rawFields[part.fieldname] = part.value;
             }
         }
 
-        return rawFields;
+        rawFields.photoURLs = photoURLs;
+        return updatedPhoto ? rawFields.photoURL = photoURLs[0] : rawFields;
     }
 }

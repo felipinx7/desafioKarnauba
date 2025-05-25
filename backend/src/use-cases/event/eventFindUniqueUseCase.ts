@@ -1,5 +1,5 @@
 import { ICityRepository } from "../../domain/repositorys/ICityRepository";
-import { IEventRepository } from "../../domain/repositorys/IPlaceEvent";
+import { IEventRepository } from "../../domain/repositorys/IEventRepository";
 import { ServerError } from "../../infra/utils/serverError";
 
 export class EventFindUniqueUseCase {

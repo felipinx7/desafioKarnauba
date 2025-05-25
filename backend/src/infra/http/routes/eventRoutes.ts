@@ -21,3 +21,11 @@ export function findUniqueEvent(fastify: FastifyInstance){
 export function findAllEvent(fastify: FastifyInstance){
     fastify.get('/events', (req, res) => eventInstance.findAll({req, res}));
 }
+
+export function UpdatePhotoEvent(fastify: FastifyInstance){
+    fastify.put('/event/photo/:id', authGuard, (req, res) => eventInstance.updatePhoto({req, res}))
+}
+
+export function CreatePhotoEvent(fastify: FastifyInstance){
+    fastify.post('/event/create/photo/:eventId', authGuard, (req, res) => eventInstance.createPhoto({req, res}))
+}

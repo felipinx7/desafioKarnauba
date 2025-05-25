@@ -21,3 +21,11 @@ export function cityFindUnique(fastify: FastifyInstance){
 export function cityFindMany(fastify: FastifyInstance){
     fastify.get('/citys', (req, res) => cityInstance.findAllCity({req, res}))
 }
+
+export function cityUpdatePhoto(fastify: FastifyInstance){
+    fastify.put('/city/update/photo/:id', authGuard, (req, res) => cityInstance.updatePhoto({req, res}))
+}
+
+export function cityCreatePhoto(fastify: FastifyInstance){
+    fastify.post('/city/create/photo/:cityId',authGuard, (req, res) => cityInstance.createPhoto({req, res}))
+}

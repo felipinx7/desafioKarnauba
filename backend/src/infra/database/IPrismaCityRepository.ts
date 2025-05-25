@@ -1,6 +1,8 @@
+import { Photo } from "@prisma/client";
 import { prisma } from "../../config/prisma";
 import { City } from "../../domain/entities/city";
 import { ICityRepository } from "../../domain/repositorys/ICityRepository";
+import { connect } from "http2";
 
 export class IPrismaCityRepository implements ICityRepository {
     async createCity(data: City): Promise<City | null> {
@@ -10,8 +12,13 @@ export class IPrismaCityRepository implements ICityRepository {
                 name: data.name,
                 location: data.location,
                 description: data.description,
-                photoURL: data.photoURL,
                 instagram: data.instagram,
+                photos: {
+                   create: data.photos?.map(photo => ({
+                        id: photo.id,
+                        url: photo.url
+                    }))
+                },
                 places: {
                     connect: data.places?.map(place => ({ id: place.id }))
                 }
@@ -22,15 +29,14 @@ export class IPrismaCityRepository implements ICityRepository {
 
     async updateCity(data: City): Promise<City | null> {
         const city = await prisma.city.update({
-            where: {id: data.id},
+            where: { id: data.id },
             data: {
                 name: data.name,
                 location: data.location,
                 description: data.description,
-                photoURL: data.photoURL,
                 instagram: data.instagram,
             }
-        })
+        });
 
         return city;
     }
@@ -68,8 +74,17 @@ export class IPrismaCityRepository implements ICityRepository {
     async getAllCities(): Promise<City[]> {
         const cities = await prisma.city.findMany({
             include: {
-                places: true,
-                events: true
+                places: {
+                    include: {
+                        photos: true
+                    }
+                },
+                events: {
+                    include: {
+                        photos: true
+                    }
+                },
+                photos: true
             }
         })
 
@@ -80,11 +95,51 @@ export class IPrismaCityRepository implements ICityRepository {
         const city = await prisma.city.findUnique({
             where: {id},
             include: {
-                places: true,
-                events: true
+                places: {
+                    include: {
+                        photos: true
+                    }
+                },
+                events: {
+                    include: {
+                        photos: true
+                    }
+                },
+                photos: true
             }
         })
 
         return city;
     }
+
+    async updatePhoto(photoId: string, photoURLs: string): Promise<Photo> {
+        const photo = await prisma.photo.update({
+            where: {id: photoId},
+            data: {
+                url: photoURLs
+            }
+        })
+
+        return photo
+    }
+
+    async findPhoto(photoId: string): Promise<Photo | null> {
+        const photo = await prisma.photo.findUnique({
+            where: {id: photoId}
+        })
+
+        return photo;
+    }
+
+    async createPhoto(id: string, photoURLs: string, idCity: string): Promise<Photo | null> {
+        const photo = await prisma.photo.create({
+            data: {
+                url: photoURLs,
+                id: id,
+                cityId: idCity
+            }
+        })
+        return photo;
+    }
 }
+

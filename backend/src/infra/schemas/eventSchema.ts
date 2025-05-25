@@ -6,6 +6,6 @@ export const eventSchema = z.object({
     location: z.string({required_error: "Location is required"}),
     description: z.string({required_error: "Description is required"}),
     active: z.boolean({required_error: "Active is required"}),
-    photoURL: z.string({required_error: "PhotoURL is required"}),
+    photoURLs: z.array(z.string()),
     instagram: z.string().optional(),
 });

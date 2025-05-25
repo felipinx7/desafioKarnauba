@@ -1,3 +1,4 @@
+import { Photo } from "@prisma/client";
 import { City } from "../entities/city";
 
 export interface ICityRepository {
@@ -8,4 +9,7 @@ export interface ICityRepository {
     getAllCities(): Promise<City[]>;
     existsPlaceInCity(id: string): Promise<boolean>;
     existsEventInCity(id: string): Promise<boolean>;
+    updatePhoto(photoId: string, photoURLs: string): Promise<Photo | null>;
+    findPhoto(photoId: string): Promise<Photo | null>;
+    createPhoto(id: string, photoURLs: string, idCity: string): Promise<Photo | null>;
 };

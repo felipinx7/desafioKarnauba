@@ -1,5 +1,5 @@
 import { ICityRepository } from "../../domain/repositorys/ICityRepository";
-import { IEventRepository } from "../../domain/repositorys/IPlaceEvent";
+import { IEventRepository } from "../../domain/repositorys/IEventRepository";
 import { eventDTO } from "../../infra/dto/eventSchemaDTO";
 import { eventSchema } from "../../infra/schemas/eventSchema";
 import { ServerError } from "../../infra/utils/serverError";

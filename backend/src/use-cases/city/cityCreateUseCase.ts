@@ -7,16 +7,21 @@ import { City } from "../../domain/entities/city";
 export class CityCreateUseCase {
     constructor(
         private readonly cityRepository: ICityRepository
-    ){}
+    ) { }
 
-    async execute(data: cityDTO){
+    async execute(data: cityDTO) {
         const parsedData = citySchema.safeParse(data);
-        if(!parsedData.success) throw new Error("Bad Request");
+        if (!parsedData.success) throw new Error("Bad Request");
 
-        const { name, location, description, photoURL, instagram } = parsedData.data!;
+        const { name, location, description, photoURLs, instagram } = parsedData.data!;
         const id = randomUUID();
 
-        const city = new City(name, location, description, photoURL, id, [], [], instagram);
+        const photo = (photoURLs && Array.isArray(photoURLs) ? photoURLs : []).map(url => ({
+            id: randomUUID(),
+            url
+        }));
+
+        const city = new City(name, location, description, id, photo, [], [], instagram);
         await this.cityRepository.createCity(city);
 
         return city;

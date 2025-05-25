@@ -1,7 +1,9 @@
+import { EventCreatePhotoUseCase } from "../../../use-cases/event/eventCreatePhotoUseCase";
 import { EventCreateUseCase } from "../../../use-cases/event/eventCreateUseCase";
 import { EventDeleteUseCase } from "../../../use-cases/event/eventDeleteUseCase";
 import { EventFindAllUseCase } from "../../../use-cases/event/eventFindAllUseCase";
 import { EventFindUniqueUseCase } from "../../../use-cases/event/eventFindUniqueUseCase";
+import { EventUpdatePhotoUseCase } from "../../../use-cases/event/eventUpdatePhotoUseCase";
 import { EventUpdateUseCase } from "../../../use-cases/event/eventUpdateUseCase";
 import { IPrismaCityRepository } from "../../database/IPrismaCityRepository";
 import { IPrismaEventRepository } from "../../database/IPrismaEventRepository";
@@ -17,6 +19,8 @@ const eventUpdateUseCase = new EventUpdateUseCase(prismaEventRepository, prismaC
 const eventDeleteUseCase = new EventDeleteUseCase(prismaEventRepository, prismaCityRepository);
 const eventFindAllUseCase = new EventFindAllUseCase(prismaEventRepository);
 const eventFindUniqueUseCase = new EventFindUniqueUseCase(prismaEventRepository, prismaCityRepository);
+const eventUpdatePhotoUseCase = new EventUpdatePhotoUseCase(prismaEventRepository);
+const eventCreatePhotoUseCase = new EventCreatePhotoUseCase(prismaEventRepository);
 const multipart = new Multipart(photoStorageService);
 
-export const eventInstance = new EventController(multipart, eventCreateUseCase, eventUpdateUseCase, eventDeleteUseCase, eventFindUniqueUseCase, eventFindAllUseCase)
+export const eventInstance = new EventController(multipart, eventCreateUseCase, eventUpdateUseCase, eventDeleteUseCase, eventFindUniqueUseCase, eventFindAllUseCase, eventUpdatePhotoUseCase, eventCreatePhotoUseCase);

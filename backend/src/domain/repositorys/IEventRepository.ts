@@ -1,3 +1,4 @@
+import { Photo } from "@prisma/client";
 import { Events } from "../entities/event";
 
 export interface IEventRepository {
@@ -6,4 +7,7 @@ export interface IEventRepository {
     deleteEvent(id: string): Promise<Events | null>;
     getEventById(id: string): Promise<Events | null>;
     getAllEvents(): Promise<Events[]>;
+    updatePhoto(photoId: string, photoURLs: string): Promise<Photo | null>;
+    findPhoto(photoId: string): Promise<Photo | null>;
+    createPhoto(id: string, photoURLs: string, idEvent: string): Promise<Photo | null>;
 }

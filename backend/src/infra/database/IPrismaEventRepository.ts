@@ -1,6 +1,7 @@
+import { Photo } from "@prisma/client";
 import { prisma } from "../../config/prisma";
 import { Events } from "../../domain/entities/event";
-import { IEventRepository } from "../../domain/repositorys/IPlaceEvent";
+import { IEventRepository } from "../../domain/repositorys/IEventRepository";
 
 export class IPrismaEventRepository implements IEventRepository {
     async createEvent(data: Events): Promise<Events | null> {
@@ -10,7 +11,12 @@ export class IPrismaEventRepository implements IEventRepository {
                 name: data.name,
                 date: data.date,
                 description: data.description,
-                photoURL: data.photoURL,
+                photos: {
+                    create: data.photos?.map(photo => ({
+                        id: photo.id,
+                        url: photo.url
+                    }))
+                },
                 instagram: data.instagram,
                 cityId: data.cityId,
                 active: data.active,
@@ -21,12 +27,11 @@ export class IPrismaEventRepository implements IEventRepository {
 
     async updateEvent(data: Events): Promise<Events | null> {
         const event = await prisma.event.update({
-            where: {id: data.id},
+            where: { id: data.id },
             data: {
                 name: data.name,
                 date: data.date,
                 description: data.description,
-                photoURL: data.photoURL,
                 instagram: data.instagram,
                 cityId: data.cityId,
                 active: data.active,
@@ -39,7 +44,7 @@ export class IPrismaEventRepository implements IEventRepository {
 
     async deleteEvent(id: string): Promise<Events | null> {
         const event = await prisma.event.delete({
-            where: {id}
+            where: { id }
         })
 
         return event;
@@ -47,15 +52,52 @@ export class IPrismaEventRepository implements IEventRepository {
 
     async getEventById(id: string): Promise<Events | null> {
         const event = await prisma.event.findUnique({
-            where: {id}
+            where: { id },
+            include: {
+                photos: true
+            }
         })
 
         return event;
     }
 
     async getAllEvents(): Promise<Events[]> {
-        const events = await prisma.event.findMany({})
+        const events = await prisma.event.findMany({
+            include: {
+                photos: true
+            }
+        })
 
         return events;
+    }
+
+    async updatePhoto(photoId: string, photoURLs: string): Promise<Photo> {
+        const photo = await prisma.photo.update({
+            where: { id: photoId },
+            data: {
+                url: photoURLs
+            }
+        })
+
+        return photo
+    }
+
+    async findPhoto(photoId: string): Promise<Photo | null> {
+        const photo = await prisma.photo.findUnique({
+            where: { id: photoId }
+        })
+
+        return photo;
+    }
+
+    async createPhoto(id: string, photoURLs: string, idEvent: string): Promise<Photo | null> {
+        const photo = await prisma.photo.create({
+            data: {
+                url: photoURLs,
+                id: id,
+                eventId: idEvent
+            }
+        })
+        return photo;
     }
 }

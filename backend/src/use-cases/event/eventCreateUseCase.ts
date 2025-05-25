@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import { ICityRepository } from "../../domain/repositorys/ICityRepository";
-import { IEventRepository } from "../../domain/repositorys/IPlaceEvent";
+import { IEventRepository } from "../../domain/repositorys/IEventRepository";
 import { eventDTO } from "../../infra/dto/eventSchemaDTO";
 import { eventSchema } from "../../infra/schemas/eventSchema";
 import { ServerError } from "../../infra/utils/serverError";
@@ -16,13 +16,18 @@ export class EventCreateUseCase {
         const parsedData = eventSchema.safeParse(data);
         if (!parsedData.data) throw new ServerError("Bad request");
 
-        const {name, date, active, description, photoURL, instagram} = parsedData.data
+        const {name, date, active, description, photoURLs, instagram} = parsedData.data
         
         const isCityExist = await this.cityRepository.findUnique(idCity);
         if (!isCityExist) throw new ServerError("City not found", 404);
 
         const id = randomUUID();
-        const event = new Events(name, date, active, description, photoURL, id, idCity, instagram);
+        const photo = photoURLs.map(url => ({
+            id: randomUUID(),
+            url
+        }));
+
+        const event = new Events(name, date, active, description, id, idCity, instagram, photo);
 
         await this.eventRepository.createEvent(event);
         return event;

@@ -1,8 +1,9 @@
-import { Category, Place } from "@prisma/client";
+import { Category, Photo } from "@prisma/client";
 import { IPlaceRepository } from "../../domain/repositorys/IPlaceRepository";
 import { prisma } from "../../config/prisma";
+import { Place } from "../../domain/entities/places";
 
-export class IPrismaPlaceRepository  implements IPlaceRepository {
+export class IPrismaPlaceRepository implements IPlaceRepository {
     async createPlace(data: Place): Promise<Place | null> {
         const place = await prisma.place.create({
             data: {
@@ -10,8 +11,13 @@ export class IPrismaPlaceRepository  implements IPlaceRepository {
                 name: data.name,
                 location: data.location,
                 description: data.description,
-                photoURL: data.photoURL,
                 instagram: data.instagram,
+                photos: {
+                    create: data.photos?.map(photo => ({
+                        id: photo.id,
+                        url: photo.url
+                    }))
+                },
                 phone: data.phone,
                 category: data.category,
                 city: {
@@ -24,12 +30,11 @@ export class IPrismaPlaceRepository  implements IPlaceRepository {
 
     async updatePlace(data: Place): Promise<Place | null> {
         const place = await prisma.place.update({
-            where: {id: data.id},
+            where: { id: data.id },
             data: {
                 name: data.name,
                 location: data.location,
                 description: data.description,
-                photoURL: data.photoURL,
                 instagram: data.instagram,
                 phone: data.phone ?? null,
                 category: data.category,
@@ -41,7 +46,7 @@ export class IPrismaPlaceRepository  implements IPlaceRepository {
 
     async deletePlace(id: string): Promise<Place | null> {
         const place = await prisma.place.delete({
-            where: {id}
+            where: { id }
         })
 
         return place;
@@ -50,14 +55,21 @@ export class IPrismaPlaceRepository  implements IPlaceRepository {
 
     async getPlaceById(id: string): Promise<Place | null> {
         const place = await prisma.place.findUnique({
-            where: {id}
+            where: { id },
+            include: {
+                photos: true
+            }
         })
 
         return place;
     }
 
     async getAllPlaces(): Promise<Place[]> {
-        const places = await prisma.place.findMany({})
+        const places = await prisma.place.findMany({
+            include: {
+                photos: true
+            }
+        })
 
         return places;
     }
@@ -67,8 +79,41 @@ export class IPrismaPlaceRepository  implements IPlaceRepository {
             where: {
                 category: category
             },
+            include: {
+                photos: true
+            }
         })
 
         return places;
+    }
+
+    async updatePhoto(photoId: string, photoURLs: string): Promise<Photo> {
+        const photo = await prisma.photo.update({
+            where: { id: photoId },
+            data: {
+                url: photoURLs
+            }
+        })
+
+        return photo
+    }
+
+    async findPhoto(photoId: string): Promise<Photo | null> {
+        const photo = await prisma.photo.findUnique({
+            where: { id: photoId }
+        })
+
+        return photo;
+    }
+
+    async createPhoto(id: string, photoURLs: string, idPlace: string): Promise<Photo | null> {
+        const photo = await prisma.photo.create({
+            data: {
+                url: photoURLs,
+                id: id,
+                placeId: idPlace
+            }
+        })
+        return photo;
     }
 }

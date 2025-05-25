@@ -16,13 +16,18 @@ export class PlaceCreateUseCase {
         const parsedData = placeSchema.safeParse(data);
         if (!parsedData.success) throw new ServerError("Bad Request");
 
-        const { name, location, description, photoURL, category, phone, instagram } = parsedData.data!
+        const { name, location, description, photoURLs, category, phone, instagram } = parsedData.data!
 
         const isCityExist = await this.cityRepository.findUnique(cityId);
         if (!isCityExist) throw new ServerError("City not found", 404);
 
         const id = randomUUID();
-        const place = new Place(name, location, description, photoURL, category, cityId, id, phone ?? null, instagram ?? null);
+        const photos = photoURLs.map(url => ({
+            id: randomUUID(),
+            url
+        }));
+
+        const place = new Place(name, location, description, category, cityId, id, phone ?? null, instagram ?? null, photos);
 
         await this.placeRepository.createPlace(place);
         return place

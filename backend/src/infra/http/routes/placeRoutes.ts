@@ -26,3 +26,11 @@ export function placeFindUnique(fastify: FastifyInstance){
 export function placeFindAll(fastify: FastifyInstance){
     fastify.get('/places', (req, res) => placeInstance.findAll({req, res}));
 }
+
+export function placeUpdatePhoto(fastify: FastifyInstance){
+    fastify.put('/place/photo/:id', authGuard, (req, res) => placeInstance.updatePhoto({req, res}))
+}
+
+export function placeCreatePhoto(fastify: FastifyInstance){
+    fastify.post('/place/create/photo/:placeId',authGuard, (req, res) => placeInstance.createPhoto({req, res}))
+}
