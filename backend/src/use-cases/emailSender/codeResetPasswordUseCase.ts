@@ -13,7 +13,9 @@ export class CodeResetPassword {
         if (!parsedData.success) throw new ServerError("Bad request");
 
         const { email, code } = parsedData.data;
-        await this.changePassword.storeVerificationCode(email, code);
+
+        const emailExists = await this.changePassword.checkEmailHasCode(email);
+        if (!emailExists) throw new ServerError("Email not found", 404);
 
         const isValid = await this.changePassword.verifyCode(email, code);
         if (!isValid) throw new ServerError("Invalid code verification", 401);

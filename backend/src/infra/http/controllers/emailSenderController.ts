@@ -19,16 +19,17 @@ export class SenderEmailController {
     }
 
     async codeReset(fastify: FastifyContextDTO){
-        const { email, code } = fastify.req.body as { email: string, code: string };
+        const { email } = fastify.req.body as { email: string };
+        const { code } =  fastify.req.params as { code: string };
         const token = await this.codeResetPassword.execute({email, code});
         fastify.res.send({message: "Correct code", token: token});
     }
 
     async resetPassword(fastify: FastifyContextDTO){
-        const { email, password } = fastify.req.body as {email: string, password: string};
+        const { password } = fastify.req.body as { password: string };
         const { token } = fastify.req.params as { token: string }
 
-        const data = await this.updatePassword.execute({email, password, token})
+        const data = await this.updatePassword.execute({ password, token})
         fastify.res.send({message: "Password changed successfully", ...data})
     }
 }

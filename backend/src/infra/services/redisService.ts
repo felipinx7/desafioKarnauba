@@ -7,7 +7,7 @@ import { redis } from "../../config/redis";
 export class RedisService implements TokenForChangePassword {
     constructor(
         private senderEmail: SenderEmailService
-    ){}
+    ) { }
 
     async generateToken(): Promise<string> {
         return randomBytes(32).toString('hex')
@@ -34,6 +34,11 @@ export class RedisService implements TokenForChangePassword {
         return await redis.get(`password-key:${token}`)
     }
 
+    async checkEmailHasCode(email: string): Promise<boolean> {
+        const code = await redis.get(`reset-code:${email}`);
+        return code !== null;
+    }
+
     async applyRatelimit(email: string, ip: string): Promise<void> {
         const ipKey = ip;
         const ipCount = parseFloat(await redis.incrbyfloat(ipKey, 1));
@@ -49,7 +54,7 @@ export class RedisService implements TokenForChangePassword {
     }
 
     async sendPasswordRecoveryEmail(code: string, email: string): Promise<void> {
-        await this.senderEmail.senderEmail({code, email})
+        await this.senderEmail.senderEmail({ code, email })
     }
 
     async storeVerificationCode(email: string, code: string): Promise<void> {
@@ -62,11 +67,12 @@ export class RedisService implements TokenForChangePassword {
     }
 
     async allowReset(email: string): Promise<void> {
-        await redis.setex(`reset-code:${email}`, 3600, "true");
+        await redis.setex(`reset-allowed:${email}`, 3600, "true");
     }
 
+
     async isResetAllowed(email: string): Promise<boolean> {
-        const flag = await redis.get(`reset-code:${email}`);
+        const flag = await redis.get(`reset-allowed:${email}`);
         return flag === "true";
     }
 }

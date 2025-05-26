@@ -44,11 +44,19 @@ export function emailSenderRoute(fastify: FastifyInstance) {
 }
 
 export function codeResetPasswordRoute(fastify: FastifyInstance) {
-    fastify.post('/admin/code-reset-password', {
+    fastify.post('/admin/code-reset-password/:code', {
         schema: {
             summary: 'Send email with code to reset password',
             description: 'This route sends an email to the user with a code to reset their password.',
             tags: ['Email'],
+            params: {
+                type: 'object',
+                properties: {
+                    code: { type: 'string', description: 'The code for password reset' }
+                },
+                required: ['code'],
+                additionalProperties: false
+            },
             body: {
                 type: 'object',
                 properties: {
@@ -63,7 +71,6 @@ export function codeResetPasswordRoute(fastify: FastifyInstance) {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Email sent successfully'] },
-                        code: { type: 'string', description: 'The code sent to the user' },
                         token: { type: 'string', description: 'The token for password reset' }
                     }
                 },
@@ -88,10 +95,10 @@ export function codeResetPasswordRoute(fastify: FastifyInstance) {
 
 
 export function updatePasswordRoute(fastify: FastifyInstance) {
-    fastify.put('/patient/reset-password/:token', {
+    fastify.put('/admin/reset-password/:token', {
         schema: {
             summary: 'Reset password using token',
-            description: 'This route allows a user to reset their password using a token sent to their email.',
+            description: 'This route allows a admin to reset their password using a token sent to their email.',
             tags: ['Email'],
             params: {
                 type: 'object',
@@ -105,7 +112,6 @@ export function updatePasswordRoute(fastify: FastifyInstance) {
                 type: 'object',
                 properties: {
                     password: { type: 'string', minLength: 8, description: 'New password' },
-                    email: { type: 'string', format: 'email', description: 'Email of the user' }
                 },
                 required: ['password'],
                 additionalProperties: false

@@ -12,5 +12,5 @@ export const forgotPasswordSchema = z.object({
 
 export const codeResetSchema = z.object({
     email: z.string().email(),
-    code: z.string()
+    code: z.string().length(8)
 })

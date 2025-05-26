@@ -8,7 +8,7 @@ import { IAdminRepository } from "../../domain/repositorys/IAdminRepository";
 export class SenderEmailUseCase {
     constructor(
         private adminRepository: IAdminRepository,
-        private changePassoword: TokenForChangePassword
+        private changePassword: TokenForChangePassword
     ){}
 
     async execute(data: emailSenderDTO){
@@ -21,7 +21,8 @@ export class SenderEmailUseCase {
         const isAdminExist = await this.adminRepository.getAdminByEmail(email);
         if (!isAdminExist) throw new ServerError("Admin not found", 404);
 
-        await this.changePassoword.applyRatelimit(email, ip);
-        await this.changePassoword.sendPasswordRecoveryEmail(code, email)
+        await this.changePassword.applyRatelimit(email, ip);
+        await this.changePassword.sendPasswordRecoveryEmail(code, email)
+        await this.changePassword.storeVerificationCode(email, code);
     }
 }
