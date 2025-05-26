@@ -1,9 +1,33 @@
 import { FastifyInstance } from "fastify";
 import { adminInstace } from "../instances/adminInstance";
 import { authGuard } from "../../utils/authGuard";
+import zodToJsonSchema from "zod-to-json-schema";
+import { adminLoginSchema, adminSchema } from "../../schemas/adminSchema";
 
 export function adminRegister(fastify: FastifyInstance){
-    fastify.post('/admin/register', (req, res) => adminInstace.create({req, res}));
+    fastify.post('/admin/register', {
+        schema: {
+            body: zodToJsonSchema(adminSchema, {name: 'Create Admin Body'}),
+            summary: "Create admin",
+            tags: ['Admin'],
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string' },
+                    },
+                    description: 'Admin created successfully'
+                }
+            },
+            401: {
+                type: 'object',
+                 properties: {
+                    message: { type: 'string' },
+                },
+                description: 'Invalid credentials'
+            }
+        }
+    }, (req, res) => adminInstace.create({req, res}));
 }
 
 export function adminLogin(fastify: FastifyInstance){
@@ -15,7 +39,35 @@ export function adminLogin(fastify: FastifyInstance){
                 errorResponseBuilder: () => {
                    return {
                     statusCode: 429,
-                    message: "Too many requests, please try again later."}
+                    message: 'Too many requests, please try again later.'}
+                }
+            }
+        },
+        schema: {
+            summary: "Admin Login",
+            tags: ['Admin'],
+            body: zodToJsonSchema(adminLoginSchema, {name: 'Admin Login Body' }),
+            response: {
+                200: {
+                    type: "object",
+                    properties: {
+                        token: { type: 'string' }
+                    }
+                },
+                401: {
+                    type: "object",
+                    properties: {
+                        message: { type: 'string' }
+                    },
+                    description: 'Invalid credentials'
+                },
+                 429: {
+                    type: 'object',
+                    properties: {
+                        statusCode: { type: 'number' },
+                        message: { type: 'string' }
+                    },
+                    description: 'Too many requests, please try again later.'
                 }
             }
         }

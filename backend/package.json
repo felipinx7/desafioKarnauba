@@ -12,8 +12,11 @@
   "packageManager": "pnpm@10.6.3",
   "dependencies": {
     "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^11.0.1",
     "@fastify/multipart": "^9.0.3",
     "@fastify/rate-limit": "^10.3.0",
+    "@fastify/swagger": "^9.5.1",
+    "@fastify/swagger-ui": "^5.2.2",
     "@prisma/client": "^6.8.2",
     "@types/nodemailer": "^6.4.17",
     "bcryptjs": "^3.0.2",
@@ -25,7 +28,8 @@
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^7.0.3",
     "prisma": "^6.8.2",
-    "zod": "^3.25.26"
+    "zod": "^3.25.26",
+    "zod-to-json-schema": "^3.24.5"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",
