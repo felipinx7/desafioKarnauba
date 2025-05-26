@@ -21,8 +21,16 @@ export function adminRegister(fastify: FastifyInstance) {
                 201: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [201] },
                         message: { type: 'string', enum: ['Admin created successfully'] },
+                        admin: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string', format: 'uuid' },
+                                name: { type: 'string' },
+                                email: { type: 'string', format: 'email' },
+                                rememberMe: { type: 'boolean', default: false }
+                            }
+                        }
                     },
                     description: 'Admin created successfully'
                 }
@@ -30,7 +38,6 @@ export function adminRegister(fastify: FastifyInstance) {
             401: {
                 type: 'object',
                 properties: {
-                    statusCode: { type: 'number', enum: [401] },
                     message: { type: 'string', enum: ['Invalid credentials'] },
                 },
                 description: 'Invalid credentials'
@@ -70,14 +77,12 @@ export function adminLogin(fastify: FastifyInstance) {
                 201: {
                     type: "object",
                     properties: {
-                        statusCode: { type: 'number', enum: [201] },
                         token: { type: 'string', enum: ['JWT token for authentication'] },
                     }
                 },
                 400: {
                     type: "object",
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', enum: ['Invalid credentials'] }
                     },
                     description: 'Invalid credentials'
@@ -85,7 +90,6 @@ export function adminLogin(fastify: FastifyInstance) {
                 429: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [429] },
                         message: { type: 'string', enum: ['Too many requests, please try again later.'] }
                     },
                     description: 'Too many requests, please try again later.'
@@ -114,7 +118,6 @@ export function adminUpdate(fastify: FastifyInstance) {
                 201: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [201] },
                         message: { type: 'string', enum: ['Admin updated successfully'] },
                     },
                     description: 'Admin updated successfully'
@@ -122,7 +125,6 @@ export function adminUpdate(fastify: FastifyInstance) {
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', enum: ['Invalid credentials'] },
                     },
                     description: 'Invalid credentials'
@@ -131,7 +133,6 @@ export function adminUpdate(fastify: FastifyInstance) {
             401: {
                 type: 'object',
                 properties: {
-                    statusCode: { type: 'number', enum: [401] },
                     message: { type: 'string', enum: ['Unauthorized'] },
                 },
                 description: 'Unauthorized'
@@ -165,14 +166,14 @@ export function adminDelete(fastify: FastifyInstance) {
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
+
                         message: { type: 'string', enum: ['Admin not found']}
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
+
                         message: { type: 'string', enum: ['Unauthorized'] },
                     },
                     description: 'Unauthorized'
@@ -208,7 +209,7 @@ export function adminFindUnique(fastify: FastifyInstance) {
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
+
                         message: { type: 'string', enum: ['Unauthorized'] },
                     },
                     description: 'Unauthorized'
@@ -237,7 +238,7 @@ export function adminLogOut(fastify: FastifyInstance) {
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
+
                         message: { type: 'string', enum: ['Unauthorized'] },
                     },
                     description: 'Unauthorized'
@@ -266,7 +267,6 @@ export function adminCreateGoogle(fastify: FastifyInstance) {
                 201: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [201] },
                         message: { type: 'string', enum: ['Admin created successfully'] },
                     },
                     description: 'Admin created successfully'
@@ -304,14 +304,12 @@ export function adminLoginGoogle(fastify: FastifyInstance) {
                 201: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [201] },
                         token: { type: 'string', enum: ['JWT token for authentication'] },
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', enum: ['Invalid credentials'] }
                     },
                     description: 'Invalid credentials'
@@ -319,7 +317,6 @@ export function adminLoginGoogle(fastify: FastifyInstance) {
                 429: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [429] },
                         message: { type: 'string', enum: ['Too many requests, please try again later.'] }
                     },
                     description: 'Too many requests, please try again later.'

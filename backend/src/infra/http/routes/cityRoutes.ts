@@ -29,19 +29,30 @@ export function cityRegister(fastify: FastifyInstance){
                     properties: {
                         statusCode: { type: 'number', enum: [201] },
                         message: { type: 'string', enum: ['City created successfully'] },
+                        city: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                name: { type: 'string' },
+                                location: { type: 'string' },
+                                description: { type: 'string' },
+                                photos: { type: 'array', items: { type: 'string' } },
+                                places: { type: 'array', items: { type: 'string' } },
+                                events: { type: 'array', items: { type: 'string' } },
+                                instagram: { type: 'string', nullable: true }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', default: 'Bad request' },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
                         message: { type: 'string', default: 'Unauthorized' },
                     }
                 },
@@ -74,21 +85,31 @@ export function cityUpdate(fastify: FastifyInstance){
                 200: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [200] },
                         message: { type: 'string', enum: ['City updated successfully'] },
+                        city: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                name: { type: 'string' },
+                                location: { type: 'string' },
+                                description: { type: 'string' },
+                                photos: { type: 'array', items: { type: 'string' } },
+                                places: { type: 'array', items: { type: 'string' } },
+                                events: { type: 'array', items: { type: 'string' } },
+                                instagram: { type: 'string', nullable: true }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', default: 'Bad request' },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
                         message: { type: 'string', default: 'Unauthorized' },
                     }
                 },
@@ -108,21 +129,18 @@ export function cityDelete(fastify: FastifyInstance){
                 200: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [200] },
                         message: { type: 'string', enum: ['City deleted successfully'] },
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', default: 'Bad request' },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
                         message: { type: 'string', default: 'Unauthorized' },
                     }
                 },
@@ -148,22 +166,31 @@ export function cityFindUnique(fastify: FastifyInstance){
                 200: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [200] },
                         message: { type: 'string', enum: ['City found successfully'] },
-                        data: { type: 'object' }
+                        city: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                name: { type: 'string' },
+                                location: { type: 'string' },
+                                description: { type: 'string' },
+                                photos: { type: 'array', items: { type: 'string' } },
+                                places: { type: 'array', items: { type: 'string' } },
+                                events: { type: 'array', items: { type: 'string' } },
+                                instagram: { type: 'string', nullable: true }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', default: 'Bad request' },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
                         message: { type: 'string', default: 'Unauthorized' },
                     }
                 },
@@ -182,22 +209,34 @@ export function cityFindMany(fastify: FastifyInstance){
                 200: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [200] },
                         message: { type: 'string', enum: ['Cities found successfully'] },
-                        data: { type: 'array', items: { type: 'object' } }
+                        citys: {
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {
+                                    id: { type: 'string' },
+                                    name: { type: 'string' },
+                                    location: { type: 'string' },
+                                    description: { type: 'string' },
+                                    photos: { type: 'array', items: { type: 'string' } },
+                                    places: { type: 'array', items: { type: 'string' } },
+                                    events: { type: 'array', items: { type: 'string' } },
+                                    instagram: { type: 'string', nullable: true }
+                                }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', default: 'Bad request' },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
                         message: { type: 'string', default: 'Unauthorized' },
                     }
                 },
@@ -233,21 +272,26 @@ export function cityUpdatePhoto(fastify: FastifyInstance){
                 200: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [200] },
                         message: { type: 'string', enum: ['City photo updated successfully'] },
+                        photo: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                url: { type: 'string' },
+                                cityId: { type: 'string' }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', default: 'Bad request' },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
                         message: { type: 'string', default: 'Unauthorized' },
                     }
                 },
@@ -285,19 +329,25 @@ export function cityCreatePhoto(fastify: FastifyInstance){
                     properties: {
                         statusCode: { type: 'number', enum: [201] },
                         message: { type: 'string', enum: ['City photo created successfully'] },
+                        photo: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                url: { type: 'string' },
+                                cityId: { type: 'string' }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', default: 'Bad request' },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
                         message: { type: 'string', default: 'Unauthorized' },
                     }
                 },
@@ -324,21 +374,18 @@ export function cityDeletePhoto(fastify: FastifyInstance){
                 200: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [200] },
                         message: { type: 'string', enum: ['City photo deleted successfully'] },
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [400] },
                         message: { type: 'string', default: 'Bad request' },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [401] },
                         message: { type: 'string', default: 'Unauthorized' },
                     }
                 },

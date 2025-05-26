@@ -1,8 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { placeInstance } from "../instances/placeInstance";
-import { authGuard } from "../../utils/authGuard";
 import { authMiddleware } from "../middleware/authMiddleware";
-
 
 export function placeRegister(fastify: FastifyInstance){
     fastify.post('/place/register/:cityId', {
@@ -33,25 +31,37 @@ export function placeRegister(fastify: FastifyInstance){
             tags: ['Place'],
             consumes: ['multipart/form-data'],
             response: {
-                201: {
+                200: {
+                    consumes: ['multipart/form-data'],
                     type: 'object',
                     proprieties: {
                         message: { type: 'string' , enum: ['Place created successfully'] },
-                        statusCode: { type: 'number', enum: [201] },
+                        place: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                name: { type: 'string' },
+                                description: { type: 'string' },
+                                category: { type: 'string' },
+                                cityId: { type: 'string' },
+                                phone: { type: 'string', nullable: true },
+                                instagram: { type: 'string', nullable: true },
+                                location: { type: 'string' },
+                                photos: { type: 'array', items: { type: 'string' } }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Bad Request'] },
-                        statusCode: { type: 'number', enum: [400] },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Unauthorized'] },
-                        statusCode: { type: 'number', enum: [401] },
                     }
                 },
             }
@@ -88,24 +98,36 @@ export function placeUpdate(fastify: FastifyInstance){
             },
             response: {
                 200: {
+                    consumes: ['multipart/form-data'],
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Place updated successfully'] },
-                        statusCode: { type: 'number', enum: [200] },
+                        place: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                name: { type: 'string' },
+                                description: { type: 'string' },
+                                category: { type: 'string' },
+                                cityId: { type: 'string' },
+                                phone: { type: 'string', nullable: true },
+                                instagram: { type: 'string', nullable: true },
+                                location: { type: 'string' },
+                                photos: { type: 'array', items: { type: 'string' } }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Bad Request'] },
-                        statusCode: { type: 'number', enum: [400] },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Unauthorized'] },
-                        statusCode: { type: 'number', enum: [401] },
                     }
                 },
             }
@@ -125,21 +147,18 @@ export function placeDelete(fastify: FastifyInstance){
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Place deleted successfully'] },
-                        statusCode: { type: 'number', enum: [200] },
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Bad Request'] },
-                        statusCode: { type: 'number', enum: [400] },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Unauthorized'] },
-                        statusCode: { type: 'number', enum: [401] },
                     }
                 },
             }
@@ -148,7 +167,51 @@ export function placeDelete(fastify: FastifyInstance){
 }
 
 export function placeByCategory(fastify: FastifyInstance){
-    fastify.get('/places/:category', (req, res) => placeInstance.findByCategory({req, res}));
+    fastify.get('/places/:category', {
+        schema: {
+            params: {
+                type: 'object',
+                properties: {
+                    category: { type: 'string' }
+                },
+                required: ['category']
+            },
+            summary: 'Find places by category',
+            description: 'This endpoint allows you to find places by their category.',
+            tags: ['Place'],
+            response: {
+                200: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'string' },
+                            name: { type: 'string' },
+                            description: { type: 'string' },
+                            category: { type: 'string' },
+                            cityId: { type: 'string' },
+                            phone: { type: 'string', nullable: true },
+                            instagram: { type: 'string', nullable: true },
+                            location: { type: 'string' },
+                            photos: { type: 'array', items: { type: 'string' } }
+                        }
+                    }
+                },
+                400: {
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string', enum: ['Bad Request'] },
+                    }
+                },
+                401: {
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string', enum: ['Unauthorized'] },
+                    }
+                },
+            }
+        }
+    }, (req, res) => placeInstance.findByCategory({req, res}));
 }
 
 export function placeFindUnique(fastify: FastifyInstance){
@@ -169,21 +232,32 @@ export function placeFindUnique(fastify: FastifyInstance){
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Place found successfully'] },
-                        statusCode: { type: 'number', enum: [200] },
+                        place: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                name: { type: 'string' },
+                                description: { type: 'string' },
+                                category: { type: 'string' },
+                                cityId: { type: 'string' },
+                                phone: { type: 'string', nullable: true },
+                                instagram: { type: 'string', nullable: true },
+                                location: { type: 'string' },
+                                photos: { type: 'array', items: { type: 'string' } }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Bad Request'] },
-                        statusCode: { type: 'number', enum: [400] },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Unauthorized'] },
-                        statusCode: { type: 'number', enum: [401] },
                     }
                 },
             }
@@ -219,14 +293,12 @@ export function placeFindAll(fastify: FastifyInstance){
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Bad Request'] },
-                        statusCode: { type: 'number', enum: [400] },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Unauthorized'] },
-                        statusCode: { type: 'number', enum: [401] },
                     }
                 },
             }
@@ -261,21 +333,26 @@ export function placeUpdatePhoto(fastify: FastifyInstance){
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Photo updated successfully'] },
-                        statusCode: { type: 'number', enum: [200] },
+                        photo: { 
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                url: { type: 'string' },
+                                placeId: { type: 'string' }
+                            }
+                         }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Bad Request'] },
-                        statusCode: { type: 'number', enum: [400] },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Unauthorized'] },
-                        statusCode: { type: 'number', enum: [401] },
                     }
                 },
             }
@@ -311,20 +388,26 @@ export function placeCreatePhoto(fastify: FastifyInstance){
                     properties: {
                         message: { type: 'string', enum: ['Photo created successfully'] },
                         statusCode: { type: 'number', enum: [201] },
+                        photo: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                url: { type: 'string' },
+                                placeId: { type: 'string' }
+                            }
+                        }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Bad Request'] },
-                        statusCode: { type: 'number', enum: [400] },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Unauthorized'] },
-                        statusCode: { type: 'number', enum: [401] },
                     }
                 },
             }
@@ -351,21 +434,18 @@ export function placeDeletePhoto(fastify: FastifyInstance){
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Photo deleted successfully'] },
-                        statusCode: { type: 'number', enum: [200] },
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Bad Request'] },
-                        statusCode: { type: 'number', enum: [400] },
                     }
                 },
                 401: {
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Unauthorized'] },
-                        statusCode: { type: 'number', enum: [401] },
                     }
                 },
             }

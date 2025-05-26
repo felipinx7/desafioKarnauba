@@ -6,7 +6,6 @@ export const emailSenderSchema = z.object({
 })
 
 export const forgotPasswordSchema = z.object({
-    email: z.string().email(),
     token: z.string(),
     password: z.string()
 })

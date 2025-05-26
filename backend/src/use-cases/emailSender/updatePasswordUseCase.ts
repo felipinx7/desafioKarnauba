@@ -15,7 +15,11 @@ export class UpdatePasswordUseCase {
         const parsedData = forgotPasswordSchema.safeParse(data);
         if (!parsedData.success) throw new ServerError("Bad request");
 
-        const { email, password, token } = parsedData.data!;
+        const { password, token } = parsedData.data!;
+
+        const email = await this.changePassoword.getEmailByToken(token);
+        if (!email) throw new ServerError("Invalid email", 401);
+
         await this.changePassoword.allowReset(email);
 
         const isAllowed = await this.changePassoword.isResetAllowed(email);
