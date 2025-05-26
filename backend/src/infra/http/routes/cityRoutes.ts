@@ -27,5 +27,9 @@ export function cityUpdatePhoto(fastify: FastifyInstance){
 }
 
 export function cityCreatePhoto(fastify: FastifyInstance){
-    fastify.post('/city/create/photo/:cityId',authGuard, (req, res) => cityInstance.createPhoto({req, res}))
+    fastify.post('/city/create/photo/:cityId', authGuard, (req, res) => cityInstance.createPhoto({req, res}))
+}
+
+export function cityDeletePhoto(fastify: FastifyInstance){
+    fastify.delete('/city/delete/photo/:id', authGuard, (req, res) => cityInstance.deletePhoto({req,res}))
 }

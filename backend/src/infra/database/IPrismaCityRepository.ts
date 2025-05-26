@@ -141,5 +141,11 @@ export class IPrismaCityRepository implements ICityRepository {
         })
         return photo;
     }
+
+    async deletePhoto(id: string): Promise<void> {
+        await prisma.photo.delete({
+            where: {id}
+        })
+    }
 }
 

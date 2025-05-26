@@ -49,6 +49,7 @@ model Event {
   id          String   @id
   name        String
   date        DateTime
+  lastDate    DateTime
   active      Boolean
   instagram   String?
   description String

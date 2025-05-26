@@ -5,8 +5,9 @@ import { CityFindUniqueUseCase } from "../../../use-cases/city/cityFindUniqueUse
 import { CityUpdateUseCase } from "../../../use-cases/city/cityUpdateUseCase";
 import { FastifyContextDTO } from "../../dto/fastifyContextDTO";
 import { Multipart } from "../plugins/multipart";
-import { CityUpdatePhotoUseCase } from "../../../use-cases/city/cityUpdatePhotoUseCase";
-import { CityCreatePhotoUseCase } from "../../../use-cases/city/cityCreatePhotoUseCase";
+import { CityUpdatePhotoUseCase } from "../../../use-cases/city/photo/cityUpdatePhotoUseCase";
+import { CityCreatePhotoUseCase } from "../../../use-cases/city/photo/cityCreatePhotoUseCase";
+import { CityDeletePhotoUseCase } from "../../../use-cases/city/photo/cityDeletePhotoUseCase";
 
 export class CityController {
     constructor(
@@ -17,7 +18,8 @@ export class CityController {
         private readonly cityFindUniqueUseCase: CityFindUniqueUseCase,
         private readonly cityFindAllUseCase: CityFindAllUseCase,
         private readonly cityUpdatePhotoUseCase: CityUpdatePhotoUseCase,
-        private readonly cityCreatePhotoUseCase: CityCreatePhotoUseCase
+        private readonly cityCreatePhotoUseCase: CityCreatePhotoUseCase,
+        private readonly cityDeletePhotoUseCase: CityDeletePhotoUseCase
     ){}
 
     async createCity(fastify: FastifyContextDTO){
@@ -62,5 +64,11 @@ export class CityController {
         const data = await this.multipart.handleDataMultipart(fastify.req, "city", true);
         const photo = await this.cityCreatePhotoUseCase.execute(data, cityId);
         fastify.res.status(201).send({message: "Photo created", ...photo});
+    }
+
+    async deletePhoto(fastify: FastifyContextDTO){
+        const { id } = fastify.req.params as { id: string };
+        await this.cityDeletePhotoUseCase.execute(id);
+        fastify.res.send("Deleted photo");
     }
 }

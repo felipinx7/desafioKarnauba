@@ -12,4 +12,5 @@ export interface ICityRepository {
     updatePhoto(photoId: string, photoURLs: string): Promise<Photo | null>;
     findPhoto(photoId: string): Promise<Photo | null>;
     createPhoto(id: string, photoURLs: string, idCity: string): Promise<Photo | null>;
+    deletePhoto(id: string): Promise<void>;
 };

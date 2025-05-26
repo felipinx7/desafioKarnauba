@@ -4,6 +4,7 @@ export class Events {
     constructor(
         public name: string,
         public date: Date,
+        public lastDate: Date,
         public active: boolean = false,
         public description: string,
         public readonly id: string,

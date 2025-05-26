@@ -35,7 +35,7 @@ export function adminFindUnique(fastify: FastifyInstance){
 }
 
 export function adminLogOut(fastify: FastifyInstance){
-    fastify.delete('/admin/logout', (req, res) => adminInstace.logout({req, res}))
+    fastify.delete('/admin/logout', authGuard, (req, res) => adminInstace.logout({req, res}))
 }
 
 export function adminCreateGoogle(fastify: FastifyInstance){

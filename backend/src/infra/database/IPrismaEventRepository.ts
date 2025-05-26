@@ -10,6 +10,7 @@ export class IPrismaEventRepository implements IEventRepository {
                 id: data.id ?? '',
                 name: data.name,
                 date: data.date,
+                lastDate: data.lastDate,
                 description: data.description,
                 photos: {
                     create: data.photos?.map(photo => ({
@@ -31,6 +32,7 @@ export class IPrismaEventRepository implements IEventRepository {
             data: {
                 name: data.name,
                 date: data.date,
+                lastDate: data.lastDate,
                 description: data.description,
                 instagram: data.instagram,
                 cityId: data.cityId,
@@ -71,6 +73,15 @@ export class IPrismaEventRepository implements IEventRepository {
         return events;
     }
 
+    async findAvailableEvents(): Promise<Events[]> {
+        const events = await prisma.event.findMany({
+            where: {active: true},
+            include: { photos: true }
+        })
+
+        return events;
+    }
+
     async updatePhoto(photoId: string, photoURLs: string): Promise<Photo> {
         const photo = await prisma.photo.update({
             where: { id: photoId },
@@ -99,5 +110,11 @@ export class IPrismaEventRepository implements IEventRepository {
             }
         })
         return photo;
+    }
+
+    async deletePhoto(id: string): Promise<void> {
+        await prisma.photo.delete({
+            where: {id}
+        })
     }
 }

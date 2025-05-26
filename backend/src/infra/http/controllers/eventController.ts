@@ -5,8 +5,10 @@ import { EventFindUniqueUseCase } from "../../../use-cases/event/eventFindUnique
 import { EventFindAllUseCase } from "../../../use-cases/event/eventFindAllUseCase";
 import { FastifyContextDTO } from "../../dto/fastifyContextDTO";
 import { Multipart } from "../plugins/multipart";
-import { EventUpdatePhotoUseCase } from "../../../use-cases/event/eventUpdatePhotoUseCase";
-import { EventCreatePhotoUseCase } from "../../../use-cases/event/eventCreatePhotoUseCase";
+import { EventUpdatePhotoUseCase } from "../../../use-cases/event/photo/eventUpdatePhotoUseCase";
+import { EventCreatePhotoUseCase } from "../../../use-cases/event/photo/eventCreatePhotoUseCase";
+import { EventDeletePhotoUseCase } from "../../../use-cases/event/photo/eventDeletePhotoUseCase";
+import { EventFindAvailableUseCase } from "../../../use-cases/event/eventFindAvailableUseCase";
 
 export class EventController {
     constructor(
@@ -17,7 +19,9 @@ export class EventController {
         private readonly findUniqueUseCase: EventFindUniqueUseCase,
         private readonly findAllUseCase: EventFindAllUseCase,
         private readonly updatePhotoUseCase: EventUpdatePhotoUseCase,
-        private readonly createPhotoUseCase: EventCreatePhotoUseCase
+        private readonly createPhotoUseCase: EventCreatePhotoUseCase,
+        private readonly deletePhotoUseCase: EventDeletePhotoUseCase,
+        private readonly findAvaliableEvents: EventFindAvailableUseCase
     ) { }
 
     async create(fastify: FastifyContextDTO) {
@@ -53,6 +57,11 @@ export class EventController {
         fastify.res.send(...events)
     }
 
+    async findAvaliableEvent(fastify: FastifyContextDTO){
+        const events = await this.findAvaliableEvents.execute();
+        fastify.res.send(...events)
+    }
+
     async updatePhoto(fastify: FastifyContextDTO) {
         const { id } = fastify.req.params as { id: string };
         const data = await this.multipart.handleDataMultipart(fastify.req, "city", true);
@@ -65,5 +74,11 @@ export class EventController {
         const data = await this.multipart.handleDataMultipart(fastify.req, "event", true);
         const photo = await this.createPhotoUseCase.execute(data, eventId);
         fastify.res.status(201).send({ message: "Photo created", ...photo });
+    }
+
+    async deletePhoto(fastify: FastifyContextDTO){
+            const { id } = fastify.req.params as { id: string };
+            await this.deletePhotoUseCase.execute(id);
+            fastify.res.send("Deleted photo");
     }
 }

@@ -11,4 +11,5 @@ export interface IPlaceRepository {
     updatePhoto(photoId: string, photoURLs: string): Promise<Photo | null>;
     findPhoto(photoId: string): Promise<Photo | null>;
     createPhoto(id: string, photoURLs: string, idPlace): Promise<Photo | null>;
+    deletePhoto(id: string): Promise<void>;
 };

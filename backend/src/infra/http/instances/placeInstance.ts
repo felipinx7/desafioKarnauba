@@ -1,10 +1,11 @@
-import { PlaceCreatePhotoUseCase } from "../../../use-cases/place/placeCreatePhotoUseCase";
+import { PlaceCreatePhotoUseCase } from "../../../use-cases/place/photo/placeCreatePhotoUseCase";
 import { PlaceCreateUseCase } from "../../../use-cases/place/placeCreateUseCase";
+import { PlaceDeletePhotoUseCase } from "../../../use-cases/place/photo/placeDeletePhotoUseCase";
 import { PlaceDeleteUseCase } from "../../../use-cases/place/placeDeleteUseCase";
 import { PlaceFindAllUseCase } from "../../../use-cases/place/placeFindAllUseCase";
 import { PlaceFindCategoryUseCase } from "../../../use-cases/place/placeFindCategoryUseCase";
 import { PlaceFindUniqueUseCase } from "../../../use-cases/place/placefindUniqueUseCase";
-import { PlaceUpdatePhotoUseCase } from "../../../use-cases/place/placeUpdatePhotoUseCase";
+import { PlaceUpdatePhotoUseCase } from "../../../use-cases/place/photo/placeUpdatePhotoUseCase";
 import { PlaceUpdateUseCase } from "../../../use-cases/place/placeUpdateUseCase";
 import { IPrismaCityRepository } from "../../database/IPrismaCityRepository";
 import { IPrismaPlaceRepository } from "../../database/IPrismaPlaceRepository";
@@ -24,6 +25,7 @@ const findUniqueUseCase = new PlaceFindUniqueUseCase(prismaPlaceRepository, pris
 const findAllUseCase = new PlaceFindAllUseCase(prismaPlaceRepository);
 const updatePhotoUseCase = new PlaceUpdatePhotoUseCase(prismaPlaceRepository);
 const createPhotoUseCase = new PlaceCreatePhotoUseCase(prismaPlaceRepository);
+const deletePhotoUseCase = new PlaceDeletePhotoUseCase(prismaPlaceRepository);
 
 
-export const placeInstance = new PlaceController(multipart, createPlaceUseCase, updatePlaceUseCase, deletePlaceUseCase, findByCategoryUseCase, findUniqueUseCase, findAllUseCase, updatePhotoUseCase, createPhotoUseCase);
+export const placeInstance = new PlaceController(multipart, createPlaceUseCase, updatePlaceUseCase, deletePlaceUseCase, findByCategoryUseCase, findUniqueUseCase, findAllUseCase, updatePhotoUseCase, createPhotoUseCase, deletePhotoUseCase);

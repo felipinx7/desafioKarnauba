@@ -34,3 +34,7 @@ export function placeUpdatePhoto(fastify: FastifyInstance){
 export function placeCreatePhoto(fastify: FastifyInstance){
     fastify.post('/place/create/photo/:placeId',authGuard, (req, res) => placeInstance.createPhoto({req, res}))
 }
+
+export function placeDeletePhoto(fastify: FastifyInstance){
+    fastify.delete('/place/delete/photo/:id', authGuard, (req, res) => placeInstance.deletePhoto({req,res}))
+}

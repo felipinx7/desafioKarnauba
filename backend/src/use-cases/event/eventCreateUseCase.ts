@@ -16,7 +16,7 @@ export class EventCreateUseCase {
         const parsedData = eventSchema.safeParse(data);
         if (!parsedData.data) throw new ServerError("Bad request");
 
-        const {name, date, active, description, photoURLs, instagram} = parsedData.data
+        const {name, date, lastDate, active, description, photoURLs, instagram} = parsedData.data
         
         const isCityExist = await this.cityRepository.findUnique(idCity);
         if (!isCityExist) throw new ServerError("City not found", 404);
@@ -27,9 +27,9 @@ export class EventCreateUseCase {
             url
         }));
 
-        const event = new Events(name, date, active, description, id, idCity, instagram, photo);
-
+        const event = new Events(name, date, lastDate, active, description, id, idCity, instagram, photo);
         await this.eventRepository.createEvent(event);
-        return event;
+
+        return {event};
     }
 }

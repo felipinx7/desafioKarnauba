@@ -13,6 +13,7 @@ export class EventUpdateUseCase {
 
     async execute(data: eventDTO, id: string){
         const parsedData = eventSchema.partial().safeParse(data);
+        console.log(parsedData.error)
         if (!parsedData.success) throw new ServerError("Bad request", 404);
 
         const isEventExist = await this.eventRepository.getEventById(id);

@@ -51,7 +51,7 @@ export class AdminController {
             sameSite: 'lax',
             path: '/',
             maxAge: token.remenberMe ? 3600 * 24 * 30 : 60 * 60 * 24
-        }).status(200).send({message: "Admin logged in"});
+        }).status(200).send({message: "Admin logged in", remenberMe: token.remenberMe});
     }
 
     async logout(fastify: FastifyContextDTO) {

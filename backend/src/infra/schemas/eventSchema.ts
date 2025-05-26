@@ -1,11 +1,19 @@
 import { z } from "zod";
 
 export const eventSchema = z.object({
-    name: z.string({required_error: "Name is required"}),
-    date: z.date({required_error: "Date is required"}),
-    location: z.string({required_error: "Location is required"}),
-    description: z.string({required_error: "Description is required"}),
-    active: z.boolean({required_error: "Active is required"}),
+    name: z.string({ required_error: "Name is required" }),
+    date: z.coerce.date({ required_error: "Date is required" }),
+    lastDate: z.coerce.date({ required_error: "LastDate is required" }),
+    location: z.string({ required_error: "Location is required" }),
+    description: z.string({ required_error: "Description is required" }),
+    active: z.preprocess(
+        (val) => {
+            if (val === 'true') return true;
+            if (val === 'false') return false;
+            return val;
+        },
+        z.boolean().optional().default(false)
+    ),
     photoURLs: z.array(z.string()),
-    instagram: z.string().optional(),
+    instagram: z.string().optional()
 });

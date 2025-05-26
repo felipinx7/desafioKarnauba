@@ -7,8 +7,9 @@ import { PlaceFindUniqueUseCase } from "../../../use-cases/place/placefindUnique
 import { PlaceUpdateUseCase } from "../../../use-cases/place/placeUpdateUseCase";
 import { FastifyContextDTO } from "../../dto/fastifyContextDTO";
 import { Multipart } from "../plugins/multipart";
-import { PlaceUpdatePhotoUseCase } from "../../../use-cases/place/placeUpdatePhotoUseCase";
-import { PlaceCreatePhotoUseCase } from "../../../use-cases/place/placeCreatePhotoUseCase";
+import { PlaceUpdatePhotoUseCase } from "../../../use-cases/place/photo/placeUpdatePhotoUseCase";
+import { PlaceCreatePhotoUseCase } from "../../../use-cases/place/photo/placeCreatePhotoUseCase";
+import { PlaceDeletePhotoUseCase } from "../../../use-cases/place/photo/placeDeletePhotoUseCase";
 
 export class PlaceController {
     constructor(
@@ -20,7 +21,8 @@ export class PlaceController {
         private readonly findUniqueUseCase: PlaceFindUniqueUseCase,
         private readonly findAllUseCase: PlaceFindAllUseCase,
         private readonly updatePhotoUseCase: PlaceUpdatePhotoUseCase,
-        private readonly createPhotoUseCase: PlaceCreatePhotoUseCase
+        private readonly createPhotoUseCase: PlaceCreatePhotoUseCase,
+        private readonly deletePhotoUseCase: PlaceDeletePhotoUseCase
     ) { }
 
     async create(fastify: FastifyContextDTO) {
@@ -67,10 +69,16 @@ export class PlaceController {
         fastify.res.send({ message: "Updated photo", photo })
     }
 
-    async createPhoto(fastify: FastifyContextDTO){
-            const { placeId } = fastify.req.params as { placeId: string };
-            const data = await this.multipart.handleDataMultipart(fastify.req, "place", true);
-            const photo = await this.createPhotoUseCase.execute(data, placeId);
-            fastify.res.status(201).send({message: "Photo created", ...photo});
-        }
+    async createPhoto(fastify: FastifyContextDTO) {
+        const { placeId } = fastify.req.params as { placeId: string };
+        const data = await this.multipart.handleDataMultipart(fastify.req, "place", true);
+        const photo = await this.createPhotoUseCase.execute(data, placeId);
+        fastify.res.status(201).send({ message: "Photo created", ...photo });
+    }
+
+    async deletePhoto(fastify: FastifyContextDTO) {
+        const { id } = fastify.req.params as { id: string };
+        await this.deletePhotoUseCase.execute(id);
+        fastify.res.send("Deleted photo");
+    }
 }

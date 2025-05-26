@@ -116,4 +116,10 @@ export class IPrismaPlaceRepository implements IPlaceRepository {
         })
         return photo;
     }
+
+    async deletePhoto(id: string): Promise<void> {
+            await prisma.photo.delete({
+                where: {id}
+            })
+    }
 }

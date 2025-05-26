@@ -1,6 +1,6 @@
-import { IPlaceRepository } from "../../domain/repositorys/IPlaceRepository";
-import { photoSchema } from "../../infra/schemas/photoSchema";
-import { ServerError } from "../../infra/utils/serverError";
+import { IPlaceRepository } from "../../../domain/repositorys/IPlaceRepository";
+import { photoSchema } from "../../../infra/schemas/photoSchema";
+import { ServerError } from "../../../infra/utils/serverError";
 
 export class PlaceUpdatePhotoUseCase {
     constructor(
