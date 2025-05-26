@@ -11,7 +11,7 @@ import fastifyCors from "@fastify/cors";
 const server = fastify();
 
 server.register(fastifyCors, {
-    origin: '*',
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'DELETE', 'PUT']
 })
 server.register(fastifyRateLimit,{
@@ -22,9 +22,8 @@ server.register(fastifyRateLimit,{
     },
     skipOnError: true,
 })
-server.register(fastifyCookie)
-server.register(fastifyMultipart)
-server.register(registerRoutes)
+server.register(fastifyCookie);
+server.register(fastifyMultipart);
 server.register(fastifySwagger, {
     openapi: {
         info: {
@@ -35,8 +34,12 @@ server.register(fastifySwagger, {
     }
 });
 server.register(fastifySwaggerUi, {
-    routePrefix: '/docs'
+    routePrefix: '/docs',
+    uiConfig: {
+        docExpansion: 'full'
+    }
 });
+server.register(registerRoutes);
 
 server.listen({port: Number(env.PORT)}).then(() => {
     console.log("HTTP SERVER RUNNING!")
