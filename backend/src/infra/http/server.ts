@@ -26,7 +26,8 @@ server.register(fastifyRateLimit,{
 server.register(fastifyCookie);
 server.register(fastifyMultipart);
 server.register(helmet, {
-    contentSecurityPolicy: false
+    contentSecurityPolicy: false,
+    hsts: env.NODE_ENV === "production" ? true : false
 });
 server.register(fastifySwagger, {
     openapi: {
