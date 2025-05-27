@@ -12,7 +12,7 @@ import helmet from '@fastify/helmet';
 const server = fastify();
 
 server.register(fastifyCors, {
-    origin: 'http://localhost:3000',
+    origin: env.PORTFRONT,
     methods: ['GET', 'POST', 'DELETE', 'PUT']
 })
 server.register(fastifyRateLimit,{

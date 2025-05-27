@@ -8,9 +8,10 @@ datasource db {
 }
 
 enum Category {
-  restaurant
-  hotel
-  tourist_attractions
+  RESTAURAUNT
+  HOTEL
+  TOURIST_ATTRACTIONS
+  LANDSCAPE
 }
 
 model Admin {
@@ -20,6 +21,7 @@ model Admin {
   password String? 
   googleId String? @unique
   city   City? @relation("AdminCity")
+  authorized  Boolean @default(false)
 }
 
 model City {

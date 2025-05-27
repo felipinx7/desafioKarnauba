@@ -18,6 +18,9 @@ export class AdminLoginUseCase {
         const isAdminExist = await this.adminRepository.getAdminByEmail(email);
         if (!isAdminExist) throw new ServerError("invalid credentials");
 
+        const { authorized } = isAdminExist
+        if (!authorized) throw new ServerError("Admin not authorized", 401);
+        
         if (!isAdminExist.password) throw new ServerError("This account has been registered with Google");
 
         const isPassword = await bcrypt.compare(password, isAdminExist.password);
