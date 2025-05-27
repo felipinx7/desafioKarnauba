@@ -45,10 +45,26 @@ cd cocotour
 cd backend
 
 ### 2. Instalar as dependências
-pnpm i
+pnpm install
 
 ### 3. Criar o arquivo .env 
-<pre><code>```env DATABASE_URL="postgresql://usuario:senha@host:5432/banco" JWT_SECRET="sua_chave_secreta_jwt" PORT=porta_do_backend PORTFRONT="http://localhost:porta_do_frontend" NODE_ENV="development" GOOGLE_CLIENT_ID="seu_google_client_id" GMAIL_USER="seu_email_para_envio@gmail.com" PASSWORD_GMAIL="senha_do_email" REDIS_URL="redis://localhost:6379" # ou o link do Redis em nuvem ```</code></pre>
+DATABASE_URL="postgresql://usuario:senha@host:5432/banco"
+</br>
+JWT_SECRET="sua_chave_secreta_jwt"
+</br>
+PORT=porta_do_backend
+</br>
+PORTFRONT="http://localhost:porta_do_frontend"
+</br>
+NODE_ENV="development"
+</br>
+GOOGLE_CLIENT_ID="seu_google_client_id"
+</br>
+GMAIL_USER="seu_email_para_envio@gmail.com"
+</br>
+PASSWORD_GMAIL="senha_do_email"
+</br>
+REDIS_URL="redis://localhost:6379" # ou o link do Redis em nuvem
 
 
 ### 4.  Rodar as migrations e gerar o client do Prisma
