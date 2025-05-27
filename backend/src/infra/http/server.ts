@@ -7,6 +7,7 @@ import { registerRoutes } from "./routes/registerRoutes";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import fastifyCors from "@fastify/cors";
+import helmet from '@fastify/helmet';
 
 const server = fastify();
 
@@ -24,6 +25,9 @@ server.register(fastifyRateLimit,{
 })
 server.register(fastifyCookie);
 server.register(fastifyMultipart);
+server.register(helmet, {
+    contentSecurityPolicy: false
+});
 server.register(fastifySwagger, {
     openapi: {
         info: {

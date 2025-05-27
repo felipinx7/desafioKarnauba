@@ -10,10 +10,12 @@ import { IPrismaCityRepository } from "../../database/IPrismaCityRepository";
 import { PhotoStorageService } from "../../services/photoStorageService";
 import { CityController } from "../controllers/cityController";
 import { Multipart } from "../plugins/multipart";
+import { IPrismaAdminReposotory } from "../../database/IPrismaAdminRepository";
 
 const prismaCityRepository = new IPrismaCityRepository();
+const prismaAdminRepository = new IPrismaAdminReposotory();
 const photoStorageService = new PhotoStorageService();
-const cityCreateUseCase = new CityCreateUseCase(prismaCityRepository);
+const cityCreateUseCase = new CityCreateUseCase(prismaCityRepository, prismaAdminRepository);
 const cityUpdateUseCase = new CityUpdateUseCase(prismaCityRepository)
 const cityDeleteUseCase = new CityDeleteUseCase(prismaCityRepository);
 const cityFindAllUseCase = new CityFindAllUseCase(prismaCityRepository);

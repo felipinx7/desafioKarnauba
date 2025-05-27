@@ -3,7 +3,6 @@ import { Admin } from "../../domain/entities/admin";
 import { IAdminRepository } from "../../domain/repositorys/IAdminRepository";
 
 export class IPrismaAdminReposotory implements IAdminRepository {
-
     async getAdminByEmail(email: string): Promise<Admin | null> {
         const admin = await prisma.admin.findUnique({
             where: {email}
@@ -18,6 +17,7 @@ export class IPrismaAdminReposotory implements IAdminRepository {
         return admin;
     }
 
+
     async createAdmin(data: Admin): Promise<Admin | null> {
         const admin = await prisma.admin.create({
             data: {
@@ -27,6 +27,7 @@ export class IPrismaAdminReposotory implements IAdminRepository {
                 password: data.password,
             }
         })
+
         return admin;
     }
 

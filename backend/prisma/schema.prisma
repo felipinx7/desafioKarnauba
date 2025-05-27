@@ -19,6 +19,7 @@ model Admin {
   email    String @unique
   password String? 
   googleId String? @unique
+  city   City? @relation("AdminCity")
 }
 
 model City {
@@ -30,6 +31,8 @@ model City {
   instagram   String?
   places      Place[]
   events      Event[]
+  adminId     String @unique
+  admin       Admin   @relation("AdminCity",fields: [adminId], references: [id])
 }
 
 model Place {

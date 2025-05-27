@@ -2,7 +2,6 @@ import { Photo } from "@prisma/client";
 import { prisma } from "../../config/prisma";
 import { City } from "../../domain/entities/city";
 import { ICityRepository } from "../../domain/repositorys/ICityRepository";
-import { connect } from "http2";
 
 export class IPrismaCityRepository implements ICityRepository {
     async createCity(data: City): Promise<City | null> {
@@ -13,6 +12,7 @@ export class IPrismaCityRepository implements ICityRepository {
                 location: data.location,
                 description: data.description,
                 instagram: data.instagram,
+                adminId: data.adminId,
                 photos: {
                    create: data.photos?.map(photo => ({
                         id: photo.id,

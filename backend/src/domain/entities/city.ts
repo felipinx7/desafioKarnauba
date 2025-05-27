@@ -8,6 +8,7 @@ export class City {
         public location: string,
         public description: string,
         public readonly id: string,
+        public adminId: string,
         public photos?: PhotoDTO[],
         public places?: Place[],
         public events?: Events[],

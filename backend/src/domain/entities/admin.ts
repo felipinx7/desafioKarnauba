@@ -1,3 +1,5 @@
+import { City } from "@prisma/client";
+
 export class Admin {
     constructor(
         public readonly id: string,
@@ -5,5 +7,6 @@ export class Admin {
         public email: string,
         public password: string | null,
         public readonly googleId: string | null,
+        public city?: City 
     ){}
 }
