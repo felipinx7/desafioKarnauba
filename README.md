@@ -39,7 +39,9 @@
 ### 1. Clonar o repositório
 
 git clone https://github.com/seu-usuario/cocotour.git
+</br>
 cd cocotour
+</br>
 cd backend
 
 ### 2. Instalar as dependências
