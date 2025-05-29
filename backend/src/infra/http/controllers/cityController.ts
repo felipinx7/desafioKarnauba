@@ -24,6 +24,7 @@ export class CityController {
 
     async createCity(fastify: FastifyContextDTO){
         const data = await this.multipart.handleDataMultipart(fastify.req, "city");
+        console.log(data)
         const city = await this.cityCreateUseCase.execute(data, fastify.req);
         fastify.res.status(201).send({message: "City created", ...city });
     }

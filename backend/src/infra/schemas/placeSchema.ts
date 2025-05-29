@@ -5,7 +5,10 @@ export const placeSchema = z.object({
     location: z.string({required_error: "Location is required"}),
     description: z.string({required_error: "Description is required"}),
     photoURLs: z.array(z.string()),
-    category: z.enum(['hotel', 'restaurant', 'tourist_attractions']),
+    category: z.enum(['RESTAURANT', 'HOTEL', 'TOURIST_ATTRACTIONS', 'LANDSCAPE']),
     phone: z.string().max(14).optional(),
     instagram: z.string().optional(),
 });
+
+
+

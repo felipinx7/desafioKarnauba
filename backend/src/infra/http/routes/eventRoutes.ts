@@ -17,7 +17,7 @@ export function eventRegister(fastify: FastifyInstance) {
                 }
             },
             consumes: ['multipart/form-data'],
-            body: {
+            stream: {
                 type: 'object',
                 required: ['name', 'date', 'lastDate', 'description'],
                 properties: {
@@ -30,30 +30,6 @@ export function eventRegister(fastify: FastifyInstance) {
                 }
             },
             response: {
-                201: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string', enum: ['Event created successfully'] },
-                        event: {
-                            type: 'object',
-                            properties: {
-                                id: { type: 'string', format: 'uuid' },
-                                name: { type: 'string' },
-                                date: { type: 'string', format: 'date-time' },
-                                lastDate: { type: 'string', format: 'date-time' },
-                                description: { type: 'string' },
-                                instagram: { type: 'string', nullable: true, maxLength: 100 },
-                                active: { type: 'boolean' },
-                                cityId: { type: 'string', format: 'uuid' },
-                                photos: {
-                                    type: 'array', items: {
-                                        type: 'object',
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 400: {
                     type: 'object',
                     properties: {
@@ -86,7 +62,7 @@ export function updateEvent(fastify: FastifyInstance) {
                 }
             },
             consumes: ['multipart/form-data'],
-            body: {
+            stream: {
                 type: 'object',
                 required: ['name', 'date', 'lastDate', 'description'],
                 properties: {
@@ -99,31 +75,6 @@ export function updateEvent(fastify: FastifyInstance) {
                 }
             },
             response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string', enum: ['Event updated successfully'] },
-                        statusCode: { type: 'number', enum: [200] },
-                        event: {
-                            type: 'object',
-                            properties: {
-                                id: { type: 'string', format: 'uuid' },
-                                name: { type: 'string' },
-                                date: { type: 'string', format: 'date-time' },
-                                lastDate: { type: 'string', format: 'date-time' },
-                                description: { type: 'string' },
-                                instagram: { type: 'string', nullable: true, maxLength: 100 },
-                                active: { type: 'boolean' },
-                                cityId: { type: 'string', format: 'uuid' },
-                                photos: {
-                                    type: 'array', items: {
-                                        type: 'object',
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 400: {
                     type: 'object',
                     properties: {
@@ -208,31 +159,6 @@ export function findUniqueEvent(fastify: FastifyInstance) {
                 }
             },
             response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string', enum: ['Event found'] },
-                        statusCode: { type: 'number', enum: [200] },
-                        event: {
-                            type: 'object',
-                            properties: {
-                                id: { type: 'string', format: 'uuid' },
-                                name: { type: 'string' },
-                                date: { type: 'string', format: 'date-time' },
-                                lastDate: { type: 'string', format: 'date-time' },
-                                description: { type: 'string' },
-                                instagram: { type: 'string', nullable: true, maxLength: 100 },
-                                active: { type: 'boolean' },
-                                cityId: { type: 'string', format: 'uuid' },
-                                photos: {
-                                    type: 'array', items: {
-                                        type: 'object',
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 400: {
                     type: 'object',
                     properties: {
@@ -258,34 +184,6 @@ export function findAllEvent(fastify: FastifyInstance) {
             summary: 'Find all events',
             description: 'This endpoint allows you to find all events.',
             response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string', enum: ['Events found'] },
-                        statusCode: { type: 'number', enum: [200] },
-                        events: {
-                            type: 'array',
-                            items: {
-                                type: 'object',
-                                properties: {
-                                    id: { type: 'string', format: 'uuid' },
-                                    name: { type: 'string' },
-                                    date: { type: 'string', format: 'date-time' },
-                                    lastDate: { type: 'string', format: 'date-time' },
-                                    description: { type: 'string' },
-                                    instagram: { type: 'string', nullable: true, maxLength: 100 },
-                                    active: { type: 'boolean' },
-                                    cityId: { type: 'string', format: 'uuid' },
-                                    photos: {
-                                        type: 'array', items: {
-                                            type: 'object',
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 400: {
                     type: 'object',
                     properties: {
@@ -304,34 +202,6 @@ export function findAvailableEvent(fastify: FastifyInstance) {
             summary: 'Find available events',
             description: 'This endpoint allows you to find all available events.',
             response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string', enum: ['Available events found'] },
-                        statusCode: { type: 'number', enum: [200] },
-                        events: {
-                            type: 'array',
-                            items: {
-                                type: 'object',
-                                properties: {
-                                    id: { type: 'string', format: 'uuid' },
-                                    name: { type: 'string' },
-                                    date: { type: 'string', format: 'date-time' },
-                                    lastDate: { type: 'string', format: 'date-time' },
-                                    description: { type: 'string' },
-                                    instagram: { type: 'string', nullable: true, maxLength: 100 },
-                                    active: { type: 'boolean' },
-                                    cityId: { type: 'string', format: 'uuid' },
-                                    photos: {
-                                        type: 'array', items: {
-                                            type: 'object',
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
                 400: {
                     type: 'object',
                     properties: {
@@ -358,7 +228,7 @@ export function UpdatePhotoEvent(fastify: FastifyInstance) {
                 }
             },
             consumes: ['multipart/form-data'],
-            body: {
+            stream: {
                 type: 'object',
                 required: ['photo'],
                 properties: {
@@ -404,7 +274,7 @@ export function CreatePhotoEvent(fastify: FastifyInstance) {
         schema: {
             tags: ['Event'],
             summary: 'Create a new event photo',
-            description: 'This endpoint allows you to create a new photo for an event. The photo must be provided in the request body.',
+            description: 'This endpoint allows you to create a new photo for an event. The photo must be provided in the request stream.',
             params: {
                 type: 'object',
                 required: ['eventId'],
@@ -413,7 +283,7 @@ export function CreatePhotoEvent(fastify: FastifyInstance) {
                 }
             },
             consumes: ['multipart/form-data'],
-            body: {
+            stream: {
                 type: 'object',
                 required: ['photo'],
                 properties: {

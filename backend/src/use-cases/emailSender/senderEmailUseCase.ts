@@ -21,7 +21,6 @@ export class SenderEmailUseCase {
         const isAdminExist = await this.adminRepository.getAdminByEmail(email);
         if (!isAdminExist) throw new ServerError("Admin not found", 404);
 
-        await this.changePassword.applyRatelimit(email, ip);
         await this.changePassword.sendPasswordRecoveryEmail(code, email)
         await this.changePassword.storeVerificationCode(email, code);
     }

@@ -6,7 +6,7 @@ export function cityRegister(fastify: FastifyInstance){
     fastify.post('/city/register', {
         preHandler: authMiddleware,
         schema: {
-            body: {
+            stream: {
                 type: 'object',
                 properties: {
                     name: { type: 'string' },
@@ -65,7 +65,7 @@ export function cityUpdate(fastify: FastifyInstance){
     fastify.put('/city/update/:id', {
         preHandler: authMiddleware,
         schema: {
-            body: {
+            stream: {
                 type: 'object',
                 properties: {
                     name: { type: 'string' },
@@ -256,7 +256,7 @@ export function cityUpdatePhoto(fastify: FastifyInstance){
                 },
                 required: ['id']
             },
-            body: {
+            stream: {
                 type: 'object',
                 properties: {
                     url: { type: 'string' },
@@ -311,7 +311,7 @@ export function cityCreatePhoto(fastify: FastifyInstance){
                 },
                 required: ['cityId']
             },
-            body: {
+            stream: {
                 type: 'object',
                 properties: {
                     url: { type: 'string' },
