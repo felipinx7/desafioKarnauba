@@ -1,4 +1,4 @@
-import { Category } from "@prisma/client"
+import { Category } from "@prisma/client";
 import { PhotoDTO } from "../../infra/dto/photoDTO";
 
 export class Place {
