@@ -1,5 +1,6 @@
-import { munckupMobile, wavesBackground } from '@/assets/image'
 import Image from 'next/image'
+
+import { munckupMobile, wavesBackground } from '@/assets/image'
 
 export const AboutSistem = () => {
   return (

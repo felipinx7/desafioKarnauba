@@ -1,7 +1,8 @@
+import Image from 'next/image'
+
 import { IconeEmail } from '@/assets/icons/icon-email'
 import { IconeEnterPrise } from '@/assets/icons/icon-enterprise'
 import { manformladdingpage } from '@/assets/image'
-import Image from 'next/image'
 
 export const SectionFormContact = () => {
   return (
@@ -17,8 +18,8 @@ export const SectionFormContact = () => {
         >
           <div className="w-[50%] max-lg:w-full">
             <div className="mb-10 flex flex-col items-start justify-center">
-              <h1 className="text-primargreen text-[2.5rem] font-[600]">Entre em Contato</h1>
-              <p className="text-primargreen text-[1.2rem] font-[300]">
+              <h1 className="text-[2.5rem] font-[600] text-primargreen">Entre em Contato</h1>
+              <p className="text-[1.2rem] font-[300] text-primargreen">
                 Um sistema feito sob medida para mostrar ao mundo as riquezas de Moraújo,
                 impulsionar o turismo local e facilitar a administração com eficiência e tecnologia.
               </p>
@@ -28,7 +29,7 @@ export const SectionFormContact = () => {
             <div className="flex w-full flex-col items-start justify-center gap-6">
               {/* INPUT FIELD NAME CITY  */}
               <div className="flex w-full flex-col">
-                <label htmlFor="name" className="text-primargreen mb-1 text-[1.2rem] font-medium">
+                <label htmlFor="name" className="mb-1 text-[1.2rem] font-medium text-primargreen">
                   Nome da Cidade
                 </label>
                 <div className="relative w-full">
@@ -37,7 +38,7 @@ export const SectionFormContact = () => {
                     type="text"
                     required
                     placeholder="Digite o nome da sua cidade"
-                    className="border-primargreen text-primargreen placeholder:text-primargreen focus:shadow-shadowInputFormContact w-full rounded-full border border-2 px-4 py-4 pr-10 transition-all duration-500 ease-in-out focus:outline-none"
+                    className="w-full rounded-full border border-2 border-primargreen px-4 py-4 pr-10 text-primargreen transition-all duration-500 ease-in-out placeholder:text-primargreen focus:shadow-shadowInputFormContact focus:outline-none"
                   />
                   <div className="pointer-events-none absolute right-3 top-2 block w-[7%] -translate-y-1/2 max-sm:hidden">
                     <IconeEnterPrise />
@@ -47,7 +48,7 @@ export const SectionFormContact = () => {
 
               {/* INPUT - EMAIL */}
               <div className="flex w-full flex-col">
-                <label htmlFor="email" className="text-primargreen mb-1 text-[1.2rem] font-medium">
+                <label htmlFor="email" className="mb-1 text-[1.2rem] font-medium text-primargreen">
                   Email
                 </label>
                 <div className="relative w-full">
@@ -56,14 +57,14 @@ export const SectionFormContact = () => {
                     required
                     type="email"
                     placeholder="seuemail@gmail.com"
-                    className="border-primargreen text-primargreen placeholder:text-primargreen focus:shadow-shadowInputFormContact w-full rounded-full border border-2 px-4 py-4 pr-10 transition-all duration-500 ease-in-out focus:outline-none"
+                    className="w-full rounded-full border border-2 border-primargreen px-4 py-4 pr-10 text-primargreen transition-all duration-500 ease-in-out placeholder:text-primargreen focus:shadow-shadowInputFormContact focus:outline-none"
                   />
                   <div className="pointer-events-none absolute right-3 top-1/2 block -translate-y-1/2 max-sm:hidden">
                     <IconeEmail />
                   </div>
                 </div>
               </div>
-              <button className="bg-secundaryGreen700 hover:bg-secundaryGreen700 w-full cursor-pointer rounded-[0.8rem] p-2 text-[1.2rem] font-[--font-sora] font-[700] text-white">
+              <button className="w-full cursor-pointer rounded-[0.8rem] bg-secundaryGreen700 p-2 text-[1.2rem] font-[--font-sora] font-[700] text-white hover:bg-secundaryGreen700">
                 ENVIAR DADOS
               </button>
             </div>

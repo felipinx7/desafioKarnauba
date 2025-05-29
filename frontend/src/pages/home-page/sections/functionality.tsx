@@ -1,13 +1,13 @@
-import { manwithsuitcase, wavesBackground } from '@/assets/image'
 import Image from 'next/image'
-import { CardFunctionalityBenefits } from '../components/layout/card-funcionality-benefits'
 import { InfoCardFunctionality } from '@/constants/info-card-funcionality'
+import { CardFunctionalityBenefits } from '../components/layout/card-funcionality-benefits'
+import { manwithsuitcase } from '@/assets/image'
 
 export const SectionFunctionality = () => {
   return (
     <section id="Functionality" className="relative min-h-[100vh] w-full bg-white">
       <div className="m-auto flex w-full max-w-[1280px] flex-col items-start justify-between px-5 py-5 max-lg:flex-col">
-        <h1 className="text-primargreen w-[70%] break-all text-[2rem] font-[--font-sora] font-[600] max-lg:w-full">
+        <h1 className="w-[70%] break-all text-[2rem] font-[--font-sora] font-[600] text-primargreen max-lg:w-full">
           Funcionalidades que tornam nosso sistema intuitivo e ideal para a sua cidade
         </h1>
         <div className="relative mt-[2rem] flex w-full items-end justify-between max-lg:flex-col max-lg:gap-20">

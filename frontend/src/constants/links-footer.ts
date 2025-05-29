@@ -1,11 +1,7 @@
 export const LinksFooter = [
   {
     title: 'Redes Sociais',
-    links: [
-        { name: 'Facebook' }, 
-        { name: 'Instagram' },
-        { name: 'Whatsapp' },
-        { name: 'Email' }],
+    links: [{ name: 'Facebook' }, { name: 'Instagram' }, { name: 'Whatsapp' }, { name: 'Email' }],
   },
   {
     title: 'Links de Navegeção',

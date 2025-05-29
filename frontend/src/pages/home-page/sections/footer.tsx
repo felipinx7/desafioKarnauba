@@ -1,6 +1,7 @@
+import Image from 'next/image'
+
 import { imageLogo } from '@/assets/image'
 import { LinksFooter } from '@/constants/links-footer'
-import Image from 'next/image'
 
 export const Footer = () => {
   return (
