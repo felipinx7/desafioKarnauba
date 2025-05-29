@@ -3,7 +3,7 @@ import { placeInstance } from "../instances/placeInstance";
 import { authMiddleware } from "../middleware/authMiddleware";
 
 export function placeRegister(fastify: FastifyInstance) {
-    fastify.post('/place/register/:cityId', {
+    fastify.post('/place/register', {
         preHandler: authMiddleware,
         schema: {
             stream: {
@@ -18,13 +18,6 @@ export function placeRegister(fastify: FastifyInstance) {
                     photos: { type: 'array', items: { type: 'string' } },
                 },
                 required: ['name', 'description', 'category', 'location']
-            },
-            params: {
-                type: 'object',
-                properties: {
-                    cityId: { type: 'string' }
-                },
-                required: ['cityId']
             },
             summary: 'Register a new place',
             description: 'This endpoint allows you to register a new place with its details including name, description, category, city ID, phone number, Instagram handle, location, and photos.',

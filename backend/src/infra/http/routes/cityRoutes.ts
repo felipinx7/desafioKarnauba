@@ -62,7 +62,7 @@ export function cityRegister(fastify: FastifyInstance){
 }
 
 export function cityUpdate(fastify: FastifyInstance){
-    fastify.put('/city/update/:id', {
+    fastify.put('/city/update', {
         preHandler: authMiddleware,
         schema: {
             stream: {
@@ -119,11 +119,11 @@ export function cityUpdate(fastify: FastifyInstance){
 }
 
 export function cityDelete(fastify: FastifyInstance){
-    fastify.delete('/city/delete/:id', {
+    fastify.delete('/city/delete', {
         preHandler: authMiddleware,
         schema: {
             summary: 'Delete a city',
-            description: 'This endpoint allows you to delete a city by its ID.',
+            description: 'This endpoint allows you to delete a city',
             tags: ['City'],
             responses: {
                 200: {
@@ -150,18 +150,12 @@ export function cityDelete(fastify: FastifyInstance){
 }
 
 export function cityFindUnique(fastify: FastifyInstance){
-    fastify.get('/city/:id', {
+    fastify.get('/city', {
+        preHandler: authMiddleware,
         schema: {
             summary: 'Find a city by ID',
             description: 'This endpoint allows you to find a city by its ID.',
             tags: ['City'],
-            params: {
-                type: 'object',
-                properties: {
-                    id: { type: 'string', description: 'The ID of the city to find' }
-                },
-                required: ['id']
-            },
             responses: {
                 200: {
                     type: 'object',
@@ -301,23 +295,16 @@ export function cityUpdatePhoto(fastify: FastifyInstance){
 }
 
 export function cityCreatePhoto(fastify: FastifyInstance){
-    fastify.post('/city/create/photo/:cityId', {
+    fastify.post('/city/create/photo', {
         preHandler: authMiddleware,
         schema: {
-            params: {
-                type: 'object',
-                properties: {
-                    cityId: { type: 'string', description: 'The ID of the city to which the photo belongs' }
-                },
-                required: ['cityId']
-            },
             stream: {
                 type: 'object',
                 properties: {
                     url: { type: 'string' },
                     cityId: { type: 'string' }
                 },
-                required: ['url', 'cityId']
+                required: ['url']
             },
             summary: 'Create a new city photo',
             description: 'This endpoint allows you to create a new photo for a city.',

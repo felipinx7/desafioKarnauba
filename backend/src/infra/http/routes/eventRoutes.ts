@@ -3,19 +3,12 @@ import { eventInstance } from "../instances/eventInstance";
 import { authMiddleware } from "../middleware/authMiddleware";
 
 export function eventRegister(fastify: FastifyInstance) {
-    fastify.post('/event/register/:idCity', {
+    fastify.post('/event/register', {
         preHandler: authMiddleware,
         schema: {
             tags: ['Event'],
             summary: 'Create a new event',
             description: 'This endpoint allows you to create a new event. The event must have a name, date, last date, and description. Instagram is optional.',
-            params: {
-                type: 'object',
-                required: ['idCity'],
-                properties: {
-                    idCity: { type: 'string', format: 'uuid' }
-                }
-            },
             consumes: ['multipart/form-data'],
             stream: {
                 type: 'object',

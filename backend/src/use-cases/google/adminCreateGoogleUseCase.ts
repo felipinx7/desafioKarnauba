@@ -16,7 +16,7 @@ export class AdminCreateGoogleUseCase {
     async execute(token: googleDTO){
         const parsedData = googleSchema.safeParse(token);
         if (!parsedData.success) throw new ServerError("Invalid ID token");
-
+        
         const { idToken } = parsedData.data
         const ticket = await this.oauthClient.verifyIdToken({
             idToken: idToken,
@@ -35,7 +35,7 @@ export class AdminCreateGoogleUseCase {
         if (!email) throw new ServerError("Email not provided by Google");
         if (!name) throw new ServerError("Name not provider by Google");
 
-        const admin = new Admin(id, name, email, null, sub);
+        const admin = new Admin(id, name, email, null, sub, null);
         await this.adminRepository.upsertGoogleAdminInput(admin);
 
         return admin;

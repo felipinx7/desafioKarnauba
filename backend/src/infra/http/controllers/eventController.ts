@@ -25,10 +25,8 @@ export class EventController {
     ) { }
 
     async create(fastify: FastifyContextDTO) {
-        const { idCity } = fastify.req.params as { idCity: string };
         const data = await this.multipart.handleDataMultipart(fastify.req, "event");
-
-        const event = await this.createUseCase.execute(data, idCity);
+        const event = await this.createUseCase.execute(data, fastify.req);
         fastify.res.status(201).send({ message: "Event created", ...event });
     }
 

@@ -6,11 +6,11 @@ export const emailSenderSchema = z.object({
 })
 
 export const forgotPasswordSchema = z.object({
-    token: z.string(),
-    password: z.string()
+    token: z.string().regex(/^[^<>]*$/, "Sem tags HTML"),
+    password: z.string().regex(/^[^<>]*$/, "Sem tags HTML")
 })
 
 export const codeResetSchema = z.object({
     email: z.string().email(),
-    code: z.string().length(8)
+    code: z.string().length(8).regex(/^[^<>]*$/, "Sem tags HTML")
 })

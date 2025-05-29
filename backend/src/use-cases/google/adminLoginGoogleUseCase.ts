@@ -33,7 +33,7 @@ export class AdminLoginGoogleUseCase {
         if (!admin) throw new ServerError("Admin not found", 404);
 
         if (admin.googleId !== sub) throw new ServerError("Invalid Google Account", 409);
-        const tokenJWT = jwt.sign({id: admin.id}, env.JWT_SECRET, {
+        const tokenJWT = jwt.sign({id: admin.id, cityid: admin.cityId, rememberMe: true}, env.JWT_SECRET, {
             expiresIn: '12h'
         });
 

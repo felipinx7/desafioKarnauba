@@ -36,21 +36,18 @@ export class CityController {
     }
 
     async updateCity(fastify: FastifyContextDTO){
-        const { id } = fastify.req.params as { id: string };
         const data = await this.multipart.handleDataMultipart(fastify.req, "city");
-        const updatedCity = await this.cityUpdateUseCase.execute(data, id);
+        const updatedCity = await this.cityUpdateUseCase.execute(data, fastify.req);
         fastify.res.send({message: "Updated city", updatedCity});
     }
 
     async deleteCity(fastify: FastifyContextDTO){
-        const { id } = fastify.req.params as { id: string };
-        await this.cityDeleteUseCase.execute(id);
+        await this.cityDeleteUseCase.execute(fastify.req);
         fastify.res.send("City deleted");
     }
 
     async findUniqueCity(fastify: FastifyContextDTO){
-        const { id } = fastify.req.params as { id: string };
-        const city = await this.cityFindUniqueUseCase.execute(id);
+        const city = await this.cityFindUniqueUseCase.execute(fastify.req);
         fastify.res.send(city);
     }
 
@@ -67,9 +64,8 @@ export class CityController {
     }
 
     async createPhoto(fastify: FastifyContextDTO){
-        const { cityId } = fastify.req.params as { cityId: string };
         const data = await this.multipart.handleDataMultipart(fastify.req, "city", true);
-        const photo = await this.cityCreatePhotoUseCase.execute(data, cityId);
+        const photo = await this.cityCreatePhotoUseCase.execute(data, fastify.req);
         fastify.res.status(201).send({message: "Photo created", ...photo});
     }
 

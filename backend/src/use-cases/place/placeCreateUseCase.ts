@@ -5,6 +5,7 @@ import { IPlaceRepository } from "../../domain/repositorys/IPlaceRepository";
 import { placeDTO } from "../../infra/dto/placeDTO";
 import { placeSchema } from "../../infra/schemas/placeSchema";
 import { ServerError } from "../../infra/utils/serverError";
+import { FastifyRequest } from "fastify";
 
 export class PlaceCreateUseCase {
     constructor(
@@ -12,13 +13,15 @@ export class PlaceCreateUseCase {
         private cityRepository: ICityRepository
     ){}
 
-    async execute(data: placeDTO, cityId: string){
+    async execute(data: placeDTO, req: FastifyRequest){
         const parsedData = placeSchema.safeParse(data);
-        console.log(parsedData.error)
         if (!parsedData.success) throw new ServerError("Bad Request");
 
         const { name, location, description, photoURLs, category, phone, instagram } = parsedData.data!
 
+        const cityId = req.user?.cityId;
+        if (!cityId) throw new ServerError("Not exist city", 404);
+        
         const isCityExist = await this.cityRepository.findUnique(cityId);
         if (!isCityExist) throw new ServerError("City not found", 404);
 

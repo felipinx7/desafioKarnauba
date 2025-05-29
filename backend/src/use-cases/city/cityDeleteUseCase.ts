@@ -1,10 +1,14 @@
+import { FastifyRequest } from "fastify";
 import { ICityRepository } from "../../domain/repositorys/ICityRepository";
 import { ServerError } from "../../infra/utils/serverError";
 
 export class CityDeleteUseCase {
     constructor(private readonly cityRepository: ICityRepository){}
 
-    async execute(id: string){
+    async execute(req: FastifyRequest){
+        const id = req.user?.cityId;
+        if (!id) throw new ServerError("Not exist city", 404);
+
         const isCityExist = await this.cityRepository.findUnique(id);
         if (!isCityExist) throw new ServerError("City not found", 404);
         
