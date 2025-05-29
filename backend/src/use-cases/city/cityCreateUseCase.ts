@@ -23,6 +23,7 @@ export class CityCreateUseCase {
         const isAdminExists = await this.adminRepository.getAdminById(adminId);
         if (!isAdminExists) throw new ServerError("Admin not found", 404);
 
+        console.log(isAdminExists)
         if (isAdminExists.city) throw new ServerError("Admin already has a city", 400);
 
         const { name, location, description, photoURLs, instagram } = parsedData.data!;

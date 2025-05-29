@@ -14,9 +14,18 @@ export class IPrismaAdminReposotory implements IAdminRepository {
         const admin = await prisma.admin.findUnique({
             where: {id}
         });
+
         return admin;
     }
 
+    async findAdminAuthorized(id: string): Promise<boolean> {
+        const adminAuthorized = await prisma.admin.findUnique({
+            where: {id, authorized: true}
+        })
+
+        if (!adminAuthorized) return false;
+        return true;
+    }
 
     async createAdmin(data: Admin): Promise<Admin | null> {
         const admin = await prisma.admin.create({

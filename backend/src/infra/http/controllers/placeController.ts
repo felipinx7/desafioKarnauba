@@ -26,9 +26,9 @@ export class PlaceController {
     ) { }
 
     async create(fastify: FastifyContextDTO) {
-        const { placeId } = fastify.req.params as { placeId: string }
+        const { cityId } = fastify.req.params as { cityId: string }
         const data = await this.multipart.handleDataMultipart(fastify.req, "place");
-        const place = await this.createUseCase.execute(data, placeId);
+        const place = await this.createUseCase.execute(data, cityId);
         fastify.res.status(201).send({ message: "Place created", ...place });
     }
 
@@ -36,7 +36,7 @@ export class PlaceController {
         const { id } = fastify.req.params as { id: string };
         const data = await this.multipart.handleDataMultipart(fastify.req, "place");
         const updatedPlace = await this.updateUseCase.execute(data, id);
-        fastify.res.send({ message: "Updated place", ...updatedPlace })
+        fastify.res.send({ message: "Updated place", place: updatedPlace })
     }
 
     async delete(fastify: FastifyContextDTO) {

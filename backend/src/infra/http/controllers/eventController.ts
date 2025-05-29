@@ -49,17 +49,17 @@ export class EventController {
     async findUnique(fastify: FastifyContextDTO) {
         const { id } = fastify.req.params as { id: string };
         const event = await this.findUniqueUseCase.execute(id);
-        fastify.res.send({ message: "Event found", ...event });
+        fastify.res.send({...event });
     }
 
     async findAll(fastify: FastifyContextDTO) {
         const events = await this.findAllUseCase.execute();
-        fastify.res.send(...events)
+        fastify.res.send({...events})
     }
 
     async findAvaliableEvent(fastify: FastifyContextDTO){
         const events = await this.findAvaliableEvents.execute();
-        fastify.res.send(...events)
+        fastify.res.send({...events})
     }
 
     async updatePhoto(fastify: FastifyContextDTO) {

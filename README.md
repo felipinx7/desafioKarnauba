@@ -28,6 +28,7 @@
 - **Prisma ORM** – Abstração de banco de dados relacional
 - **PostgreSQL** – Banco de dados utilizado
 - **Zod** – Validação de dados
+- **Docker** & **Docker Compose** – Containerização da aplicação e banco de dados
 - **JWT** – Autenticação segura
 - **Nodemailer + Redis** – Envio de emails e fila (caso aplicável)
 - **Helmet, Rate-limit, CORS, Multipart** – Segurança e controle de requisições
@@ -48,7 +49,13 @@ cd backend
 pnpm install
 
 ### 3. Criar o arquivo .env 
-DATABASE_URL="postgresql://usuario:senha@host:5432/banco"
+DATABASE_USER=dbuser
+</br>
+DATABASE_PASS=dbsenha
+</br>
+DATABASE_DB=dbName
+</br>
+DATABASE_URL="postgresql://usuario:senha@db:5432/banco"
 </br>
 JWT_SECRET="sua_chave_secreta_jwt"
 </br>
@@ -66,12 +73,18 @@ PASSWORD_GMAIL="senha_do_email"
 </br>
 REDIS_URL="redis://localhost:6379" # ou o link do Redis em nuvem
 
+### 4. Rodar com Docker
+docker-compose up
 
-### 4.  Rodar as migrations e gerar o client do Prisma
-npx prisma generate
-npx prisma migrate dev --name init
+### 5.  Rodar as migrations e gerar o client do Prisma com Docker
+docker exec -it backend-backend-1 npx prisma generate
+docker exec -it backend-backend-1 npx prisma migrate dev --name init
 
-### 5.  Rodar a aplicação em modo desenvolvimento
+### 6.  Rodar a aplicação em modo desenvolvimento (opcional se quiser rodar sem docker)
 pnpm dev
+
+### 7. Para abrir o Prisma Studio (UI do banco) dentro do container:
+docker exec -it backend-backend-1 npx prisma studio
+
 
 

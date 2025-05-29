@@ -148,18 +148,10 @@ export function adminDelete(fastify: FastifyInstance) {
             summary: 'Delete Admin',
             description: 'This endpoint allows an administrator to delete your account. The cookie will delete the user you are logged in as.',
             tags: ['Admin'],
-            body: {
-                type: 'object',
-                required: ['id'],
-                properties: {
-                    id: { type: 'string', enum: ['AdminId'] }
-                }
-            },
             response: {
                 200: {
                     type: 'object',
                     properties: {
-                        statusCode: {type: 'number', enum: [200] },
                         message: { type: 'string', enum: ['Deleted Admin Sucessfully'] },
                     },
                 },
@@ -194,14 +186,17 @@ export function adminFindUnique(fastify: FastifyInstance) {
                 200: {
                     type: 'object',
                     properties: {
-                        statusCode: { type: 'number', enum: [200] },
-                        data: {
+                        message: { type: 'string' },
+                        admin: {
                             type: 'object',
                             properties: {
                                 id: { type: 'string', format: 'uuid' },
                                 name: { type: 'string' },
                                 email: { type: 'string', format: 'email' },
                                 rememberMe: { type: 'boolean' },
+                                password: { type: 'string' },
+                                googleId: { type: ['string', 'null'] },
+                                authorized: { type: 'boolean' }
                             }
                         }
                     }

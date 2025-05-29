@@ -2,11 +2,11 @@ import { FastifyInstance } from "fastify";
 import { placeInstance } from "../instances/placeInstance";
 import { authMiddleware } from "../middleware/authMiddleware";
 
-export function placeRegister(fastify: FastifyInstance){
+export function placeRegister(fastify: FastifyInstance) {
     fastify.post('/place/register/:cityId', {
         preHandler: authMiddleware,
         schema: {
-            body: {
+            stream: {
                 type: 'object',
                 properties: {
                     name: { type: 'string' },
@@ -15,9 +15,9 @@ export function placeRegister(fastify: FastifyInstance){
                     phone: { type: 'string', nullable: true },
                     instagram: { type: 'string', nullable: true },
                     location: { type: 'string' },
-                    photos: {type: 'array', items: { type: 'string' }},
+                    photos: { type: 'array', items: { type: 'string' } },
                 },
-                required: ['name', 'description', 'category', 'location', 'cityId']
+                required: ['name', 'description', 'category', 'location']
             },
             params: {
                 type: 'object',
@@ -34,8 +34,8 @@ export function placeRegister(fastify: FastifyInstance){
                 200: {
                     consumes: ['multipart/form-data'],
                     type: 'object',
-                    proprieties: {
-                        message: { type: 'string' , enum: ['Place created successfully'] },
+                    properties: {
+                        message: { type: 'string', enum: ['Place created successfully'] },
                         place: {
                             type: 'object',
                             properties: {
@@ -66,14 +66,14 @@ export function placeRegister(fastify: FastifyInstance){
                 },
             }
         }
-    }, (req, res) => placeInstance.create({req, res}));
+    }, (req, res) => placeInstance.create({ req, res }));
 }
 
-export function placeUpdate(fastify: FastifyInstance){
+export function placeUpdate(fastify: FastifyInstance) {
     fastify.put('/place/update/:id', {
         preHandler: authMiddleware,
         schema: {
-            body: {
+            stream: {
                 type: 'object',
                 properties: {
                     name: { type: 'string' },
@@ -82,7 +82,7 @@ export function placeUpdate(fastify: FastifyInstance){
                     phone: { type: 'string', nullable: true },
                     instagram: { type: 'string', nullable: true },
                     location: { type: 'string' },
-                    photos: {type: 'array', items: { type: 'string' }},
+                    photos: { type: 'array', items: { type: 'string' } },
                 }
             },
             summary: 'Update a place',
@@ -92,32 +92,11 @@ export function placeUpdate(fastify: FastifyInstance){
             params: {
                 type: 'object',
                 properties: {
-                    cityId: { type: 'string' }
+                    id: { type: 'string' }
                 },
-                required: ['cityId']
+                required: ['id']
             },
             response: {
-                200: {
-                    consumes: ['multipart/form-data'],
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string', enum: ['Place updated successfully'] },
-                        place: {
-                            type: 'object',
-                            properties: {
-                                id: { type: 'string' },
-                                name: { type: 'string' },
-                                description: { type: 'string' },
-                                category: { type: 'string' },
-                                cityId: { type: 'string' },
-                                phone: { type: 'string', nullable: true },
-                                instagram: { type: 'string', nullable: true },
-                                location: { type: 'string' },
-                                photos: { type: 'array', items: { type: 'string' } }
-                            }
-                        }
-                    }
-                },
                 400: {
                     type: 'object',
                     properties: {
@@ -132,10 +111,10 @@ export function placeUpdate(fastify: FastifyInstance){
                 },
             }
         }
-    }, (req, res) => placeInstance.update({req, res}));
+    }, (req, res) => placeInstance.update({ req, res }));
 }
 
-export function placeDelete(fastify: FastifyInstance){
+export function placeDelete(fastify: FastifyInstance) {
     fastify.delete('/place/delete/:id', {
         preHandler: authMiddleware,
         schema: {
@@ -163,16 +142,19 @@ export function placeDelete(fastify: FastifyInstance){
                 },
             }
         }
-    }, (req, res) => placeInstance.delete({req, res}));
+    }, (req, res) => placeInstance.delete({ req, res }));
 }
 
-export function placeByCategory(fastify: FastifyInstance){
+export function placeByCategory(fastify: FastifyInstance) {
     fastify.get('/places/:category', {
         schema: {
             params: {
                 type: 'object',
                 properties: {
-                    category: { type: 'string' }
+                    category: {
+                        type: 'string',
+                        enum: ['RESTAURANT', 'HOTEL', 'TOURIST_ATTRACTIONS', 'LANDSCAPE']
+                    }
                 },
                 required: ['category']
             },
@@ -180,23 +162,6 @@ export function placeByCategory(fastify: FastifyInstance){
             description: 'This endpoint allows you to find places by their category.',
             tags: ['Place'],
             response: {
-                200: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            id: { type: 'string' },
-                            name: { type: 'string' },
-                            description: { type: 'string' },
-                            category: { type: 'string' },
-                            cityId: { type: 'string' },
-                            phone: { type: 'string', nullable: true },
-                            instagram: { type: 'string', nullable: true },
-                            location: { type: 'string' },
-                            photos: { type: 'array', items: { type: 'string' } }
-                        }
-                    }
-                },
                 400: {
                     type: 'object',
                     properties: {
@@ -211,10 +176,10 @@ export function placeByCategory(fastify: FastifyInstance){
                 },
             }
         }
-    }, (req, res) => placeInstance.findByCategory({req, res}));
+    }, (req, res) => placeInstance.findByCategory({ req, res }));
 }
 
-export function placeFindUnique(fastify: FastifyInstance){
+export function placeFindUnique(fastify: FastifyInstance) {
     fastify.get('/place/:id', {
         schema: {
             params: {
@@ -262,33 +227,16 @@ export function placeFindUnique(fastify: FastifyInstance){
                 },
             }
         }
-    }, (req, res) => placeInstance.findUnique({req, res}));
+    }, (req, res) => placeInstance.findUnique({ req, res }));
 }
 
-export function placeFindAll(fastify: FastifyInstance){
+export function placeFindAll(fastify: FastifyInstance) {
     fastify.get('/places', {
         schema: {
             summary: 'Find all places',
             description: 'This endpoint allows you to retrieve a list of all places.',
             tags: ['Place'],
             response: {
-                200: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            id: { type: 'string' },
-                            name: { type: 'string' },
-                            description: { type: 'string' },
-                            category: { type: 'string' },
-                            cityId: { type: 'string' },
-                            phone: { type: 'string', nullable: true },
-                            instagram: { type: 'string', nullable: true },
-                            location: { type: 'string' },
-                            photos: { type: 'array', items: { type: 'string' } }
-                        }
-                    }
-                },
                 400: {
                     type: 'object',
                     properties: {
@@ -303,14 +251,14 @@ export function placeFindAll(fastify: FastifyInstance){
                 },
             }
         }
-    }, (req, res) => placeInstance.findAll({req, res}));
+    }, (req, res) => placeInstance.findAll({ req, res }));
 }
 
-export function placeUpdatePhoto(fastify: FastifyInstance){
+export function placeUpdatePhoto(fastify: FastifyInstance) {
     fastify.put('/place/photo/:id', {
         preHandler: authMiddleware,
         schema: {
-            body: {
+            stream: {
                 type: 'object',
                 properties: {
                     photo: { type: 'string' }
@@ -333,14 +281,14 @@ export function placeUpdatePhoto(fastify: FastifyInstance){
                     type: 'object',
                     properties: {
                         message: { type: 'string', enum: ['Photo updated successfully'] },
-                        photo: { 
+                        photo: {
                             type: 'object',
                             properties: {
                                 id: { type: 'string' },
                                 url: { type: 'string' },
                                 placeId: { type: 'string' }
                             }
-                         }
+                        }
                     }
                 },
                 400: {
@@ -357,14 +305,14 @@ export function placeUpdatePhoto(fastify: FastifyInstance){
                 },
             }
         }
-    }, (req, res) => placeInstance.updatePhoto({req, res}))
+    }, (req, res) => placeInstance.updatePhoto({ req, res }))
 }
 
-export function placeCreatePhoto(fastify: FastifyInstance){
+export function placeCreatePhoto(fastify: FastifyInstance) {
     fastify.post('/place/create/photo/:placeId', {
         preHandler: authMiddleware,
         schema: {
-            body: {
+            stream: {
                 type: 'object',
                 properties: {
                     photo: { type: 'string' }
@@ -412,10 +360,10 @@ export function placeCreatePhoto(fastify: FastifyInstance){
                 },
             }
         }
-    }, (req, res) => placeInstance.createPhoto({req, res}))
+    }, (req, res) => placeInstance.createPhoto({ req, res }))
 }
 
-export function placeDeletePhoto(fastify: FastifyInstance){
+export function placeDeletePhoto(fastify: FastifyInstance) {
     fastify.delete('/place/delete/photo/:id', {
         preHandler: authMiddleware,
         schema: {
@@ -450,5 +398,5 @@ export function placeDeletePhoto(fastify: FastifyInstance){
                 },
             }
         }
-    }, (req, res) => placeInstance.deletePhoto({req,res}))
+    }, (req, res) => placeInstance.deletePhoto({ req, res }))
 }

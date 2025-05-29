@@ -14,6 +14,7 @@ export class PlaceCreateUseCase {
 
     async execute(data: placeDTO, cityId: string){
         const parsedData = placeSchema.safeParse(data);
+        console.log(parsedData.error)
         if (!parsedData.success) throw new ServerError("Bad Request");
 
         const { name, location, description, photoURLs, category, phone, instagram } = parsedData.data!
