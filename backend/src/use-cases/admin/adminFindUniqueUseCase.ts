@@ -9,9 +9,9 @@ export class AdminFindUniqueUseCase {
         if (!user) throw new Error("Unauthorized");
 
         const isAdminExist = await this.adminRepository.getAdminById(user.id);
-        console.log(isAdminExist)
         if (!isAdminExist) throw new Error("Admin not found");
 
-        return isAdminExist
+        const { password, ...rest } = isAdminExist
+        return rest
     }
 }

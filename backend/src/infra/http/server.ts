@@ -8,6 +8,7 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import fastifyCors from "@fastify/cors";
 import helmet from '@fastify/helmet';
+import { staticFilesPlugin } from "./plugins/static";
 
 const server = fastify();
 
@@ -23,6 +24,7 @@ server.register(fastifyRateLimit,{
     },
     skipOnError: true,
 })
+server.register(staticFilesPlugin)
 server.register(fastifyCookie);
 server.register(fastifyMultipart);
 server.register(helmet, {
