@@ -9,14 +9,14 @@ import { DataLoginUser } from '@/dto/data-login-user-DTO'
 import { loginUserSchema } from '@/schemas/user-schema'
 import { LoginUser } from '@/services/routes/auth'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export const LoginPage = () => {
   //Manipulate of login User
   const router = useRouter()
+  //State for storage value remember me
+  const [rememberMe, setRememberMe] = useState(true)
 
-  const handlePage = () => {
-    router.push("/login")
-  }
   const {
     register,
     handleSubmit,
@@ -29,7 +29,9 @@ export const LoginPage = () => {
   async function onSubmit(data: DataLoginUser) {
     try {
       const response = await LoginUser(data)
-      console.log('Resposta do login:', response)
+      console.log('Resposta do Email:', data.email)
+      console.log('Resposta do Password:', data.password)
+      console.log('Resposta do Remeberme:', data.remenberMe)
       alert('Login realizado com sucesso!')
     } catch (error) {
       console.error('Erro ao logar:', error)
@@ -90,7 +92,7 @@ export const LoginPage = () => {
               name="password"
               className="w-full rounded-lg border-2 border-black/10 p-2 outline-none transition-all ease-in-out focus:border-2 focus:border-primargreen"
             />
-             {errors && (
+            {errors && (
               <div className="flex w-full items-start justify-start">
                 <p className="text-[1rem] text-red-600">{errors.password?.message}</p>
               </div>
@@ -100,8 +102,8 @@ export const LoginPage = () => {
           {/* Remember + Forgot Password */}
           <div className="flex w-full items-center justify-between text-sm text-gray-700">
             <div className="flex items-center gap-2">
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember" className="text-primargreen">
+              <input type="checkbox" {...register("remenberMe")} id="rememberMe" />
+              <label htmlFor="rememberMe" className="text-primargreen">
                 Lembrar de min
               </label>
             </div>
