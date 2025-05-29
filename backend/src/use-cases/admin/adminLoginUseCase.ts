@@ -26,7 +26,7 @@ export class AdminLoginUseCase {
         const isPassword = await bcrypt.compare(password, isAdminExist.password);
         if (!isPassword) throw new ServerError("invalid credentials");
 
-        const token = jwt.sign({id: isAdminExist.id}, env.JWT_SECRET, {
+        const token = jwt.sign({id: isAdminExist.id, cityId: isAdminExist.cityId, remenberMe: remenberMe}, env.JWT_SECRET, {
             expiresIn: remenberMe ? '30d': '1d'
         });
 

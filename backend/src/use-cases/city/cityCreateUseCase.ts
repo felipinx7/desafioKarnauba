@@ -6,6 +6,8 @@ import { City } from "../../domain/entities/city";
 import { FastifyRequest } from "fastify";
 import { IAdminRepository } from "../../domain/repositorys/IAdminRepository";
 import { ServerError } from "../../infra/utils/serverError";
+import jwt from 'jsonwebtoken'
+import { env } from "../../config/env";
 
 export class CityCreateUseCase {
     constructor(
@@ -14,6 +16,8 @@ export class CityCreateUseCase {
     ) { }
 
     async execute(data: cityDTO, req: FastifyRequest) {
+        const remenberMe = req.user?.remenberMe
+
         const adminId = req.user?.id;
         if (!adminId) throw new ServerError("Unauthorized", 401);
 
@@ -23,7 +27,6 @@ export class CityCreateUseCase {
         const isAdminExists = await this.adminRepository.getAdminById(adminId);
         if (!isAdminExists) throw new ServerError("Admin not found", 404);
 
-        console.log(isAdminExists)
         if (isAdminExists.city) throw new ServerError("Admin already has a city", 400);
 
         const { name, location, description, photoURLs, instagram } = parsedData.data!;
@@ -37,6 +40,9 @@ export class CityCreateUseCase {
         const city = new City(name, location, description, id, adminId, photo, [], [], instagram);
         await this.cityRepository.createCity(city);
 
-        return city;
+        const newToken = jwt.sign({ id: adminId, cityId: id }, env.JWT_SECRET, {
+            expiresIn: remenberMe ? '30d' : '1d'
+        })
+        return { city, newToken, remenberMe};
     }
 }

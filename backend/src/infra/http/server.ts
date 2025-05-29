@@ -14,6 +14,7 @@ const server = fastify();
 
 server.register(fastifyCors, {
     origin: env.PORTFRONT,
+    credentials: true,
     methods: ['GET', 'POST', 'DELETE', 'PUT']
 })
 server.register(fastifyRateLimit,{

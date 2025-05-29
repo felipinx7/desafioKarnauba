@@ -7,6 +7,7 @@ export class Admin {
         public email: string,
         public password: string | null,
         public readonly googleId: string | null,
+        public readonly cityId: string | null,
         public city?: City
     ){}
 }

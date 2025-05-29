@@ -8,6 +8,7 @@ import { Multipart } from "../plugins/multipart";
 import { CityUpdatePhotoUseCase } from "../../../use-cases/city/photo/cityUpdatePhotoUseCase";
 import { CityCreatePhotoUseCase } from "../../../use-cases/city/photo/cityCreatePhotoUseCase";
 import { CityDeletePhotoUseCase } from "../../../use-cases/city/photo/cityDeletePhotoUseCase";
+import { env } from "../../../config/env";
 
 export class CityController {
     constructor(
@@ -24,9 +25,14 @@ export class CityController {
 
     async createCity(fastify: FastifyContextDTO){
         const data = await this.multipart.handleDataMultipart(fastify.req, "city");
-        console.log(data)
-        const city = await this.cityCreateUseCase.execute(data, fastify.req);
-        fastify.res.status(201).send({message: "City created", ...city });
+        const cityData = await this.cityCreateUseCase.execute(data, fastify.req);
+        fastify.res.setCookie('token', cityData.newToken, {
+               httpOnly: true,
+               secure: env.NODE_ENV === "production",
+               sameSite: 'lax',
+               path: '/',
+               maxAge: cityData.remenberMe ? 3600 * 24 * 30 : 60 * 24 
+        }).status(201).send({message: "City created", city: cityData.city });
     }
 
     async updateCity(fastify: FastifyContextDTO){
