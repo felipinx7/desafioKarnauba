@@ -1,0 +1,19 @@
+import imageLogo from './logo-cocotour.png'
+import womanSitting from './woman-sitting.svg'
+import wavesDecored from './waves-coderate.svg'
+import wavesBackground from './waves-background.svg'
+import munckupMobile from './munckup-mobile.svg'
+import manwithsuitcase from './man-with-suitcase.svg'
+import walkingman from './walking-man.svg'
+import manformladdingpage from "./man-form-landing-page.svg"
+
+export {
+  imageLogo,
+  womanSitting,
+  wavesDecored,
+  wavesBackground,
+  munckupMobile,
+  manwithsuitcase,
+  walkingman,
+  manformladdingpage
+}

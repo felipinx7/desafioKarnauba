@@ -1,18 +1,25 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
 
 export default {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primargreen: 'var(--primary-green)',
+        primaryBlack400: 'var(--primary-black-400)',
+        primaryWhite500: 'var(--primary-white-500)',
+        secundaryGreen700: 'var(--primary-gree-700)',
+      },
+      boxShadow: {
+        shadowButtomAcessar: '0px 4px 34px 5px #D5D6DB',
+        shadowInputFormContact: '0px 1px 10px 3px rgba(32, 180, 114, 0.75)',
+        hoverShadowButtomAcessar: '0px 4px 40px 8px #D5D6DB',
       },
     },
   },
   plugins: [],
-} satisfies Config;
+} satisfies Config
