@@ -26,6 +26,6 @@ export class AdminCreateUseCase {
         const admin = new Admin(id, name, email, hashedPassword, null);
         await this.adminRepository.createAdmin(admin);
 
-        return admin;    
+        return {name, email};    
     }
 }
