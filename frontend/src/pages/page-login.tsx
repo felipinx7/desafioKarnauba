@@ -27,16 +27,8 @@ export const LoginPage = () => {
 
   //Function Submited Form and login
   async function onSubmit(data: DataLoginUser) {
-    try {
       const response = await LoginUser(data)
-      console.log('Resposta do Email:', data.email)
-      console.log('Resposta do Password:', data.password)
-      console.log('Resposta do Remeberme:', data.remenberMe)
-      alert('Login realizado com sucesso!')
-    } catch (error) {
-      console.error('Erro ao logar:', error)
-      alert('Erro ao logar no sistema')
-    }
+      router.push("/administrative")
   }
 
   return (

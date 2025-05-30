@@ -9,6 +9,7 @@
   --primary-black-400: rgba(0, 0, 0, 0.62);
   --primary-white-500: #e6e6e6;
   --primary-gree-700: #157c4e;
+  --primary-gray: #d9d9d9;
 }
 
 @media (prefers-color-scheme: dark) {

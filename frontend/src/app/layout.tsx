@@ -1,5 +1,10 @@
 import '../config/globals.css'
 
+// app/layout.tsx (ou layout.js)
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+
 import type { Metadata } from 'next'
 import { Albert_Sans, Geist, Geist_Mono, Poppins, Sora } from 'next/font/google'
 
@@ -32,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-bt">
+    <html lang="pt-br">
       <body className={`${sora.variable} ${albertSans.variable} ${poppins.variable} antialiased`}>
         {children}
       </body>

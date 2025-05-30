@@ -7,6 +7,7 @@ import manwithsuitcase from './man-with-suitcase.svg'
 import walkingman from './walking-man.svg'
 import manformladdingpage from './man-form-landing-page.svg'
 import backgroundloginpage from './image-login-page.svg'
+import logococotourmonochrome from './logococotourmonochrome.svg'
 
 export {
   imageLogo,
@@ -18,4 +19,5 @@ export {
   walkingman,
   manformladdingpage,
   backgroundloginpage,
+  logococotourmonochrome,
 }

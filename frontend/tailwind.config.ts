@@ -13,6 +13,7 @@ export default {
         primaryBlack400: 'var(--primary-black-400)',
         primaryWhite500: 'var(--primary-white-500)',
         secundaryGreen700: 'var(--primary-gree-700)',
+        primarygray: "var(--primary-gray)"
       },
       boxShadow: {
         shadowButtomAcessar: '0px 4px 34px 5px #D5D6DB',
