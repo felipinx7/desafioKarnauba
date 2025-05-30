@@ -25,6 +25,9 @@ export class EventCreateUseCase {
         const isCityExist = await this.cityRepository.findUnique(cityId);
         if (!isCityExist) throw new ServerError("City not found", 404);
 
+        const dataIsBigLastData = date > lastDate;
+        if (dataIsBigLastData) throw new ServerError("LastData cannot be greater than the start date");
+        
         const id = randomUUID();
         const photo = photoURLs.map(url => ({
             id: randomUUID(),
