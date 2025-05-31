@@ -27,7 +27,6 @@ export class EventCreateUseCase {
         const isAdminExist = await this.adminRepository.getAdminById(adminId)
         if (!isAdminExist) throw new ServerError("Admin not found")
         
-        console.log(isAdminExist);
         const { cityId } = isAdminExist;
         if (!cityId) throw new ServerError(`City not found ${cityId}`);
 
