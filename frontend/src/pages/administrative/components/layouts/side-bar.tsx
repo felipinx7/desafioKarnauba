@@ -18,7 +18,7 @@ export const SideBarAdministrative = ({ setActiveSection }: SideBarProps) => {
   }
 
   return (
-    <article className="flex min-h-[100vh] w-[20%] flex-col items-start bg-primargreen p-2">
+    <article className="flex max-lg:hidden min-h-[100vh] w-[20%] flex-col items-start bg-primargreen p-2">
       <Image
         src={logococotourmonochrome}
         width={600}

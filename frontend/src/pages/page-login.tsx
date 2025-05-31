@@ -136,7 +136,7 @@ export const LoginPage = () => {
       </div>
 
       {/* Background image container */}
-      <div className="relative hidden h-screen w-full lg:block">
+      <div className="relative hidden min-h-[100vh] w-full lg:block">
         <Image
           src={backgroundloginpage}
           alt="Login page background image"

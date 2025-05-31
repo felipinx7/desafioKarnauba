@@ -1,49 +1,103 @@
 'use client'
 
-import { useState } from 'react'
-import { NameAdminstrative } from '../components/name-adm'
-import { IconClosed } from '@/assets/icons/icone-closed'
-import { createEvent } from '@/services/routes/createEvent'
+import { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { dataEventDTO } from '@/dto/data-create-event-DTO'
-import { eventSchema } from '@/schemas/event-schema'
 import { z } from 'zod'
 
-export const SectionEvents = () => {
-  // State utils in Section
-  const [isVisibility, setIsVisibility] = useState(false)
+import { NameAdminstrative } from '../components/layouts/name-adm'
+import { IconClosed } from '@/assets/icons/icone-closed'
+import { CardEventAndLocation } from '../components/layouts/card-event-and-location'
 
-  //Functios utils
-  const handleVisibility = () => {
-    setIsVisibility((prev) => !prev)
-  }
+import { createEvent } from '@/services/routes/createEvent'
+import { getInfoCity } from '@/services/routes/getInfoCity'
+
+import { eventSchema } from '@/schemas/event-schema'
+import { dataEventDTO } from '@/dto/data-create-event-DTO'
+import { CardEventAndLocationProps } from '@/dto/data-card-event-DTO'
+
+export const SectionEvents = () => {
+  const [isVisibility, setIsVisibility] = useState(false)
+  const [events, setEvents] = useState<CardEventAndLocationProps[] | null>(null)
+  const [originalEvents, setOriginalEvents] = useState<CardEventAndLocationProps[]>([])
+  const [searchTerm, setSearchTerm] = useState('')
+
   const {
     control,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
   })
-  console.log(errors)
-  async function onSubmit(data: dataEventDTO) {
-    const response = await createEvent(data)
-    console.log('Resposta da API:', response)
+
+  // Toggle modal
+  const handleVisibility = () => {
+    setIsVisibility((prev) => !prev)
+  }
+
+  // Submit form
+  const onSubmit = async (data: dataEventDTO) => {
+    try {
+      const response = await createEvent(data)
+      console.log('Resposta da API:', response)
+      reset()
+      setIsVisibility(false)
+      await fetchInfoEvents() // Atualiza eventos após criar
+    } catch (error) {
+      console.error('Erro ao criar evento:', error)
+    }
+  }
+
+  // Buscar eventos da cidade
+  const fetchInfoEvents = async () => {
+    try {
+      const { events } = await getInfoCity()
+      setEvents(events)
+      setOriginalEvents(events)
+    } catch (error) {
+      console.error('Erro ao buscar eventos:', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchInfoEvents()
+  }, [])
+
+  // Filtrar eventos
+  const handleSearch = () => {
+    if (!originalEvents) return
+
+    const filtered = originalEvents.filter((event) =>
+      event.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
+
+    setEvents(filtered)
   }
 
   return (
-    <section className="w-[cacl(100% - 20%)]">
-      <NameAdminstrative />
+    <section>
+      {/* Header */}
+      <div className="max-lg:hidden">
+        <NameAdminstrative />
+      </div>
+
+      {/* Search and Add */}
       <div>
-        <div className="relative w-[80%]">
+        <div className="relative w-[80%] max-lg:w-full">
           <input
             type="text"
-            placeholder="Digite o nome do eventos."
-            className="w-[100%] rounded-[1rem] bg-primarygray p-5 outline-none focus:border-[2px] focus:border-primargreen"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Digite o nome do evento."
+            className="w-full rounded-[1rem] bg-primarygray p-5 outline-none focus:border-2 focus:border-primargreen"
           />
-          <button className="absolute right-2 top-1.5 w-[10%] rounded-[1rem] bg-primargreen p-3.5 font-[700] text-white">
-            buscar
+          <button
+            onClick={handleSearch}
+            className="absolute right-2 top-1.5 rounded-[1rem] bg-primargreen p-3.5 font-bold text-white"
+          >
+            Buscar
           </button>
         </div>
         <button
@@ -54,177 +108,172 @@ export const SectionEvents = () => {
         </button>
       </div>
 
-      {/* Modal of register Eventos  */}
-      <div
-        className={`${isVisibility ? 'hidden' : 'fixed'} inset-0 z-50 flex items-center justify-center bg-black/50`}
-      >
-        <article className="relative w-[90%] max-w-md rounded-xl bg-white p-6 shadow-lg">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Upload image */}
-            <div>
+      {/* Modal de criação */}
+      {isVisibility && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <article className="relative max-h-[90vh] w-[95%] max-w-lg overflow-y-auto rounded-xl bg-white p-5 shadow-lg">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+              {/* Header */}
               <div className="flex items-center justify-between">
-                <label className="mb-2 block text-sm font-medium text-gray-700">
-                  Escolha fotos do evento
-                </label>
-                <div
+                <h2 className="text-lg font-semibold text-gray-800">Novo Evento</h2>
+                <button
                   onClick={handleVisibility}
-                  className="absolute right-3 top-3 h-[30px] w-[30px] text-[1.1rem]"
+                  type="button"
+                  className="h-[30px] w-[30px] text-gray-600 hover:text-gray-800"
                 >
                   <IconClosed />
-                </div>
+                </button>
               </div>
-              <div className="relative h-48 w-full rounded border-2 border-black/50 bg-white">
-                <Controller
-                  name="photoURLs"
-                  control={control}
-                  defaultValue={[]}
-                  render={({ field }) => (
-                    <>
-                      <input
-                        type="file"
-                        multiple
-                        accept="image/*"
-                        onChange={(e) => {
-                          const files = e.target.files
-                          field.onChange(files ? Array.from(files) : [])
-                        }}
-                      />
-                      {errors.photoURLs && (
-                        <p className="text-red-500">{errors.photoURLs.message}</p>
-                      )}
-                    </>
-                  )}
-                />
-              </div>
-              {errors && <div>{errors.photoURLs?.message}</div>}
-            </div>
 
-            {/* name event + status event */}
-            <div className='flex gap-2 items-center justify-start'>
-              {/* name event */}
+              {/* Upload */}
               <div>
-                <label htmlFor="name" className="mb-1 text-sm font-medium text-gray-700">
-                  Nome do Evento
+                <label className="mb-1 block text-sm font-medium text-gray-700">
+                  Fotos do Evento
                 </label>
-                <input
-                  id="name"
-                  {...register('name')}
-                  type="text"
-                  placeholder="Ex: Festival de Verão"
-                  className="w-full rounded-md border-2 border-black/50 p-3 outline-none placeholder:text-black/60 focus:ring-1 focus:ring-primargreen"
-                />
-                {errors && <div>{errors.name?.message}</div>}
+                <div className="relative flex h-48 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 text-sm text-gray-500">
+                  <Controller
+                    name="photoURLs"
+                    control={control}
+                    defaultValue={[]}
+                    render={({ field }) => (
+                      <>
+                        <input
+                          type="file"
+                          multiple
+                          accept="image/*"
+                          className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                          onChange={(e) => {
+                            const files = e.target.files
+                            field.onChange(files ? Array.from(files) : [])
+                          }}
+                        />
+                        <span>Clique para adicionar imagens</span>
+                      </>
+                    )}
+                  />
+                </div>
+                {errors.photoURLs && (
+                  <p className="text-sm text-red-500">{errors.photoURLs.message}</p>
+                )}
               </div>
-              {/* Status event */}
-              <div className="flex items-center justify-start gap-2">
-                <div className="flex flex-col">
-                  <label htmlFor="" className="text-sm font-medium text-gray-700">
-                    Status
+
+              {/* Nome + Status */}
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Nome do Evento
                   </label>
+                  <input
+                    {...register('name')}
+                    type="text"
+                    placeholder="Ex: Festival de Verão"
+                    className="w-full rounded border border-gray-300 p-2 text-sm"
+                  />
+                  {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Status</label>
                   <select
                     {...register('active')}
-                    className="rounded-[0.2rem] border-2 border-black/50 p-2.5"
-                    id=""
+                    className="rounded border border-gray-300 p-2 text-sm"
                   >
                     <option value="true">Ativo</option>
                     <option value="false">Inativo</option>
                   </select>
+                  {errors.active && <p className="text-sm text-red-500">{errors.active.message}</p>}
                 </div>
-                {errors && <div>{errors.active?.message}</div>}
-              </div>
-            </div>
-
-            {/* container location + Instagram */}
-
-            <div className="flex gap-2">
-              {/* Instagram */}
-              <div>
-                <label htmlFor="instagram" className="text-sm font-medium text-gray-700">
-                  Instagram
-                </label>
-                <input
-                  {...register('instagram')}
-                  id="instagram"
-                  type="text"
-                  placeholder="@nomedoevento"
-                  className="w-full rounded-md border-2 border-black/50 p-3 outline-none placeholder:text-black/60 focus:ring-1 focus:ring-primargreen"
-                />
-                {errors && <div>{errors.instagram?.message}</div>}
               </div>
 
-              <div>
-                {/* Location */}
-                <label htmlFor="location" className="text-sm font-medium text-gray-700">
-                  Localização
-                </label>
-                <input
-                  {...register('location')}
-                  id="location"
-                  type="text"
-                  placeholder="Rua Tal, Bairro, Cidade"
-                  className="w-full rounded-md border-2 border-black/50 p-3 outline-none placeholder:text-black/60 focus:ring-1 focus:ring-primargreen"
-                />
-                {errors && <div>{errors.location?.message}</div>}
-              </div>
-            </div>
-
-            {/* Date of event */}
-
-            <div className="flex gap-2">
-              <div>
-                <label htmlFor="instagram" className="text-sm font-medium text-gray-700">
-                  Começa em
-                </label>
-                <input
-                  {...register('date')}
-                  id="date"
-                  type="date"
-                  className="w-full rounded-md border-2 border-black/50 p-3 outline-none placeholder:text-black/60 focus:ring-1 focus:ring-primargreen"
-                />
-                {errors && <div>{errors.date?.message}</div>}
-              </div>
-
-              <div>
-                {/* last date */}
-                <label htmlFor="location" className="text-sm font-medium text-gray-700">
-                  Termina em
-                </label>
-                <input
-                  {...register('lastDate')}
-                  id="lastDate"
-                  type="date"
-                  className="w-full rounded-md border-2 border-black/50 p-3 outline-none placeholder:text-black/60 focus:ring-1 focus:ring-primargreen"
-                />
-              </div>
-            </div>
-
-            {/* Descprition */}
-            <div>
-              <label htmlFor="description" className="text-sm font-medium text-gray-700">
-                Descrição do Evento
-              </label>
-              <textarea
-                id="description"
-                {...register('description')}
-                placeholder="Conte mais sobre o evento..."
-                className="w-full rounded-md border-2 border-black/50 p-3 outline-none placeholder:text-black/60 focus:ring-1 focus:ring-primargreen"
-              />
-              {errors && (
-                <div>
-                  <h1>{errors.description?.message}</h1>
+              {/* Instagram + Local */}
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Instagram</label>
+                  <input
+                    {...register('instagram')}
+                    type="text"
+                    placeholder="@nomedoevento"
+                    className="w-full rounded border border-gray-300 p-2 text-sm"
+                  />
+                  {errors.instagram && (
+                    <p className="text-sm text-red-500">{errors.instagram.message}</p>
+                  )}
                 </div>
-              )}
-            </div>
-            <div className="flex w-full items-center justify-center">
-              <button
-                type="submit"
-                className="w-full rounded-[0.3rem] bg-primargreen p-2 text-[1.1rem] font-bold text-white"
-              >
-                Cadastrar Evento
-              </button>
-            </div>
-          </form>
-        </article>
+                <div className="flex-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700">
+                    Localização
+                  </label>
+                  <input
+                    {...register('location')}
+                    type="text"
+                    placeholder="Rua Tal, Bairro"
+                    className="w-full rounded border border-gray-300 p-2 text-sm"
+                  />
+                  {errors.location && (
+                    <p className="text-sm text-red-500">{errors.location.message}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Datas */}
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Começa em</label>
+                  <input
+                    {...register('date')}
+                    type="date"
+                    className="w-full rounded border border-gray-300 p-2 text-sm"
+                  />
+                  {errors.date && <p className="text-sm text-red-500">{errors.date.message}</p>}
+                </div>
+                <div className="flex-1">
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Termina em</label>
+                  <input
+                    {...register('lastDate')}
+                    type="date"
+                    className="w-full rounded border border-gray-300 p-2 text-sm"
+                  />
+                </div>
+              </div>
+
+              {/* Descrição */}
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700">Descrição</label>
+                <textarea
+                  {...register('description')}
+                  rows={3}
+                  placeholder="Conte mais sobre o evento..."
+                  className="w-full resize-none rounded border border-gray-300 p-2 text-sm"
+                />
+                {errors.description && (
+                  <p className="text-sm text-red-500">{errors.description.message}</p>
+                )}
+              </div>
+
+              {/* Botão */}
+              <div>
+                <button
+                  type="submit"
+                  className="w-full rounded bg-primargreen px-4 py-2 font-semibold text-white transition hover:bg-green-600"
+                >
+                  Cadastrar Evento
+                </button>
+              </div>
+            </form>
+          </article>
+        </div>
+      )}
+
+      {/* Cards */}
+      <div className="mt-4 grid min-h-[80vh] w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-10">
+        {events ? (
+          events.length > 0 ? (
+            events.map((event, index) => <CardEventAndLocation key={index} {...event} />)
+          ) : (
+            <p className="text-gray-500">Nenhum evento encontrado.</p>
+          )
+        ) : (
+          <p className="text-gray-500">Carregando eventos...</p>
+        )}
       </div>
     </section>
   )
