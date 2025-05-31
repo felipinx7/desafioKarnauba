@@ -41,6 +41,13 @@ export class IPrismaCityRepository implements ICityRepository {
         return city;
     }
 
+    async updateCityId(adminId: string, cityId: string): Promise<void> {
+        await prisma.admin.update({
+            where: { id: adminId },
+            data: { cityId: cityId }
+        })
+    }
+
     async deleteCity(id: string): Promise<City | null> {
         const city = await prisma.city.delete({
             where: {id}

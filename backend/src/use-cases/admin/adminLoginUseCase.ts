@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { ServerError } from "../../infra/utils/serverError";
 import jwt from "jsonwebtoken";
 import { env } from "../../config/env";
+import { userData } from "../../infra/types/userData";
 
 export class AdminLoginUseCase {
     constructor(private readonly adminRepository: IAdminRepository ){}
@@ -26,7 +27,13 @@ export class AdminLoginUseCase {
         const isPassword = await bcrypt.compare(password, isAdminExist.password);
         if (!isPassword) throw new ServerError("invalid credentials");
 
-        const token = jwt.sign({id: isAdminExist.id, cityId: isAdminExist.cityId, remenberMe: remenberMe}, env.JWT_SECRET, {
+        const payload: userData = {
+            id: isAdminExist.id,
+            cityId: isAdminExist.cityId || null,
+            remenberMe: remenberMe
+        }
+
+        const token = jwt.sign(payload, env.JWT_SECRET, {
             expiresIn: remenberMe ? '30d': '1d'
         });
 

@@ -6,11 +6,13 @@ import { placeDTO } from "../../infra/dto/placeDTO";
 import { placeSchema } from "../../infra/schemas/placeSchema";
 import { ServerError } from "../../infra/utils/serverError";
 import { FastifyRequest } from "fastify";
+import { IAdminRepository } from "../../domain/repositorys/IAdminRepository";
 
 export class PlaceCreateUseCase {
     constructor(
         private placeRepository: IPlaceRepository,
-        private cityRepository: ICityRepository
+        private cityRepository: ICityRepository,
+        private adminRepository: IAdminRepository
     ){}
 
     async execute(data: placeDTO, req: FastifyRequest){
@@ -19,10 +21,13 @@ export class PlaceCreateUseCase {
 
         const { name, location, description, photoURLs, category, phone, instagram } = parsedData.data!
 
-        const cityId = req.user?.cityId;
-        if (!cityId) throw new ServerError("Not exist city", 404);
+         const adminId = req.user?.id
+        if (!adminId) throw new ServerError("Admin not authorized", 401);
+
+        const isAdminExist = await this.adminRepository.getAdminById(adminId)
+        if (!isAdminExist?.cityId) throw new ServerError("Admin not found")
         
-        const isCityExist = await this.cityRepository.findUnique(cityId);
+        const isCityExist = await this.cityRepository.findUnique(isAdminExist.cityId);
         if (!isCityExist) throw new ServerError("City not found", 404);
 
         const id = randomUUID();
@@ -31,7 +36,7 @@ export class PlaceCreateUseCase {
             url
         }));
 
-        const place = new Place(name, location, description, category, cityId, id, phone ?? null, instagram ?? null, photos);
+        const place = new Place(name, location, description, category, isAdminExist.cityId, id, phone ?? null, instagram ?? null, photos);
 
         await this.placeRepository.createPlace(place);
         return place

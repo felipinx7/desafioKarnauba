@@ -12,11 +12,13 @@ import { PhotoStorageService } from "../../services/photoStorageService";
 import { EventController } from "../controllers/eventController";
 import { Multipart } from "../plugins/multipart";
 import { EventFindAvailableUseCase } from "../../../use-cases/event/eventFindAvailableUseCase";
+import { IPrismaAdminReposotory } from "../../database/IPrismaAdminRepository";
 
 const prismaEventRepository = new IPrismaEventRepository()
 const prismaCityRepository = new IPrismaCityRepository();
+const prismaAdminRepository = new IPrismaAdminReposotory();
 const photoStorageService = new PhotoStorageService();
-const eventCreateUseCase = new EventCreateUseCase(prismaEventRepository, prismaCityRepository);
+const eventCreateUseCase = new EventCreateUseCase(prismaEventRepository, prismaCityRepository, prismaAdminRepository);
 const eventUpdateUseCase = new EventUpdateUseCase(prismaEventRepository, prismaCityRepository)
 const eventDeleteUseCase = new EventDeleteUseCase(prismaEventRepository, prismaCityRepository);
 const eventFindAllUseCase = new EventFindAllUseCase(prismaEventRepository);

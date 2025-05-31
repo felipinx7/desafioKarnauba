@@ -12,12 +12,14 @@ import { IPrismaPlaceRepository } from "../../database/IPrismaPlaceRepository";
 import { PhotoStorageService } from "../../services/photoStorageService";
 import { PlaceController } from "../controllers/placeController";
 import { Multipart } from "../plugins/multipart";
+import { IPrismaAdminReposotory } from "../../database/IPrismaAdminRepository";
 
 const prismaPlaceRepository = new IPrismaPlaceRepository();
 const photoStorage = new PhotoStorageService();
 const prismaCityRepository = new IPrismaCityRepository();
+const prismaAdminRepository = new IPrismaAdminReposotory();
 const multipart = new Multipart(photoStorage);
-const createPlaceUseCase = new PlaceCreateUseCase(prismaPlaceRepository, prismaCityRepository);
+const createPlaceUseCase = new PlaceCreateUseCase(prismaPlaceRepository, prismaCityRepository, prismaAdminRepository);
 const updatePlaceUseCase = new PlaceUpdateUseCase(prismaPlaceRepository, prismaCityRepository);
 const deletePlaceUseCase = new PlaceDeleteUseCase(prismaPlaceRepository, prismaCityRepository);
 const findByCategoryUseCase = new PlaceFindCategoryUseCase(prismaPlaceRepository);

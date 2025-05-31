@@ -6,11 +6,13 @@ import { eventSchema } from "../../infra/schemas/eventSchema";
 import { ServerError } from "../../infra/utils/serverError";
 import { Events } from "../../domain/entities/event";
 import { FastifyRequest } from "fastify";
+import { IAdminRepository } from "../../domain/repositorys/IAdminRepository";
 
 export class EventCreateUseCase {
     constructor(
         private eventRepository: IEventRepository,
-        private cityRepository: ICityRepository
+        private cityRepository: ICityRepository, 
+        private adminRepository: IAdminRepository
     ){}
 
     async execute(data: eventDTO, req: FastifyRequest){
@@ -18,9 +20,16 @@ export class EventCreateUseCase {
         if (!parsedData.data) throw new ServerError("Bad request");
 
         const {name, date, lastDate, active, description, photoURLs, instagram} = parsedData.data
+
+        const adminId = req.user?.id
+        if (!adminId) throw new ServerError("Admin not authorized", 401);
+
+        const isAdminExist = await this.adminRepository.getAdminById(adminId)
+        if (!isAdminExist) throw new ServerError("Admin not found")
         
-        const cityId = req.user?.cityId;
-        if (!cityId) throw new ServerError("Not exist city", 404);
+        console.log(isAdminExist);
+        const { cityId } = isAdminExist;
+        if (!cityId) throw new ServerError(`City not found ${cityId}`);
 
         const isCityExist = await this.cityRepository.findUnique(cityId);
         if (!isCityExist) throw new ServerError("City not found", 404);

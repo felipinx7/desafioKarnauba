@@ -16,12 +16,12 @@ const prismaCityRepository = new IPrismaCityRepository();
 const prismaAdminRepository = new IPrismaAdminReposotory();
 const photoStorageService = new PhotoStorageService();
 const cityCreateUseCase = new CityCreateUseCase(prismaCityRepository, prismaAdminRepository);
-const cityUpdateUseCase = new CityUpdateUseCase(prismaCityRepository)
-const cityDeleteUseCase = new CityDeleteUseCase(prismaCityRepository);
+const cityUpdateUseCase = new CityUpdateUseCase(prismaCityRepository, prismaAdminRepository)
+const cityDeleteUseCase = new CityDeleteUseCase(prismaCityRepository, prismaAdminRepository);
 const cityFindAllUseCase = new CityFindAllUseCase(prismaCityRepository);
-const cityFindUniqueUseCase = new CityFindUniqueUseCase(prismaCityRepository);
+const cityFindUniqueUseCase = new CityFindUniqueUseCase(prismaCityRepository, prismaAdminRepository);
 const cityUpdatePhotoUseCase = new CityUpdatePhotoUseCase(prismaCityRepository);
-const cityCreatePhotoUseCase = new CityCreatePhotoUseCase(prismaCityRepository);
+const cityCreatePhotoUseCase = new CityCreatePhotoUseCase(prismaCityRepository, prismaAdminRepository);
 const cityDeletePhotoUseCase = new CityDeletePhotoUseCase(prismaCityRepository);
 const multipart = new Multipart(photoStorageService);
 
