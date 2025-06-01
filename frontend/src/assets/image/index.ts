@@ -8,6 +8,7 @@ import walkingman from './walking-man.svg'
 import manformladdingpage from './man-form-landing-page.svg'
 import backgroundloginpage from './image-login-page.svg'
 import logococotourmonochrome from './logococotourmonochrome.svg'
+import backgroundclientpage from "./image-container-page.svg"
 
 export {
   imageLogo,
@@ -20,4 +21,5 @@ export {
   manformladdingpage,
   backgroundloginpage,
   logococotourmonochrome,
+  backgroundclientpage
 }

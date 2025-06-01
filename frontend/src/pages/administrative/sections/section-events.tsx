@@ -57,7 +57,7 @@ export const SectionEvents = () => {
       const { events } = await getInfoCity()
       setEvents(events)
       setOriginalEvents(events)
-      console.log("T", events)
+      console.log('T', events)
     } catch (error) {
       console.error('Erro ao buscar eventos:', error)
     }
@@ -84,7 +84,6 @@ export const SectionEvents = () => {
     setEvents((prev) => prev?.filter((event) => event.id !== id) || null)
     setOriginalEvents((prev) => prev.filter((event) => event.id !== id))
   }
-
 
   return (
     <section>

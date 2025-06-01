@@ -8,7 +8,6 @@ export interface CardEventAndLocationProps {
   location: string
   instagram?: string
   photos: Photo[]
+  phone: string
   handleDeleteEvent?: (id: string) => void;
-  date: string
-  lastDate: string
 }

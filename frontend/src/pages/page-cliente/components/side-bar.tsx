@@ -9,8 +9,8 @@ export const SideBarCliente = () => {
           <Image src={imageLogo} alt="logo do sistema" />
         </div>
         <div className="flex gap-4">
-          <a href="#" className='text-[1.2rem] font-[400]'>Inicio</a>
-          <a href="#" className='text-[1.2rem] font-[400]'>Explorar</a>
+          <a href="#home" className='text-[1.2rem] font-[400]'>Inicio</a>
+          <a href="#explorer" className='text-[1.2rem] font-[400]'>Explorar</a>
         </div>
       </div>
     </header>
