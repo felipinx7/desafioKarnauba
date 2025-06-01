@@ -91,7 +91,7 @@ export const SectionLocation = () => {
           onClick={handleFilter}
           className="absolute right-2 top-1.5 w-auto rounded-[1rem] bg-primargreen p-3.5 font-[700] text-white"
         >
-          buscar
+          Buscar
         </button>
       </div>
 

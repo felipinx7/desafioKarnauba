@@ -17,7 +17,7 @@ server.register(fastifyCors, {
     credentials: true,
     methods: ['GET', 'POST', 'DELETE', 'PUT']
 })
-server.register(fastifyRateLimit,{
+server.register(fastifyRateLimit, {
     max: 100,
     timeWindow: '1 minute',
     keyGenerator: (req) => {
@@ -34,7 +34,11 @@ server.register(fastifyMultipart, {
 });
 server.register(helmet, {
     contentSecurityPolicy: false,
-    hsts: env.NODE_ENV === "production" ? true : false
+    hsts: env.NODE_ENV === "production",
+    crossOriginOpenerPolicy: false,
+    crossOriginResourcePolicy: {
+        policy: "cross-origin"
+    }
 });
 server.register(fastifySwagger, {
     openapi: {
@@ -53,6 +57,6 @@ server.register(fastifySwaggerUi, {
 });
 server.register(registerRoutes);
 
-server.listen({port: Number(env.PORT)}).then(() => {
+server.listen({ port: Number(env.PORT) }).then(() => {
     console.log("HTTP SERVER RUNNING!")
 })

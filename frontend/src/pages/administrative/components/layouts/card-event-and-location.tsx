@@ -7,6 +7,7 @@ import { CardEventAndLocationProps } from '@/dto/data-card-event-DTO'
 import { eventSchema } from '@/schemas/event-schema'
 import { udpateEvent } from '@/services/routes/update-event'
 import { BaseUrl } from '@/utils/base-url-photo'
+import { baseUrlPhoto } from '@/utils/base-url-photos'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -44,11 +45,12 @@ export const CardEventAndLocation = (props: CardEventAndLocationProps) => {
     reset()
   }
 
+  const photoUrl = baseUrlPhoto('event', props.photos[0].url)
   return (
     <article className="flex h-[300px] w-[280px] flex-col rounded-[0.9rem] shadow-shadowCardEventLocation">
       <div className="relative h-[80%] w-full">
         <Image
-          src={BaseUrl(props.photos[0].url, props)}
+          src={photoUrl ? photoUrl : ''}
           className="h-[100%] w-full rounded-tl-[0.9rem] rounded-tr-[0.9rem] object-cover"
           fill
           alt="Foto de Evento"

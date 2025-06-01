@@ -5,11 +5,12 @@ import { NameAdminstrative } from '../components/layouts/name-adm'
 import { getInfoCity } from '@/services/routes/getInfoCity'
 import { updateCity } from '@/services/routes/update-city'
 import { DataInfoCityDTO } from '@/dto/data-info-city-DTO'
-import { baseUrlPhoto } from '@/utils/base-url-photos'
+import { BASE_URL_BACK_END, baseUrlPhoto } from '@/utils/base-url-photos'
 
 export const SectionCity = () => {
   const [bannerPreview, setBannerPreview] = useState<string | null>(null)
   const [bannerFile, setBannerFile] = useState<File | null>(null)
+  const [photourl, setPhotoUrl] = useState<string | null>()
   const [infoCity, setInfoCity] = useState<DataInfoCityDTO | null>(null)
   const [form, setForm] = useState({
     name: '',
@@ -54,12 +55,10 @@ export const SectionCity = () => {
 
     const firstPhotoUrl = city.photos && city.photos.length > 0 ? city.photos[0].url : ''
     const photoURL = baseUrlPhoto('city', firstPhotoUrl)
-    if (firstPhotoUrl) setBannerPreview(photoURL);
+    setPhotoUrl(photoURL);
 
     if (firstPhotoUrl) {
-      // Timestamp para evitar cache
-      const fullURL = baseUrlPhoto('city', firstPhotoUrl) + '?t=' + new Date().getTime()
-      setBannerPreview(fullURL)
+      setBannerPreview(photoURL)
       setBannerFile(null) // Limpa o arquivo local, pois usamos URL remota
     } else {
       setBannerPreview(null)
@@ -100,7 +99,7 @@ export const SectionCity = () => {
       alert('Erro ao atualizar a cidade.')
     }
   }
-
+  
   return (
     <section className="flex w-full flex-col justify-center gap-6 px-4 py-6 max-lg:w-full">
       <div className="max-lg:hidden">
@@ -111,7 +110,7 @@ export const SectionCity = () => {
         {/* Banner */}
         <div className="relative max-h-[300px] w-full overflow-hidden rounded-xl border">
             <img
-              src={bannerPreview ? bannerPreview : ''}
+              src={photourl ? photourl : ''}
               alt="Banner da cidade"
               className="h-full w-full object-cover"
             />
