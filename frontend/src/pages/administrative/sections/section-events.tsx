@@ -15,6 +15,7 @@ import { getInfoCity } from '@/services/routes/getInfoCity'
 import { eventSchema } from '@/schemas/event-schema'
 import { dataEventDTO } from '@/dto/data-create-event-DTO'
 import { CardEventAndLocationProps } from '@/dto/data-card-event-DTO'
+import { DeleteEvent } from '@/services/routes/delete-event'
 
 export const SectionEvents = () => {
   const [isVisibility, setIsVisibility] = useState(false)
@@ -44,18 +45,19 @@ export const SectionEvents = () => {
       console.log('Resposta da API:', response)
       reset()
       setIsVisibility(false)
-      await fetchInfoEvents() // Atualiza eventos após criar
+      await fetchInfoEvents()
     } catch (error) {
       console.error('Erro ao criar evento:', error)
     }
   }
 
-  // Buscar eventos da cidade
+  // Search for city events
   const fetchInfoEvents = async () => {
     try {
       const { events } = await getInfoCity()
       setEvents(events)
       setOriginalEvents(events)
+      console.log("T", events)
     } catch (error) {
       console.error('Erro ao buscar eventos:', error)
     }
@@ -65,7 +67,7 @@ export const SectionEvents = () => {
     fetchInfoEvents()
   }, [])
 
-  // Filtrar eventos
+  // Filter events
   const handleSearch = () => {
     if (!originalEvents) return
 
@@ -75,6 +77,14 @@ export const SectionEvents = () => {
 
     setEvents(filtered)
   }
+
+  const functionDeleteEvent = async (id: string) => {
+    await DeleteEvent(id)
+
+    setEvents((prev) => prev?.filter((event) => event.id !== id) || null)
+    setOriginalEvents((prev) => prev.filter((event) => event.id !== id))
+  }
+
 
   return (
     <section>
@@ -108,7 +118,7 @@ export const SectionEvents = () => {
         </button>
       </div>
 
-      {/* Modal de criação */}
+      {/* Modal of create */}
       {isVisibility && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <article className="relative max-h-[90vh] w-[95%] max-w-lg overflow-y-auto rounded-xl bg-white p-5 shadow-lg">
@@ -157,7 +167,7 @@ export const SectionEvents = () => {
                 )}
               </div>
 
-              {/* Nome + Status */}
+              {/* name + Status */}
               <div className="flex gap-2">
                 <div className="flex-1">
                   <label className="mb-1 block text-sm font-medium text-gray-700">
@@ -184,7 +194,7 @@ export const SectionEvents = () => {
                 </div>
               </div>
 
-              {/* Instagram + Local */}
+              {/* Instagram + location */}
               <div className="flex gap-2">
                 <div className="flex-1">
                   <label className="mb-1 block text-sm font-medium text-gray-700">Instagram</label>
@@ -214,7 +224,7 @@ export const SectionEvents = () => {
                 </div>
               </div>
 
-              {/* Datas */}
+              {/* date */}
               <div className="flex gap-2">
                 <div className="flex-1">
                   <label className="mb-1 block text-sm font-medium text-gray-700">Começa em</label>
@@ -235,7 +245,7 @@ export const SectionEvents = () => {
                 </div>
               </div>
 
-              {/* Descrição */}
+              {/* description */}
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-700">Descrição</label>
                 <textarea
@@ -249,7 +259,7 @@ export const SectionEvents = () => {
                 )}
               </div>
 
-              {/* Botão */}
+              {/* button */}
               <div>
                 <button
                   type="submit"
@@ -267,7 +277,13 @@ export const SectionEvents = () => {
       <div className="mt-4 grid min-h-[80vh] w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-10">
         {events ? (
           events.length > 0 ? (
-            events.map((event, index) => <CardEventAndLocation key={index} {...event} />)
+            events.map((event, index) => (
+              <CardEventAndLocation
+                key={index}
+                handleDeleteEvent={() => functionDeleteEvent(event.id)}
+                {...event}
+              />
+            ))
           ) : (
             <p className="text-gray-500">Nenhum evento encontrado.</p>
           )

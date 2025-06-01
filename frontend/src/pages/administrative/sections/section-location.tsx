@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { CardEventAndLocation } from '../components/layouts/card-event-and-location'
 import { NameAdminstrative } from '../components/layouts/name-adm'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -252,7 +251,7 @@ export const SectionLocation = () => {
         </article>
       </div>
 
-      {/* Cards filtrados ou todos */}
+      {/* Filtered cards or all */}
       <div className="mt-4 grid min-h-[80vh] w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-10 overflow-y-auto">
         {(filteredPlaces ?? showPlaces)?.length ? (
           (filteredPlaces ?? showPlaces)?.map((place, index) => (

@@ -1,7 +1,7 @@
-interface DataInfoCityDTO {
+export interface DataInfoCityDTO {
   name: string
   location: string
-  photoURL: string
+  photoURL: string[]
   description: string
   instagram: string
   adminId: string
