@@ -50,9 +50,11 @@ export const SectionCity = () => {
       description: city.description,
       instagram: city.instagram ?? '',
       adminId: city.adminId,
-    })
+    }) 
 
     const firstPhotoUrl = city.photos && city.photos.length > 0 ? city.photos[0].url : ''
+    const photoURL = baseUrlPhoto('city', firstPhotoUrl)
+    if (firstPhotoUrl) setBannerPreview(photoURL);
 
     if (firstPhotoUrl) {
       // Timestamp para evitar cache
@@ -108,19 +110,11 @@ export const SectionCity = () => {
       <form onSubmit={onSubmit}>
         {/* Banner */}
         <div className="relative max-h-[300px] w-full overflow-hidden rounded-xl border">
-          {bannerPreview ? (
             <img
-              src={bannerPreview}
+              src={bannerPreview ? bannerPreview : ''}
               alt="Banner da cidade"
               className="h-full w-full object-cover"
             />
-          ) : (
-            <img
-              src="/images/placeholder-city.png"
-              alt="Banner padrão da cidade"
-              className="h-full w-full object-cover"
-            />
-          )}
 
           <input
             type="file"
