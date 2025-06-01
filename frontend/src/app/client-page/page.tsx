@@ -1,7 +1,7 @@
+import { PageCliente } from "@/pages/page-cliente/page-cliente";
+
 export default function ClientePage (){
     return(
-        <main>
-            
-        </main>
+        <PageCliente/>
     )
 }

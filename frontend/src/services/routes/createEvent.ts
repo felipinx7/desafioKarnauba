@@ -31,7 +31,7 @@ export const createEvent = async (data: dataEventDTO) => {
       withCredentials: true,
     })
 
-    console.log('Resposta da API:', response.data.admin.cityId)
+    console.log('Resposta da API:', response.data.admin)
     return response
   } catch (error: any) {
     console.error('Falha ao criar evento:', error.response?.data || error.message)

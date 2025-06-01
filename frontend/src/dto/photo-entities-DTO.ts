@@ -1,0 +1,1 @@
+export type PhotoEntitiesDTO = "city" | "event" | "places"
