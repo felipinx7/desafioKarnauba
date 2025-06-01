@@ -3,6 +3,7 @@ import { dataCardEvent } from '@/dto/data-card-event'
 import { backgroundclientpage } from '@/assets/image'
 import { ModalEvents } from './modal-events'
 import { useState } from 'react'
+import { baseUrlPhoto } from '@/utils/base-url-photos'
 
 export function CardEvent(data: dataCardEvent) {
   const hasImage = !!backgroundclientpage // Suponha que isso futuramente será dinâmico
@@ -12,7 +13,8 @@ export function CardEvent(data: dataCardEvent) {
     setShowModal((prev) => !prev)
     console.log('Valor do Estado:', showModal)
   }
-
+  
+  const photoURL = baseUrlPhoto('event', data.photoURLs[0].url)
   return (
     <div className="">
       <article
@@ -22,7 +24,7 @@ export function CardEvent(data: dataCardEvent) {
         <div className="relative h-[229px] w-full bg-primarygray">
           {hasImage ? (
             <Image
-              src={backgroundclientpage}
+              src={photoURL ? photoURL : backgroundclientpage}
               alt={`Imagem de ${data.name}`}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"

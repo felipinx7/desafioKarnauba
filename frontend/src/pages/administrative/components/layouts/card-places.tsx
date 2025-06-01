@@ -8,6 +8,7 @@ import { placeSchema } from '@/schemas/places-schema'
 import { DeletePlace } from '@/services/routes/delete-place'
 import { updatePlace } from '@/services/routes/update-place'
 import { BaseUrlPlaces } from '@/utils/base-url-card-place'
+import { baseUrlPhoto } from '@/utils/base-url-photos'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -45,11 +46,12 @@ export const CardPlaces = (props: CardPlacesDTO) => {
     reset()
   }
 
+  const photoURL = baseUrlPhoto('place', props.photos[0].url)
   return (
     <article className="flex h-[300px] w-[280px] flex-col rounded-[0.9rem] shadow-shadowCardEventLocation">
       <div className="relative h-[80%] w-full">
         <Image
-          src={BaseUrlPlaces(props.photos[0].url, props)}
+          src={photoURL ? photoURL : ''}
           className="h-[100%] w-full rounded-tl-[0.9rem] rounded-tr-[0.9rem] object-cover"
           fill
           alt="Foto de Evento"
