@@ -35,7 +35,6 @@ server.register(fastifyMultipart, {
 server.register(helmet, {
     contentSecurityPolicy: false,
     hsts: env.NODE_ENV === "production",
-    crossOriginOpenerPolicy: false,
     crossOriginResourcePolicy: {
         policy: "cross-origin"
     }
