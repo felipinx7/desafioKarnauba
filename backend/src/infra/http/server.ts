@@ -27,7 +27,11 @@ server.register(fastifyRateLimit,{
 })
 server.register(staticFilesPlugin)
 server.register(fastifyCookie);
-server.register(fastifyMultipart);
+server.register(fastifyMultipart, {
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    }
+});
 server.register(helmet, {
     contentSecurityPolicy: false,
     hsts: env.NODE_ENV === "production" ? true : false
