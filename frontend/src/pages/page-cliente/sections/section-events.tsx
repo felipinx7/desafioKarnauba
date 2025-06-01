@@ -43,7 +43,9 @@ export const SectionEvents = () => {
         <p className="text-[1.1rem] text-[400]">
           Participe da cultura da cidade participando dos melhores eventos
         </p>
-        {infoEvents?.map((card) => <CardEvent key={card.name} {...card} />)}
+        <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {infoEvents?.map((card) => <CardEvent key={card.name} {...card} />)}
+        </div>
       </div>
     </section>
   )
