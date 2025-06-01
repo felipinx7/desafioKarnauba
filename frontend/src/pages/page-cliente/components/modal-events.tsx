@@ -9,6 +9,7 @@ import { dataCardEvent } from '@/dto/data-card-event'
 import { FC, useEffect, useState } from 'react'
 import { getAllEvents } from '@/services/routes/getAllEvents'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
+import { getInfoCity } from '@/services/routes/getInfoCity'
 
 interface ModalEventsProps extends dataCardEvent {
   onClose: () => void
