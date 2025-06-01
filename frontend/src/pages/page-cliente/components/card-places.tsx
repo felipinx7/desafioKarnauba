@@ -3,9 +3,11 @@ import { backgroundclientpage, backgroundloginpage } from '@/assets/image'
 import { CardPlacesDTO } from '@/dto/data-card-placesDTO'
 import { ModalLocation } from './modal-places'
 import { useState } from 'react'
+import { baseUrlPhoto } from '@/utils/base-url-photos'
 
 export function CardPLaces(data: CardPlacesDTO) {
   const [showModal, setShowModal] = useState(false)
+  const photoUrl = baseUrlPhoto('place', data.photos[0].url)
 
   const handleShowModal = () => {
     setShowModal((prev) => !prev)
@@ -17,7 +19,7 @@ export function CardPLaces(data: CardPlacesDTO) {
       <article onClick={handleShowModal} className="group flex h-[316px] w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg">
         <div className="relative h-[70%] w-full bg-primarygray">
           <Image
-            src={backgroundclientpage}
+            src={photoUrl ? photoUrl : backgroundclientpage}
             alt={`Imagem de ${data.name}`}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"

@@ -8,15 +8,7 @@ import { IconClosed } from '@/assets/icons/icone-closed'
 import { dataCardEvent } from '@/dto/data-card-event'
 import { FC, useEffect, useState } from 'react'
 import { getAllEvents } from '@/services/routes/getAllEvents'
-import { getInfoCity } from '@/services/routes/getInfoCity'
-
-// Interface para dados da cidade
-interface DataCityInfo {
-  name: string
-  state: string
-  population?: number
-  location: string
-}
+import { baseUrlPhoto } from '@/utils/base-url-photos'
 
 interface ModalEventsProps extends dataCardEvent {
   onClose: () => void
@@ -30,9 +22,10 @@ export const ModalEvents: FC<ModalEventsProps> = ({
   instagram,
   onClose,
   showModal,
+  photoURLs
 }) => {
   const [placesSimilar, setPlacesSimilar] = useState<dataCardEvent[]>([])
-  const [infoCity, setInfoCity] = useState<DataCityInfo | null>(null)
+  const photoUrl = baseUrlPhoto('event', photoURLs[0].url)
 
   // Load similar places when modal opens
   useEffect(() => {
@@ -94,7 +87,7 @@ export const ModalEvents: FC<ModalEventsProps> = ({
         {/* Imagem principal */}
         <div className="max-h-[400px] w-full overflow-hidden rounded-xl">
           <Image
-            src={backgroundloginpage}
+            src={photoUrl ? photoUrl : backgroundloginpage}
             alt="Imagem Local"
             className="h-auto w-full rounded-xl"
           />
@@ -147,7 +140,7 @@ export const ModalEvents: FC<ModalEventsProps> = ({
             {placesSimilar.map((place, index) => (
               <div key={index} className="flex flex-col">
                 <Image
-                  src={backgroundloginpage}
+                  src={ photoUrl ? photoUrl : backgroundloginpage}
                   alt={`Imagem de ${place.name}`}
                   className="h-auto w-full rounded-lg"
                   width={400}

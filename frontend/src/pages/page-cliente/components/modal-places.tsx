@@ -11,6 +11,7 @@ import { dataCardEvent } from '@/dto/data-card-event'
 import { getAllEvents } from '@/services/routes/getAllEvents'
 import { CardEventAndLocationProps } from '@/dto/data-card-event-DTO'
 import { getAllPlaces } from '@/services/routes/get-all-places'
+import { baseUrlPhoto } from '@/utils/base-url-photos'
 
 interface ModalLocationProps extends CardEventAndLocationProps {
   onClose: () => void
@@ -28,6 +29,7 @@ export const ModalLocation: FC<ModalLocationProps> = ({
   showModal,
 }) => {
   const [placesSimilar, setPlacesSimilar] = useState<dataCardEvent[]>([])
+  const photoUrl = baseUrlPhoto('event', photos[0].url)
 
   useEffect(() => {
     if (showModal) {
@@ -63,7 +65,7 @@ export const ModalLocation: FC<ModalLocationProps> = ({
         {/* Imagem do local */}
         <div className="max-h-[400px] w-full overflow-hidden rounded-xl">
           <Image
-            src={backgroundloginpage}
+            src={photoUrl ? photoUrl : backgroundloginpage}
             alt={`Imagem de ${name}`}
             className="h-auto w-full rounded-xl"
           />
