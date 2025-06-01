@@ -6,6 +6,7 @@ import { getInfoCity } from '@/services/routes/getInfoCity'
 import { updateCity } from '@/services/routes/update-city'
 import { DataInfoCityDTO } from '@/dto/data-info-city-DTO'
 import { BASE_URL_BACK_END, baseUrlPhoto } from '@/utils/base-url-photos'
+import { backgroundloginpage } from '@/assets/image'
 
 export const SectionCity = () => {
   const [bannerPreview, setBannerPreview] = useState<string | null>(null)
@@ -110,7 +111,7 @@ export const SectionCity = () => {
         {/* Banner */}
         <div className="relative max-h-[300px] w-full overflow-hidden rounded-xl border">
             <img
-              src={photourl ? photourl : ''}
+              src={photourl ? photourl : backgroundloginpage}
               alt="Banner da cidade"
               className="h-full w-full object-cover"
             />

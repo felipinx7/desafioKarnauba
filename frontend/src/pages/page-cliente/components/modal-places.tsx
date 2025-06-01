@@ -129,7 +129,7 @@ export const ModalLocation: FC<ModalLocationProps> = ({
             {placesSimilar.map((place, index) => (
               <div key={index} className="flex flex-col">
                 <Image
-                  src={place.photoURLs ?? backgroundloginpage}
+                  src={place.photoURLs[0].url ?? backgroundloginpage}
                   alt={`Imagem de ${place.name}`}
                   className="h-auto w-full rounded-lg"
                   width={400}

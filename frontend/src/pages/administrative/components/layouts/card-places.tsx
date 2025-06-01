@@ -3,6 +3,7 @@
 import { IconPencil } from '@/assets/icons/icon-pencil'
 import { IconTrash } from '@/assets/icons/icon-trash'
 import { IconClosed } from '@/assets/icons/icone-closed'
+import { backgroundloginpage } from '@/assets/image'
 import { CardPlacesDTO } from '@/dto/data-card-placesDTO'
 import { placeSchema } from '@/schemas/places-schema'
 import { DeletePlace } from '@/services/routes/delete-place'
@@ -51,9 +52,10 @@ export const CardPlaces = (props: CardPlacesDTO) => {
     <article className="flex h-[300px] w-[280px] flex-col rounded-[0.9rem] shadow-shadowCardEventLocation">
       <div className="relative h-[80%] w-full">
         <Image
-          src={photoURL ? photoURL : ''}
+          src={photoURL ? photoURL : backgroundloginpage}
           className="h-[100%] w-full rounded-tl-[0.9rem] rounded-tr-[0.9rem] object-cover"
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           alt="Foto de Evento"
         />
         <div className="rigth-0 absolute bottom-0 flex w-full items-center justify-end gap-3 p-2">

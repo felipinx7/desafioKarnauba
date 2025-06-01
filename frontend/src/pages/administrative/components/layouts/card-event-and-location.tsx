@@ -3,6 +3,7 @@
 import { IconPencil } from '@/assets/icons/icon-pencil'
 import { IconTrash } from '@/assets/icons/icon-trash'
 import { IconClosed } from '@/assets/icons/icone-closed'
+import { backgroundloginpage } from '@/assets/image'
 import { CardEventAndLocationProps } from '@/dto/data-card-event-DTO'
 import { eventSchema } from '@/schemas/event-schema'
 import { udpateEvent } from '@/services/routes/update-event'
@@ -50,7 +51,7 @@ export const CardEventAndLocation = (props: CardEventAndLocationProps) => {
     <article className="flex h-[300px] w-[280px] flex-col rounded-[0.9rem] shadow-shadowCardEventLocation">
       <div className="relative h-[80%] w-full">
         <Image
-          src={photoUrl ? photoUrl : ''}
+          src={photoUrl ? photoUrl : backgroundloginpage}
           className="h-[100%] w-full rounded-tl-[0.9rem] rounded-tr-[0.9rem] object-cover"
           fill
           alt="Foto de Evento"
