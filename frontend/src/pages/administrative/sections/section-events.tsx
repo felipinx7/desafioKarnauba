@@ -7,7 +7,7 @@ import { z } from 'zod'
 
 import { NameAdminstrative } from '../components/layouts/name-adm'
 import { IconClosed } from '@/assets/icons/icone-closed'
-import { CardEventAndLocation } from '../components/layouts/card-event-and-location'
+import { CardEventAndLocation } from '../components/layouts/card-event'
 
 import { createEvent } from '@/services/routes/createEvent'
 import { getInfoCity } from '@/services/routes/getInfoCity'

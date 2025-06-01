@@ -72,8 +72,8 @@ export const CardEventAndLocation = (props: CardEventAndLocationProps) => {
         </div>
       </div>
       <div className="flex h-[70%] flex-col p-3">
-        <h1 className="text-[1.2rem] font-[500] text-black">{props.name}</h1>
-        <p className="text-secundarygray900">{props.description}</p>
+        <h1 className="text-[1.2rem] font-[500] text-black truncate">{props.name}</h1>
+        <p className="text-secundarygray900 break-words line-clamp-4">{props.description}</p>
       </div>
 
       {/* Moldal of Update Info  */}

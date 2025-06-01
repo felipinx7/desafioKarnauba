@@ -30,37 +30,48 @@ export const ModalEvents: FC<ModalEventsProps> = ({
   // Load similar places when modal opens
   useEffect(() => {
     if (showModal) {
-      const fetchPlacesSimilar = async () => {
+      const fetchData = async () => {
         try {
-          const response = await getAllEvents()
+          const [eventsResponse, cityResponse] = await Promise.all([getAllEvents(), getInfoCity()])
 
-          if (response && typeof response === 'object') {
-            // Converte o objeto retornado em array para usar map corretamente
-            const placesArray = Object.values(response)
-            setPlacesSimilar(placesArray)
-            console.log('Similar places:', placesArray)
+          // Se a resposta for um array de cidades, extrair todos os places
+          if (Array.isArray(eventsResponse)) {
+            const allPlaces = eventsResponse.flatMap((city) => city.places || [])
+            setPlacesSimilar(allPlaces)
+            console.log('Similar places:', allPlaces)
+          }
+          // Se for um objeto único (uma cidade só)
+          else if (eventsResponse && typeof eventsResponse === 'object') {
+            const allPlaces = eventsResponse.places || []
+            setPlacesSimilar(allPlaces)
+            console.log('Similar places:', allPlaces)
           } else {
-            console.error('Resposta inesperada de getAllEvents:', response)
+            console.error('Resposta inesperada de getAllEvents:', eventsResponse)
             setPlacesSimilar([])
           }
+
+          // Setar info da cidade
+          setInfoCity(cityResponse)
+          console.log('Info da cidade:', cityResponse)
         } catch (error) {
-          console.error('Erro ao buscar eventos semelhantes:', error)
+          console.error('Erro ao buscar dados:', error)
           setPlacesSimilar([])
+          setInfoCity(null)
         }
       }
 
-      fetchPlacesSimilar()
+      fetchData()
     }
   }, [showModal])
 
   if (!showModal) return null
 
-  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(location)}&output=embed`
+  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(infoCity?.location ?? '')}&output=embed`
 
   return (
     <section className="fixed inset-0 z-[999] h-screen w-full overflow-y-auto bg-white">
       <div className="m-auto w-full max-w-[1280px] px-4 py-8">
-        {/* Close button */}
+        {/* Botão de fechar */}
         <button
           onClick={onClose}
           className="flex h-[40px] w-[40px] items-center justify-center gap-2"
@@ -73,7 +84,7 @@ export const ModalEvents: FC<ModalEventsProps> = ({
 
         <SideBarCliente />
 
-        {/* Main image */}
+        {/* Imagem principal */}
         <div className="max-h-[400px] w-full overflow-hidden rounded-xl">
           <Image
             src={photoUrl ? photoUrl : backgroundloginpage}
@@ -82,13 +93,13 @@ export const ModalEvents: FC<ModalEventsProps> = ({
           />
         </div>
 
-        {/* Title & description */}
+        {/* Título e descrição */}
         <div className="mt-6">
           <h1 className="text-[2rem] font-bold">{name}</h1>
           <p className="mt-4 text-[1rem] leading-6 text-gray-700">{description}</p>
         </div>
 
-        {/* Location map */}
+        {/* Mapa de localização */}
         <div className="mt-10">
           <h2 className="mb-4 text-lg font-bold">Localização</h2>
           <div className="h-[300px] w-full overflow-hidden rounded-xl">
@@ -104,7 +115,7 @@ export const ModalEvents: FC<ModalEventsProps> = ({
           </div>
         </div>
 
-        {/* Social Media */}
+        {/* Redes sociais */}
         <div className="mt-10">
           <h2 className="mb-4 text-lg font-bold">Redes Sociais</h2>
           <div className="flex flex-wrap gap-4">
@@ -141,6 +152,27 @@ export const ModalEvents: FC<ModalEventsProps> = ({
             ))}
           </div>
         </div>
+
+        {/* Informações da cidade */}
+        {infoCity && (
+          <div className="mt-10">
+            <h2 className="mb-4 text-lg font-bold">Informações da Cidade</h2>
+            <div className="space-y-1 text-sm text-gray-700">
+              <p>
+                <strong>Nome:</strong> {infoCity.name}
+              </p>
+              <p>
+                <strong>Estado:</strong> {infoCity.state}
+              </p>
+              {infoCity.population && (
+                <p>
+                  <strong>População:</strong> {infoCity.population.toLocaleString()}
+                </p>
+              )}
+              {/* Adicione outros campos conforme necessário */}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )
