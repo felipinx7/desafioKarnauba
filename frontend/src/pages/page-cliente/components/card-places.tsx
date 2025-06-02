@@ -7,7 +7,6 @@ import { baseUrlPhoto } from '@/utils/base-url-photos'
 
 export function CardPLaces(data: CardPlacesDTO) {
   const [showModal, setShowModal] = useState(false)
-  const photoUrl = baseUrlPhoto('place', data.photos[0].url)
 
   const handleShowModal = () => {
     setShowModal((prev) => !prev)
@@ -16,12 +15,13 @@ export function CardPLaces(data: CardPlacesDTO) {
 
   return (
     <>
-      <article onClick={handleShowModal} className="group flex h-[316px] w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg">
+      <article
+        onClick={handleShowModal}
+        className="group flex h-[316px] w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg"
+      >
         <div className="relative h-[70%] w-full bg-primarygray">
-          <Image
-            src={photoUrl ? photoUrl : backgroundclientpage}
-            alt={`Imagem de ${data.name}`}
-            fill
+          <img
+            alt={backgroundloginpage}
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 368px"
           />

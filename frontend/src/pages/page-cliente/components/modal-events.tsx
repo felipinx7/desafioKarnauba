@@ -8,8 +8,14 @@ import { IconClosed } from '@/assets/icons/icone-closed'
 import { dataCardEvent } from '@/dto/data-card-event'
 import { FC, useEffect, useState } from 'react'
 import { getAllEvents } from '@/services/routes/getAllEvents'
-import { baseUrlPhoto } from '@/utils/base-url-photos'
-import { getInfoCity } from '@/services/routes/getInfoCity'
+
+// Interface para dados da cidade
+interface DataCityInfo {
+  name: string
+  state: string
+  population?: number
+  location: string
+}
 
 interface ModalEventsProps extends dataCardEvent {
   onClose: () => void
@@ -23,56 +29,47 @@ export const ModalEvents: FC<ModalEventsProps> = ({
   instagram,
   onClose,
   showModal,
-  photoURLs
 }) => {
   const [placesSimilar, setPlacesSimilar] = useState<dataCardEvent[]>([])
-  const photoUrl = baseUrlPhoto('event', photoURLs[0].url)
+  const [infoCity, setInfoCity] = useState<DataCityInfo | null>(null)
 
   // Load similar places when modal opens
   useEffect(() => {
     if (showModal) {
-      const fetchData = async () => {
+      const fetchPlacesSimilar = async () => {
         try {
-          const [eventsResponse, cityResponse] = await Promise.all([getAllEvents(), getInfoCity()])
+          const response = await getAllEvents()
 
-          // Se a resposta for um array de cidades, extrair todos os places
-          if (Array.isArray(eventsResponse)) {
-            const allPlaces = eventsResponse.flatMap((city) => city.places || [])
-            setPlacesSimilar(allPlaces)
-            console.log('Similar places:', allPlaces)
-          }
-          // Se for um objeto único (uma cidade só)
-          else if (eventsResponse && typeof eventsResponse === 'object') {
-            const allPlaces = eventsResponse.places || []
-            setPlacesSimilar(allPlaces)
-            console.log('Similar places:', allPlaces)
+          if (response && typeof response === 'object') {
+            // Converte o objeto retornado em array para usar map corretamente
+            const placesArray = Object.values(response)
+            setPlacesSimilar(placesArray)
+            console.log('Similar places:', placesArray)
           } else {
-            console.error('Resposta inesperada de getAllEvents:', eventsResponse)
+            console.error('Resposta inesperada de getAllEvents:', response)
             setPlacesSimilar([])
           }
 
           // Setar info da cidade
-          setInfoCity(cityResponse)
-          console.log('Info da cidade:', cityResponse)
         } catch (error) {
-          console.error('Erro ao buscar dados:', error)
+          console.error('Erro ao buscar eventos semelhantes:', error)
           setPlacesSimilar([])
           setInfoCity(null)
         }
       }
 
-      fetchData()
+      fetchPlacesSimilar()
     }
   }, [showModal])
 
   if (!showModal) return null
 
-  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(infoCity?.location ?? '')}&output=embed`
+  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(location)}&output=embed`
 
   return (
     <section className="fixed inset-0 z-[999] h-screen w-full overflow-y-auto bg-white">
       <div className="m-auto w-full max-w-[1280px] px-4 py-8">
-        {/* Botão de fechar */}
+        {/* Close button */}
         <button
           onClick={onClose}
           className="flex h-[40px] w-[40px] items-center justify-center gap-2"
@@ -85,22 +82,22 @@ export const ModalEvents: FC<ModalEventsProps> = ({
 
         <SideBarCliente />
 
-        {/* Imagem principal */}
+        {/* Main image */}
         <div className="max-h-[400px] w-full overflow-hidden rounded-xl">
           <Image
-            src={photoUrl ? photoUrl : backgroundloginpage}
+            src={backgroundloginpage}
             alt="Imagem Local"
             className="h-auto w-full rounded-xl"
           />
         </div>
 
-        {/* Título e descrição */}
+        {/* Title & description */}
         <div className="mt-6">
           <h1 className="text-[2rem] font-bold">{name}</h1>
           <p className="mt-4 text-[1rem] leading-6 text-gray-700">{description}</p>
         </div>
 
-        {/* Mapa de localização */}
+        {/* Location map */}
         <div className="mt-10">
           <h2 className="mb-4 text-lg font-bold">Localização</h2>
           <div className="h-[300px] w-full overflow-hidden rounded-xl">
@@ -116,7 +113,7 @@ export const ModalEvents: FC<ModalEventsProps> = ({
           </div>
         </div>
 
-        {/* Redes sociais */}
+        {/* Social Media */}
         <div className="mt-10">
           <h2 className="mb-4 text-lg font-bold">Redes Sociais</h2>
           <div className="flex flex-wrap gap-4">
@@ -141,7 +138,7 @@ export const ModalEvents: FC<ModalEventsProps> = ({
             {placesSimilar.map((place, index) => (
               <div key={index} className="flex flex-col">
                 <Image
-                  src={ photoUrl ? photoUrl : backgroundloginpage}
+                  src={backgroundloginpage}
                   alt={`Imagem de ${place.name}`}
                   className="h-auto w-full rounded-lg"
                   width={400}

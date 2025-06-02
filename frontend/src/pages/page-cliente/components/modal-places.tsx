@@ -29,7 +29,6 @@ export const ModalLocation: FC<ModalLocationProps> = ({
   showModal,
 }) => {
   const [placesSimilar, setPlacesSimilar] = useState<dataCardEvent[]>([])
-  const photoUrl = baseUrlPhoto('event', photos[0].url)
 
   useEffect(() => {
     if (showModal) {
@@ -64,8 +63,8 @@ export const ModalLocation: FC<ModalLocationProps> = ({
 
         {/* Imagem do local */}
         <div className="max-h-[400px] w-full overflow-hidden rounded-xl">
-          <Image
-            src={photoUrl ? photoUrl : backgroundloginpage}
+          <img
+            src={backgroundloginpage}
             alt={`Imagem de ${name}`}
             className="h-auto w-full rounded-xl"
           />
@@ -128,8 +127,8 @@ export const ModalLocation: FC<ModalLocationProps> = ({
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {placesSimilar.map((place, index) => (
               <div key={index} className="flex flex-col">
-                <Image
-                  src={place.photoURLs[0].url ?? backgroundloginpage}
+                <img
+                  src={backgroundloginpage}
                   alt={`Imagem de ${place.name}`}
                   className="h-auto w-full rounded-lg"
                   width={400}

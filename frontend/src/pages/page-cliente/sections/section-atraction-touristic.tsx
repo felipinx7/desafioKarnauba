@@ -29,11 +29,10 @@ export const SectionAtractionTouristic = () => {
         </p>
       </div>
       <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {infoPlaces
-          .filter((place) => place.category === 'TOURIST_ATTRACTIONS')
-          .map((place) => (
-            <CardPLaces key={place.id} {...place} />
-          ))}
+        {Array.isArray(infoPlaces) &&
+          infoPlaces
+            .filter((place) => place.category === 'TOURIST_ATTRACTIONS')
+            .map((place) => <CardPLaces key={place.id} {...place} />)}
       </div>
     </section>
   )
