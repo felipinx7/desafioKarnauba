@@ -27,7 +27,7 @@ export class CityCreatePhotoUseCase {
         const id = randomUUID();
         const photo = parsedData.data?.photoURLs!
 
-        const photoURL = await this.cityRepository.createPhoto(id, photo, adminId)
+        const photoURL = await this.cityRepository.createPhoto(id, photo, isCityExist.id)
         return photoURL;
     }
 }
