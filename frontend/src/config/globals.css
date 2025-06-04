@@ -5,7 +5,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary-green: #1f7a56;
+  --primary-green: #194a99;
   --primary-black-400: rgba(0, 0, 0, 0.62);
   --primary-white-500: #e6e6e6;
   --primary-gree-700: #157c4e;
@@ -16,10 +16,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-green: #1f7a56;
+    --primary-green: #194a99;
     --primary-black-400: rgba(0, 0, 0, 0.62);
     --primary-white-500: #e6e6e6;
-    --primary-gree-700: #157c4e;
+    --primary-gree-700: #3F73C6;
   }
 }
 

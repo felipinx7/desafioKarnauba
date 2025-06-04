@@ -37,7 +37,7 @@ export const LoginPage = () => {
       <div className="flex min-h-screen w-full flex-col items-start justify-between bg-white px-10 py-10 lg:w-[50%]">
         {/* Logo */}
         <div className="flex w-full items-center justify-center">
-          <Image src={imageLogo} alt="System logo" />
+          <Image src={imageLogo} width={200} alt="System logo" />
         </div>
 
         {/* Login Form */}

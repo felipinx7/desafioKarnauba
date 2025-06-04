@@ -8,11 +8,11 @@ export const SectionHero = () => {
       <Image src={wavesDecored} alt="" className="absolute right-0 top-0 z-0 max-lg:hidden" />
       <div className="z-5 flex w-[60%] flex-col items-start justify-center gap-[1.3rem] text-left max-lg:w-[100%]">
         <h1 className="text-[3rem] font-[600] leading-[3.2rem] break-all text-white">
-          TRANSFORMANDO O JEITO DE APRESENTAR MORAÚJO AO MUNDO.
+          TRANSFORMANDO O JEITO DE APRESENTAR MASSAPÊ AO MUNDO.
         </h1>
         <p className="text-primaryWhite500 text-[1.2rem] font-[---font-sora]">
           Um sistema completo e acessível que organiza os pontos turísticos e estabelecimentos da
-          cidade, facilita a administração e valoriza o que Moraújo tem de melhor.
+          cidade, facilita a administração e valoriza o que Massapê tem de melhor.
         </p>
         <div className="w-[45%] max-lg:hidden">
           <ButtonRegister />

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { logococotourmonochrome } from '@/assets/image'
+import { logomonocromatic } from '@/assets/image'
 import { LinksSideBarAdministrative } from '@/constants/links-side-bar-adiministrative'
 import { IconeBars } from '@/assets/icons/icon-bars'
 import { IconClosed } from '@/assets/icons/icone-closed'
@@ -35,7 +35,7 @@ export const SideBarAdministrativeMobile = ({ setActiveSection }: SideBarProps) 
       {isOpen && (
         <aside className="fixed left-0 top-0 z-40 h-full w-[75%] bg-primargreen p-4 md:hidden">
           <Image
-            src={logococotourmonochrome}
+            src={logomonocromatic}
             width={400}
             className="-translate-x-6"
             alt="Logo CocoTour"

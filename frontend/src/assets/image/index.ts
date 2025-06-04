@@ -1,4 +1,4 @@
-import imageLogo from './logo-cocotour.png'
+import imageLogo from './logo-massape.png'
 import womanSitting from './woman-sitting.svg'
 import wavesDecored from './waves-coderate.svg'
 import wavesBackground from './waves-background.svg'
@@ -11,6 +11,7 @@ import logococotourmonochrome from './logococotourmonochrome.svg'
 import backgroundclientpage from './image-container-page.svg'
 import backgroundfound from './background-nofound.png'
 import peoplenotfound from './image-404.svg'
+import logomonocromatic from './logo-monocromatica.svg'
 
 export {
   imageLogo,
@@ -26,4 +27,5 @@ export {
   backgroundclientpage,
   backgroundfound,
   peoplenotfound,
+  logomonocromatic,
 }

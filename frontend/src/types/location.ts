@@ -1,4 +1,3 @@
-// types/location.ts
 import { Photo } from '@/dto/data-photo-DTO'
 import { City } from '@/dto/data-places-DTO'
 import { StaticImageData } from 'next/image'

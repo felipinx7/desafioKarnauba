@@ -1,6 +1,6 @@
 'use client'
 
-import { logococotourmonochrome } from '@/assets/image'
+import { logomonocromatic } from '@/assets/image'
 import { LinksSideBarAdministrative } from '@/constants/links-side-bar-adiministrative'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -18,13 +18,15 @@ export const SideBarAdministrative = ({ setActiveSection }: SideBarProps) => {
   }
 
   return (
-    <article className="flex max-lg:hidden min-h-[100vh] w-[20%] flex-col items-start bg-primargreen p-2">
-      <Image
-        src={logococotourmonochrome}
-        width={600}
-        className="w-full -translate-x-8"
-        alt="Logo CocoTour"
-      />
+    <article className="flex min-h-[100vh] w-[20%] flex-col items-start bg-primargreen p-2 max-lg:hidden">
+      <div className="justify-centerM flex w-full items-center">
+        <Image
+          src={logomonocromatic}
+          width={600}
+          className="w-full"
+          alt="Logo CocoTour"
+        />
+      </div>
       <nav className="mt-14 flex w-full flex-col items-start gap-4">
         {LinksSideBarAdministrative.map((link, index) => {
           const isSelected = selectedButton === link.id

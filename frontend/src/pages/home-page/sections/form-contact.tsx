@@ -20,7 +20,7 @@ export const SectionFormContact = () => {
             <div className="mb-10 flex flex-col items-start justify-center">
               <h1 className="text-[2.5rem] font-[600] text-primargreen">Entre em Contato</h1>
               <p className="text-[1.2rem] font-[300] text-primargreen">
-                Um sistema feito sob medida para mostrar ao mundo as riquezas de Moraújo,
+                Um sistema feito sob medida para mostrar ao mundo as riquezas de Massapê,
                 impulsionar o turismo local e facilitar a administração com eficiência e tecnologia.
               </p>
             </div>

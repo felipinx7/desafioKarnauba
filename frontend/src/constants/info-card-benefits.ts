@@ -26,6 +26,6 @@ export const InfoCardBenefits: InfoCardFunctionalityProps[] = [
     name: 'Experiência Moderna e Intuitiva',
     Icon: IconeSmartPhone,
     describe:
-      'A interface do sistema foi criada com foco na acessibilidade, leitura fluida e design moderno. Isso facilita a navegação para todos, proporcionando uma experiência digital envolvente e profissional, valorizando cultural e turisticamente Moraújo, e destacando seus principais atrativos com elegância.',
+      'A interface do sistema foi criada com foco na acessibilidade, leitura fluida e design moderno. Isso facilita a navegação para todos, proporcionando uma experiência digital envolvente e profissional, valorizando cultural e turisticamente Massapê, e destacando seus principais atrativos com elegância.',
   },
 ]

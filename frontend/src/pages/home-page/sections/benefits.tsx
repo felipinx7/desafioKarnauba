@@ -18,7 +18,7 @@ export const SectionBenefits = () => {
         <h1 className="w-[50%] text-[2rem] font-[--font-sora] font-[600] text-primargreen max-lg:w-full">
           Benefícios reais do sistema para sua cidade.
         </h1>
-        <div className="flex w-full items-start justify-between max-lg:flex-col-reverse max-lg:gap-10">
+        <div className="flex w-full items-center justify-between max-lg:flex-col-reverse max-lg:gap-10">
           <div className="w-[50%] max-lg:w-[100%]">
             <Image src={walkingman} alt="" />
           </div>
