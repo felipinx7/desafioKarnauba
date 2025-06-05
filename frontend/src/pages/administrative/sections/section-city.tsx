@@ -100,7 +100,7 @@ export const SectionCity = () => {
       // Atualiza o estado e o preview com os dados novos do servidor
       await fetchCityInfo()
     } catch (error) {
-      alert('Erro ao atualizar a cidade.')
+      alert('Erro ao atualizar a cidade.', error)
     }
   }
 

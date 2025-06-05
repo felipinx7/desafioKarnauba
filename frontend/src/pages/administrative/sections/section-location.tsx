@@ -30,7 +30,6 @@ export const SectionLocation = () => {
     control,
     register,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors },
   } = useForm<z.infer<typeof placeSchema>>({
