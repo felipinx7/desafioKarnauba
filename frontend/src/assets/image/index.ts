@@ -9,7 +9,7 @@ import manformladdingpage from './man-form-landing-page.svg'
 import backgroundloginpage from './image-login-page.svg'
 import logococotourmonochrome from './logococotourmonochrome.svg'
 import backgroundclientpage from './image-container-page.svg'
-import backgroundfound from './background-nofound.png'
+import backgroundfound from './background-nofound.svg'
 import peoplenotfound from './image-404.svg'
 import logomonocromatic from './logo-monocromatica.svg'
 

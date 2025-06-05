@@ -9,6 +9,7 @@ export class Events {
         public description: string,
         public readonly id: string,
         public cityId: string,
+        public location: string,
         public instagram?: string | null,
         public photos?: PhotoDTO[]
     ){}

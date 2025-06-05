@@ -20,6 +20,7 @@ export class IPrismaEventRepository implements IEventRepository {
                 },
                 instagram: data.instagram,
                 cityId: data.cityId,
+                location: data.location,
                 active: data.active,
             }
         })
@@ -36,6 +37,7 @@ export class IPrismaEventRepository implements IEventRepository {
                 description: data.description,
                 instagram: data.instagram,
                 cityId: data.cityId,
+                location: data.location,
                 active: data.active,
             }
         })

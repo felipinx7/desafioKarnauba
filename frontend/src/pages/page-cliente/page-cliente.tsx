@@ -82,8 +82,8 @@ export const PageCliente = () => {
         <SectionEvents />
         <SectionLandscape />
       </section>
-      <footer className="flex min-h-[30vh] w-full flex-col items-center justify-center gap-3 bg-primarygray max-lg:min-h-[14vh]">
-        <Image src={imageLogo} alt="Image Logo" />
+      <footer className="flex min-h-[20vh] w-full flex-col items-center justify-center gap-3 bg-primarygray max-lg:min-h-[14vh]">
+        <Image src={imageLogo} width={200} alt="Image Logo" />
         <p className="font-[400]">Copyright © 2025 CocoTour All Rigths Reserved</p>
       </footer>
     </main>

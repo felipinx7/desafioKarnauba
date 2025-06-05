@@ -45,24 +45,32 @@ export const CardPlaces = (props: CardPlacesDTO) => {
     const response = await updatePlace(props.id, data)
     console.log('Atualização Feita com sucesso!', response)
     reset()
+    setShowMoldalUpdate(false)
   }
 
+  const photo = props.photos?.[0]?.url
+    ? baseUrlPhoto('place', props.photos[0].url)
+    : backgroundloginpage
+
+  console.log('foto que deve aparecer: ', photo)
   return (
     <article className="flex h-[300px] w-[280px] flex-col rounded-[0.9rem] shadow-shadowCardEventLocation">
       <div className="relative h-[80%] w-full">
         <Image
-          src={backgroundloginpage}
-          className="h-[100%] w-full rounded-tl-[0.9rem] rounded-tr-[0.9rem] object-cover"
-          fill
+          src={photo || backgroundloginpage}
           alt="Foto de Evento"
+          fill
+          className="h-full w-full rounded-tl-[0.9rem] rounded-tr-[0.9rem] object-cover"
         />
-        <div className="rigth-0 absolute bottom-0 flex w-full items-center justify-end gap-3 p-2">
+
+        <div className="absolute bottom-0 right-0 flex w-full items-center justify-end gap-3 p-2">
           <button
             onClick={() => props.handleDeletePlace?.(props.id)}
             className="flex h-[30px] w-[30px] items-center justify-center rounded-[0.3rem] bg-white"
           >
             <IconTrash />
           </button>
+
           <button
             onClick={handleOpenMoldarUpdate}
             className="flex h-[30px] w-[30px] items-center justify-center rounded-[0.3rem] bg-white"
@@ -71,9 +79,11 @@ export const CardPlaces = (props: CardPlacesDTO) => {
           </button>
         </div>
       </div>
+
       <div className="flex h-[70%] flex-col p-3">
-        <h1 className="w-[95%] break-words text-[1.1rem] font-[500] text-black">{props.name}</h1>
-        <p className="text-secundarygray900">{props.description}</p>
+        <h1 className="w-[95%] truncate text-[1.1rem] font-medium text-black">{props.name}</h1>
+
+        <p className="line-clamp-3 h-full text-secundarygray900">{props.description}</p>
       </div>
 
       {/* Moldal of Update Info  */}
@@ -108,6 +118,7 @@ export const CardPlaces = (props: CardPlacesDTO) => {
                       <input
                         type="file"
                         multiple
+                        required
                         accept="image/*"
                         className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                         onChange={(e) => {

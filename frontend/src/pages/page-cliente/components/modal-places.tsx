@@ -44,7 +44,6 @@ export const ModalLocation: FC<ModalLocationProps> = ({
   if (!showModal) return null
 
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(location)}&output=embed`
-
   return (
     <section className="fixed inset-0 z-[999] h-screen w-full overflow-y-auto bg-white">
       <div className="m-auto w-full max-w-[1280px] px-4 py-8">
@@ -64,7 +63,7 @@ export const ModalLocation: FC<ModalLocationProps> = ({
         {/* Imagem do local */}
         <div className="max-h-[400px] w-full overflow-hidden rounded-xl">
           <img
-            src={backgroundloginpage}
+            src={photos ? photos : backgroundloginpage}
             alt={`Imagem de ${name}`}
             className="h-auto w-full rounded-xl"
           />
@@ -127,13 +126,20 @@ export const ModalLocation: FC<ModalLocationProps> = ({
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {placesSimilar.map((place, index) => (
               <div key={index} className="flex flex-col">
-                <img
-                  src={backgroundloginpage}
-                  alt={`Imagem de ${place.name}`}
-                  className="h-auto w-full rounded-lg"
-                  width={400}
-                  height={250}
-                />
+                {place?.photos.map((photos, idx) => {
+                  const photo = baseUrlPhoto('place', photos.url)
+                  return (
+                    <div key={idx} className="h-[250px] w-full overflow-hidden rounded-lg">
+                      <img
+                        src={photo || backgroundloginpage}
+                        alt={`Imagem de ${place.name}`}
+                        className="h-full w-full object-cover"
+                        width={400}
+                        height={250}
+                      />
+                    </div>
+                  )
+                })}
                 <span className="mt-2 font-semibold">{place.name}</span>
                 <span className="text-sm text-gray-600">{place.location}</span>
               </div>

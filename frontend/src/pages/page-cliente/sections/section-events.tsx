@@ -15,13 +15,14 @@ export const SectionEvents = () => {
 
         const eventsArray: dataCardEvent[] = response
           ? Object.values(response).map((event: any) => ({
+              id: event.id,
               name: event.name,
               date: new Date(event.date),
               lastDate: new Date(event.lastDate),
               location: event.location,
               description: event.description,
               active: event.active === 'true' || event.active === true,
-              photoURLs: event.photos?.map((p: any) => p.url).join(', ') || '',
+              photoURLs: event.photos[0].url,
               instagram: event.instagram || '',
             }))
           : []
@@ -44,7 +45,7 @@ export const SectionEvents = () => {
           Participe da cultura da cidade participando dos melhores eventos
         </p>
         <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {infoEvents?.map((card) => <CardEvent key={card.name} {...card} />)}
+          {infoEvents?.map((card) => <CardEvent key={card.id} {...card}/>)}
         </div>
       </div>
     </section>

@@ -15,26 +15,26 @@ enum Category {
 }
 
 model Admin {
-  id       String @id
-  name     String
-  email    String @unique
-  password String? 
-  googleId String? @unique
-  cityId   String? @unique
-  city     City?
-  authorized  Boolean @default(false)
+  id         String  @id
+  name       String
+  email      String  @unique
+  password   String?
+  googleId   String? @unique
+  cityId     String? @unique
+  city       City?
+  authorized Boolean @default(false)
 }
 
 model City {
-  id          String   @id
+  id          String  @id
   name        String
-  location    String 
+  location    String
   description String
   photos      Photo[]
   instagram   String?
   places      Place[]
   events      Event[]
-  adminId     String @unique
+  adminId     String  @unique
   admin       Admin   @relation(fields: [adminId], references: [id])
 }
 
@@ -55,6 +55,7 @@ model Event {
   id          String   @id
   name        String
   date        DateTime
+  location    String
   lastDate    DateTime
   active      Boolean
   instagram   String?
@@ -65,14 +66,14 @@ model Event {
 }
 
 model Photo {
-  id      String @id
-  url     String
-  cityId    String?  
-   city      City?    @relation(fields: [cityId], references: [id])
+  id     String  @id
+  url    String
+  cityId String?
+  city   City?   @relation(fields: [cityId], references: [id])
 
-  placeId   String?
-  place     Place?   @relation(fields: [placeId], references: [id])
+  placeId String?
+  place   Place?  @relation(fields: [placeId], references: [id])
 
-  eventId   String?
-  event     Event?   @relation(fields: [eventId], references: [id])
+  eventId String?
+  event   Event?  @relation(fields: [eventId], references: [id])
 }

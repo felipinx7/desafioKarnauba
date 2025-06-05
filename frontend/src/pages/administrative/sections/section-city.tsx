@@ -7,6 +7,7 @@ import { updateCity } from '@/services/routes/update-city'
 import { DataInfoCityDTO } from '@/dto/data-info-city-DTO'
 import { BASE_URL_BACK_END, baseUrlPhoto } from '@/utils/base-url-photos'
 import { backgroundloginpage } from '@/assets/image'
+import { updateCityImage } from '@/services/routes/update-city-image'
 
 export const SectionCity = () => {
   const [bannerPreview, setBannerPreview] = useState<string | null>(null)
@@ -92,6 +93,7 @@ export const SectionCity = () => {
 
     try {
       await updateCity(updatedFields)
+      await updateCityImage(infoCity?.photos[0].id, bannerFile )
       alert('Cidade atualizada com sucesso!')
 
       // Atualiza o estado e o preview com os dados novos do servidor
@@ -100,6 +102,7 @@ export const SectionCity = () => {
       alert('Erro ao atualizar a cidade.')
     }
   }
+
   
   return (
     <section className="flex w-full flex-col justify-center gap-6 px-4 py-6 max-lg:w-full">

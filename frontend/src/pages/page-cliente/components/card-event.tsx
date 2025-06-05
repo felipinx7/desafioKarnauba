@@ -14,7 +14,8 @@ export function CardEvent(data: dataCardEvent) {
     console.log('Valor do Estado:', showModal)
   }
   
-  const photoURL = baseUrlPhoto('event', data.photoURLs[0].url)
+  const photoURL = baseUrlPhoto('event', data.photoURLs)
+
   return (
     <div className="">
       <article
@@ -45,6 +46,7 @@ export function CardEvent(data: dataCardEvent) {
 
       <ModalEvents
         active={data.active}
+        id={data.id}
         date={data.date}
         onClose={() => setShowModal(false)}
         showModal={showModal}

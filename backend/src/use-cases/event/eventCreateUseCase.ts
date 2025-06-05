@@ -19,7 +19,7 @@ export class EventCreateUseCase {
         const parsedData = eventSchema.safeParse(data);
         if (!parsedData.data) throw new ServerError("Bad request");
 
-        const {name, date, lastDate, active, description, photoURLs, instagram} = parsedData.data
+        const {name, date, lastDate, location, active, description, photoURLs, instagram} = parsedData.data
 
         const adminId = req.user?.id
         if (!adminId) throw new ServerError("Admin not authorized", 401);
@@ -42,7 +42,7 @@ export class EventCreateUseCase {
             url
         }));
 
-        const event = new Events(name, date, lastDate, active, description, id, cityId, instagram, photo);
+        const event = new Events(name, date, lastDate, active, description, id, cityId, location,  instagram, photo);
         await this.eventRepository.createEvent(event);
 
         return {event};

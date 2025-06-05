@@ -1,6 +1,7 @@
 import { Photo } from "./data-photo-DTO"
 
 export interface dataCardEvent {
+  id: string
   name: string
   date: Date
   lastDate: Date

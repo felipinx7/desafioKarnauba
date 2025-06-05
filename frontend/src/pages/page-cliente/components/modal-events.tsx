@@ -8,6 +8,7 @@ import { IconClosed } from '@/assets/icons/icone-closed'
 import { dataCardEvent } from '@/dto/data-card-event'
 import { FC, useEffect, useState } from 'react'
 import { getAllEvents } from '@/services/routes/getAllEvents'
+import { baseUrlPhoto } from '@/utils/base-url-photos'
 
 // Interface para dados da cidade
 interface DataCityInfo {
@@ -27,13 +28,13 @@ export const ModalEvents: FC<ModalEventsProps> = ({
   description,
   location,
   instagram,
+  photoURLs,
   onClose,
   showModal,
 }) => {
   const [placesSimilar, setPlacesSimilar] = useState<dataCardEvent[]>([])
   const [infoCity, setInfoCity] = useState<DataCityInfo | null>(null)
 
-  // Load similar places when modal opens
   useEffect(() => {
     if (showModal) {
       const fetchPlacesSimilar = async () => {
@@ -41,16 +42,12 @@ export const ModalEvents: FC<ModalEventsProps> = ({
           const response = await getAllEvents()
 
           if (response && typeof response === 'object') {
-            // Converte o objeto retornado em array para usar map corretamente
-            const placesArray = Object.values(response)
+            const placesArray: any[] = Object.values(response)
             setPlacesSimilar(placesArray)
-            console.log('Similar places:', placesArray)
           } else {
             console.error('Resposta inesperada de getAllEvents:', response)
             setPlacesSimilar([])
           }
-
-          // Setar info da cidade
         } catch (error) {
           console.error('Erro ao buscar eventos semelhantes:', error)
           setPlacesSimilar([])
@@ -64,12 +61,15 @@ export const ModalEvents: FC<ModalEventsProps> = ({
 
   if (!showModal) return null
 
+  console.log('location: ', placesSimilar[0])
+  console.log('photo: ', photoURLs)
+
+  const photo = baseUrlPhoto('event', photoURLs)
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(location)}&output=embed`
 
   return (
     <section className="fixed inset-0 z-[999] h-screen w-full overflow-y-auto bg-white">
       <div className="m-auto w-full max-w-[1280px] px-4 py-8">
-        {/* Close button */}
         <button
           onClick={onClose}
           className="flex h-[40px] w-[40px] items-center justify-center gap-2"
@@ -85,9 +85,11 @@ export const ModalEvents: FC<ModalEventsProps> = ({
         {/* Main image */}
         <div className="max-h-[400px] w-full overflow-hidden rounded-xl">
           <Image
-            src={backgroundloginpage}
-            alt="Imagem Local"
+            src={photo || backgroundloginpage}
+            alt={`Imagem de ${name}`}
             className="h-auto w-full rounded-xl"
+            width={1200}
+            height={400}
           />
         </div>
 
@@ -137,13 +139,20 @@ export const ModalEvents: FC<ModalEventsProps> = ({
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {placesSimilar.map((place, index) => (
               <div key={index} className="flex flex-col">
-                <Image
-                  src={backgroundloginpage}
-                  alt={`Imagem de ${place.name}`}
-                  className="h-auto w-full rounded-lg"
-                  width={400}
-                  height={250}
-                />
+                {place?.photos?.map((photo, index) => {
+                  const photos = baseUrlPhoto('event', photo.url)
+                  return (
+                    <div key={index} className="h-[250px] w-full overflow-hidden rounded-lg">
+                      <Image
+                        src={photos || backgroundloginpage}
+                        alt={`Imagem de ${place.name}`}
+                        className="h-full w-full object-cover"
+                        width={400}
+                        height={250}
+                      />
+                    </div>
+                  )
+                })}
                 <span className="mt-2 font-semibold">{place.name}</span>
                 <span className="text-sm text-gray-600">{place.location}</span>
               </div>
@@ -167,7 +176,6 @@ export const ModalEvents: FC<ModalEventsProps> = ({
                   <strong>População:</strong> {infoCity.population.toLocaleString()}
                 </p>
               )}
-              {/* Adicione outros campos conforme necessário */}
             </div>
           </div>
         )}
