@@ -5,13 +5,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
-import type { Metadata } from 'next'
 import { Albert_Sans, Geist, Geist_Mono, Poppins, Sora } from 'next/font/google'
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-})
 
 const poppins = Poppins({
   variable: '--font-poppins',
