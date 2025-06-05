@@ -5,7 +5,6 @@ import { SideBarAdministrative } from './components/layouts/side-bar'
 import { SectionCity } from './sections/section-city'
 import { SectionEvents } from './sections/section-events'
 import { SectionLocation } from './sections/section-location'
-import { SideBarAdministrativeMobile } from './components/layouts/side-bar-adiministrative-mobile'
 import { NameAdminstrative } from './components/layouts/name-adm'
 
 export const PageAdiminstrative = () => {

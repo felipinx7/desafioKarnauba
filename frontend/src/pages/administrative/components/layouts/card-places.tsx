@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -112,13 +112,9 @@ export const CardPlaces = (props: CardPlacesDTO) => {
   // Remove an image from the preview list by index
   const handleRemovePreviewImage = (indexToRemove: number) => {
     setPreviewImages((prev) => {
-      // Revoke object URL to avoid memory leaks
       URL.revokeObjectURL(prev[indexToRemove])
       return prev.filter((_, i) => i !== indexToRemove)
     })
-
-    // Optional: update react-hook-form photoURLs field accordingly
-    // This depends on whether you want to sync removed images with the form files
   }
 
   // Main photo to display on the card - either first photo or a placeholder image
@@ -330,10 +326,7 @@ export const CardPlaces = (props: CardPlacesDTO) => {
               </div>
 
               {/* Submit button */}
-              <button
-                type="submit"
-                className="w-full rounded bg-primargreen py-2 text-white"
-              >
+              <button type="submit" className="w-full rounded bg-primargreen py-2 text-white">
                 Update Place
               </button>
             </form>

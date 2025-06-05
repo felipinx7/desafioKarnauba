@@ -75,7 +75,18 @@ export const CardEventAndLocation = ({
 
       setPreviewImages([])
     }
-  }, [showModal])
+  }, [
+    showModal,
+    setValue,
+    name,
+    description,
+    active,
+    instagram,
+    location,
+    date,
+    lastDate,
+    setPreviewImages,
+  ])
 
   const toggleModal = () => {
     setShowModal((prev) => !prev)

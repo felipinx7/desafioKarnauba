@@ -1,4 +1,3 @@
-import { IconCalendar } from '@/assets/icons/icon-calendar'
 import { IconCalendary } from '@/assets/icons/icon-calendary'
 import { IconeCifraMusica } from '@/assets/icons/icon-cifra-musica'
 import { IconFork } from '@/assets/icons/icon-fork'

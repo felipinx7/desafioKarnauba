@@ -5,9 +5,10 @@ import { NameAdminstrative } from '../components/layouts/name-adm'
 import { getInfoCity } from '@/services/routes/getInfoCity'
 import { updateCity } from '@/services/routes/update-city'
 import { DataInfoCityDTO } from '@/dto/data-info-city-DTO'
-import { BASE_URL_BACK_END, baseUrlPhoto } from '@/utils/base-url-photos'
+import { baseUrlPhoto } from '@/utils/base-url-photos'
 import { backgroundloginpage } from '@/assets/image'
 import { updateCityImage } from '@/services/routes/update-city-image'
+import Image from 'next/image'
 
 export const SectionCity = () => {
   const [bannerPreview, setBannerPreview] = useState<string | null>(null)
@@ -53,11 +54,11 @@ export const SectionCity = () => {
       description: city.description,
       instagram: city.instagram ?? '',
       adminId: city.adminId,
-    }) 
+    })
 
     const firstPhotoUrl = city.photos && city.photos.length > 0 ? city.photos[0].url : ''
     const photoURL = baseUrlPhoto('city', firstPhotoUrl)
-    setPhotoUrl(photoURL);
+    setPhotoUrl(photoURL)
 
     if (firstPhotoUrl) {
       setBannerPreview(photoURL)
@@ -93,7 +94,7 @@ export const SectionCity = () => {
 
     try {
       await updateCity(updatedFields)
-      await updateCityImage(infoCity?.photos[0].id, bannerFile )
+      await updateCityImage(infoCity?.photos[0].id, bannerFile)
       alert('Cidade atualizada com sucesso!')
 
       // Atualiza o estado e o preview com os dados novos do servidor
@@ -103,7 +104,6 @@ export const SectionCity = () => {
     }
   }
 
-  
   return (
     <section className="flex w-full flex-col justify-center gap-6 px-4 py-6 max-lg:w-full">
       <div className="max-lg:hidden">
@@ -113,11 +113,13 @@ export const SectionCity = () => {
       <form onSubmit={onSubmit}>
         {/* Banner */}
         <div className="relative max-h-[300px] w-full overflow-hidden rounded-xl border">
-            <img
-              src={photourl ? photourl : backgroundloginpage}
-              alt="Banner da cidade"
-              className="h-full w-full object-cover"
-            />
+          <Image
+            src={photourl ? photourl : backgroundloginpage}
+            width={200}
+            height={200}
+            alt="Banner da cidade"
+            className="h-full w-full object-cover"
+          />
 
           <input
             type="file"
