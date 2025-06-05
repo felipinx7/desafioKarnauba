@@ -13,8 +13,10 @@ import { CardPlaces } from '../components/layouts/card-places'
 import { getInfoCity } from '@/services/routes/getInfoCity'
 import { CardPlacesDTO } from '@/dto/data-card-placesDTO'
 import { DeletePlace } from '@/services/routes/delete-place'
+import { formatPhoneNumber } from '@/utils/formatPhone'
 
 export const SectionLocation = () => {
+  const [valuePhone, setValuePhone] = useState('')
   const [isVisibility, setIsVisibility] = useState(false)
   const [showPlaces, setShowPlaces] = useState<CardPlacesDTO[] | null>(null)
   const [searchValue, setSearchValue] = useState('')
@@ -28,6 +30,7 @@ export const SectionLocation = () => {
     control,
     register,
     handleSubmit,
+    setValue,
     reset,
     formState: { errors },
   } = useForm<z.infer<typeof placeSchema>>({
@@ -61,6 +64,13 @@ export const SectionLocation = () => {
     )
 
     setFilteredPlaces(filtered ?? [])
+  }
+
+  //Function formated phone
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value)
+    setValuePhone(valuePhone, formatted)
+    setValuePhone(formatted)
   }
 
   const FunctiondeletePlace = async (id: string) => {
@@ -169,6 +179,9 @@ export const SectionLocation = () => {
                 <input
                   {...register('phone')}
                   type="text"
+                  value={valuePhone}
+                  maxLength={15}
+                  onChange={(e) => handleChange(e)}
                   placeholder="(99) 99999-9999"
                   className="w-full rounded border border-gray-300 p-2 text-sm"
                 />
@@ -216,7 +229,7 @@ export const SectionLocation = () => {
                   <option value="RESTAURANT">Restaurante</option>
                   <option value="LANDSCAPE">Paisagem</option>
                   <option value="HOTEL">Hotel</option>
-                  <option value="TOURIST_ATTRACTIONS">Tourismo</option>
+                  <option value="TOURIST_ATTRACTIONS">Turismo</option>
                 </select>
                 {errors.category && (
                   <p className="text-sm text-red-500">{errors.category.message}</p>

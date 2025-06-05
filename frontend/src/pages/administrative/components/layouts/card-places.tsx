@@ -10,6 +10,7 @@ import { DeletePlace } from '@/services/routes/delete-place'
 import { updatePlace } from '@/services/routes/update-place'
 import { BaseUrlPlaces } from '@/utils/base-url-card-place'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
+import { formatPhoneNumber } from '@/utils/formatPhone'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -19,7 +20,8 @@ import { z } from 'zod'
 export const CardPlaces = (props: CardPlacesDTO) => {
   //State utils in components
   const [showMoldalUpdate, setShowMoldalUpdate] = useState(false)
-
+  //State for formated input phone
+  const [valuePhone, setValuePhone] = useState('')
   //Open Moldal Update Info
   const handleOpenMoldarUpdate = () => {
     setShowMoldalUpdate((prev) => !prev)
@@ -35,6 +37,7 @@ export const CardPlaces = (props: CardPlacesDTO) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<z.infer<typeof placeSchema>>({
     resolver: zodResolver(placeSchema),
@@ -46,6 +49,13 @@ export const CardPlaces = (props: CardPlacesDTO) => {
     console.log('Atualização Feita com sucesso!', response)
     reset()
     setShowMoldalUpdate(false)
+  }
+
+  //Function formated phone
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value)
+    setValuePhone(valuePhone, formatted)
+    setValuePhone(formatted)
   }
 
   const photo = props.photos?.[0]?.url
@@ -156,6 +166,11 @@ export const CardPlaces = (props: CardPlacesDTO) => {
               <input
                 {...register('phone')}
                 type="text"
+                value={valuePhone}
+                maxLength={15}
+                onChange={(e) => {
+                  handleChange(e)
+                }}
                 placeholder="(00) 00000-0000"
                 className="w-full rounded border border-gray-300 p-2 text-sm"
               />
@@ -199,7 +214,7 @@ export const CardPlaces = (props: CardPlacesDTO) => {
               >
                 <option value="RESTAURANT">Restaurante</option>
                 <option value="HOTEL">Hotel</option>
-                <option value="TOURIST_ATTRACTIONS">Atrações Turísticas</option>
+                <option value="TOURIST_ATTRACTIONS">Turísmo</option>
                 <option value="LANDSCAPE">Paisagem</option>
               </select>
               {errors.category && <p className="text-sm text-red-500">{errors.category.message}</p>}
