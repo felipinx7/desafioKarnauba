@@ -12,7 +12,7 @@ const prismaRoomRepository = new IPrismaRoomRepository();
 const prismaPlaceRepository = new IPrismaPlaceRepository();
 
 const roomCreateUseCase = new RoomCreateUseCase(prismaPlaceRepository, prismaRoomRepository);
-const roomUpdateUseCase = new RoomUpdateUseCase(prismaRoomRepository, prismaPlaceRepository);
+const roomUpdateUseCase = new RoomUpdateUseCase(prismaRoomRepository);
 const roomFindAllUseCase = new RoomFindAllUseCase(prismaRoomRepository);
 const roomFindUniqueUseCase = new RoomFindUniqueUseCase(prismaRoomRepository);
 const roomFindAvailableRoomsUseCase = new RoomFindAvailableRoomsUseCase(prismaRoomRepository);
