@@ -68,7 +68,6 @@ export const SectionLocation = () => {
   //Function formated phone
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhoneNumber(e.target.value)
-    setValuePhone(valuePhone, formatted)
     setValuePhone(formatted)
   }
 
