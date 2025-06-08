@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { getAdmin } from '@/services/routes/getAdmin'
+import { getAdmin } from '@/services/routes/admin/get-admin'
 import { SideBarAdministrativeMobile } from './side-bar-adiministrative-mobile'
 
 interface NameAdministrativeProps {

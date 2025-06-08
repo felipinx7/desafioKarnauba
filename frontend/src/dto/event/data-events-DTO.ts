@@ -1,3 +1,4 @@
+// Data of event 
 export interface EventDataDTO {
   id: string
   name: string

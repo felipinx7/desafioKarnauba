@@ -1,26 +1,25 @@
-'use client'
 
 import { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { NameAdminstrative } from '../components/layouts/name-adm'
+import { NameAdminstrative } from '../components/layouts/header-info-adm'
 import { IconClosed } from '@/assets/icons/icone-closed'
 import { CardEventAndLocation } from '../components/layouts/card-event'
 
-import { createEvent } from '@/services/routes/createEvent'
-import { getInfoCity } from '@/services/routes/getInfoCity'
+import { createEvent } from '@/services/routes/events/create-event'
+import { getInfoCity } from '@/services/routes/city/get-info-city'
 
 import { eventSchema } from '@/schemas/event-schema'
-import { dataEventDTO } from '@/dto/data-create-event-DTO'
-import { CardEventAndLocationProps } from '@/dto/data-card-event-DTO'
-import { DeleteEvent } from '@/services/routes/delete-event'
+import { dataEventDTO } from '@/dto/event/data-create-event-DTO'
+import { CardEventPageAdministrative } from '@/dto/event/data-card-event-DTO'
+import { DeleteEvent } from '@/services/routes/events/delete-event'
 
 export const SectionEvents = () => {
   const [isVisibility, setIsVisibility] = useState(false)
-  const [events, setEvents] = useState<CardEventAndLocationProps[] | null>(null)
-  const [originalEvents, setOriginalEvents] = useState<CardEventAndLocationProps[]>([])
+  const [events, setEvents] = useState<CardEventPageAdministrative[] | null>(null)
+  const [originalEvents, setOriginalEvents] = useState<CardEventPageAdministrative[]>([])
   const [searchTerm, setSearchTerm] = useState('')
 
   const {
@@ -33,41 +32,42 @@ export const SectionEvents = () => {
     resolver: zodResolver(eventSchema),
   })
 
-  // Toggle modal
+  // Toggle modal visibility
   const handleVisibility = () => {
     setIsVisibility((prev) => !prev)
   }
 
-  // Submit form
+  // Submit form handler
   const onSubmit = async (data: dataEventDTO) => {
     try {
       const response = await createEvent(data)
-      console.log('Resposta da API:', response)
+      console.log('API response:', response)
       reset()
       setIsVisibility(false)
       await fetchInfoEvents()
     } catch (error) {
-      console.error('Erro ao criar evento:', error)
+      console.error('Error creating event:', error)
     }
   }
 
-  // Search for city events
+  // Fetch events from city info
   const fetchInfoEvents = async () => {
     try {
       const { events } = await getInfoCity()
       setEvents(events)
       setOriginalEvents(events)
-      console.log('T', events)
+      console.log('Fetched events:', events)
     } catch (error) {
-      console.error('Erro ao buscar eventos:', error)
+      console.error('Error fetching events:', error)
     }
   }
 
+  // Fetch events on component mount
   useEffect(() => {
     fetchInfoEvents()
   }, [])
 
-  // Filter events
+  // Filter events by search term
   const handleSearch = () => {
     if (!originalEvents) return
 
@@ -78,6 +78,7 @@ export const SectionEvents = () => {
     setEvents(filtered)
   }
 
+  // Delete event handler
   const functionDeleteEvent = async (id: string) => {
     await DeleteEvent(id)
 
@@ -92,7 +93,7 @@ export const SectionEvents = () => {
         <NameAdminstrative />
       </div>
 
-      {/* Search and Add */}
+      {/* Search input and Add event button */}
       <div>
         <div className="relative w-[80%] max-lg:w-full">
           <input
@@ -117,12 +118,12 @@ export const SectionEvents = () => {
         </button>
       </div>
 
-      {/* Modal of create */}
+      {/* Modal for creating event */}
       {isVisibility && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <article className="relative max-h-[90vh] w-[95%] max-w-lg overflow-y-auto rounded-xl bg-white p-5 shadow-lg">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-              {/* Header */}
+              {/* Modal header */}
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-800">Novo Evento</h2>
                 <button
@@ -134,7 +135,7 @@ export const SectionEvents = () => {
                 </button>
               </div>
 
-              {/* Upload */}
+              {/* File upload for event photos */}
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-700">
                   Fotos do Evento
@@ -156,7 +157,7 @@ export const SectionEvents = () => {
                             field.onChange(files ? Array.from(files) : [])
                           }}
                         />
-                        <span>Clique para adicionar imagens</span>
+                        <span>Click to add images</span>
                       </>
                     )}
                   />
@@ -166,7 +167,7 @@ export const SectionEvents = () => {
                 )}
               </div>
 
-              {/* name + Status */}
+              {/* Event name and status */}
               <div className="flex gap-2">
                 <div className="flex-1">
                   <label className="mb-1 block text-sm font-medium text-gray-700">
@@ -193,7 +194,7 @@ export const SectionEvents = () => {
                 </div>
               </div>
 
-              {/* Instagram + location */}
+              {/* Instagram and location inputs */}
               <div className="flex gap-2">
                 <div className="flex-1">
                   <label className="mb-1 block text-sm font-medium text-gray-700">Instagram</label>
@@ -223,7 +224,7 @@ export const SectionEvents = () => {
                 </div>
               </div>
 
-              {/* date */}
+              {/* Start and end date inputs */}
               <div className="flex gap-2">
                 <div className="flex-1">
                   <label className="mb-1 block text-sm font-medium text-gray-700">Começa em</label>
@@ -244,7 +245,7 @@ export const SectionEvents = () => {
                 </div>
               </div>
 
-              {/* description */}
+              {/* Description textarea */}
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-700">Descrição</label>
                 <textarea
@@ -258,7 +259,7 @@ export const SectionEvents = () => {
                 )}
               </div>
 
-              {/* button */}
+              {/* Submit button */}
               <div>
                 <button
                   type="submit"
@@ -272,7 +273,7 @@ export const SectionEvents = () => {
         </div>
       )}
 
-      {/* Cards */}
+      {/* Events cards grid */}
       <div className="mt-4 grid min-h-[80vh] w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-10">
         {events ? (
           events.length > 0 ? (

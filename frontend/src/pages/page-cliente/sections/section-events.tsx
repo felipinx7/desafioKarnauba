@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { getAllEvents } from '@/services/routes/getAllEvents'
-import { dataEventDTO } from '@/dto/data-create-event-DTO'
-import { dataCardEvent } from '@/dto/data-card-event'
+import { getAllEvents } from '@/services/routes/events/get-all-events'
+import { dataEventDTO } from '@/dto/event/data-create-event-DTO'
+import { dataCardEvent } from '@/dto/event/data-card-event-client-page-DTO'
 import { CardEvent } from '../components/card-event'
 import { ModalEvents } from '../components/modal-events'
 
@@ -40,8 +40,8 @@ export const SectionEvents = () => {
   return (
     <section className="w-full" id="events">
       <div className="m-auto max-w-[1280px]">
-        <h1 className="text-[2rem] font-[700]">Conheça os melhores eventos da cidade</h1>
-        <p className="text-[1.1rem] text-[400]">
+        <h1 className="text-[2rem] text-primargreen font-[700]">Conheça os melhores eventos da cidade</h1>
+        <p className="text-[1.1rem] text-primargreen font-[400]">
           Participe da cultura da cidade participando dos melhores eventos
         </p>
         <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -1,19 +1,19 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { NameAdminstrative } from '../components/layouts/name-adm'
+import { NameAdminstrative } from '../components/layouts/header-info-adm'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { DataPlaces } from '@/dto/data-create-places-DTO'
-import { createPlace } from '@/services/routes/createLocation'
+import { DataPlaces } from '@/dto/places/data-create-places-DTO'
 import { placeSchema } from '@/schemas/places-schema'
 import { IconClosed } from '@/assets/icons/icone-closed'
 import { CardPlaces } from '../components/layouts/card-places'
-import { getInfoCity } from '@/services/routes/getInfoCity'
-import { CardPlacesDTO } from '@/dto/data-card-placesDTO'
-import { DeletePlace } from '@/services/routes/delete-place'
+import { getInfoCity } from '@/services/routes/city/get-info-city'
+import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
+import { DeletePlace } from '@/services/routes/places/delete-place'
 import { formatPhoneNumber } from '@/utils/formatPhone'
+import { createPlace } from '@/services/routes/places/create-places'
 
 export const SectionLocation = () => {
   const [valuePhone, setValuePhone] = useState('')

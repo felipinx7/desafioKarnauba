@@ -15,9 +15,9 @@ import { IconClosed } from '@/assets/icons/icone-closed'
 import { backgroundloginpage } from '@/assets/image'
 import { IoClose } from 'react-icons/io5'
 
-import { CardEventAndLocationProps } from '@/dto/data-card-event-DTO'
+import { CardEventPageAdministrative } from '@/dto/event/data-card-event-DTO'
 import { eventSchema } from '@/schemas/event-schema'
-import { udpateEvent } from '@/services/routes/update-event'
+import { udpateEvent } from '@/services/routes/events/update-event'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
 
 export const CardEventAndLocation = ({
@@ -31,7 +31,7 @@ export const CardEventAndLocation = ({
   active,
   instagram,
   location,
-}: CardEventAndLocationProps) => {
+}: CardEventPageAdministrative) => {
   const [showModal, setShowModal] = useState(false)
   const [previewImages, setPreviewImages] = useState<string[]>([])
 

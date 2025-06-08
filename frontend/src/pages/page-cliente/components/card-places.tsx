@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { backgroundclientpage, backgroundloginpage } from '@/assets/image'
-import { CardPlacesDTO } from '@/dto/data-card-placesDTO'
+import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
 import { ModalLocation } from './modal-places'
 import { useState } from 'react'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
@@ -19,7 +19,7 @@ export function CardPLaces(data: CardPlacesDTO) {
     <>
       <article
         onClick={handleShowModal}
-        className="group flex h-[316px] w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg"
+        className="group flex max-sm:w-full h-[316px] w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg"
       >
         <div className="relative h-[70%] w-full overflow-hidden bg-primarygray">
           <img

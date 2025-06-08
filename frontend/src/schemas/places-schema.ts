@@ -4,7 +4,7 @@ export const placeSchema = z.object({
   name: z.string({ required_error: 'Name is required' }).regex(/^[^<>]*$/, 'Sem tags HTML'),
   phone: z
     .string()
-    .max(14)
+    .max(15)
     .regex(/^[^<>]*$/, 'Sem tags HTML')
     .optional(),
   instagram: z

@@ -5,5 +5,7 @@ export const getAllPlaces = async () => {
     const response = await api.get('/places')
     console.log('Resposta da API', response.data)
     return response.data
-  } catch (error) {}
+  } catch (error) {
+    console.log('Error ao Pegar todas os Lugares', error)
+  }
 }

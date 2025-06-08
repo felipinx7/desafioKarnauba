@@ -1,4 +1,4 @@
-import { Photo } from "./data-photo-DTO"
+import { Photo } from "../photo/data-photo-DTO"
 
 export interface CardPlacesDTO {
   id: string

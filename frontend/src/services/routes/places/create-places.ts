@@ -1,5 +1,5 @@
 import { api } from '@/config/axios'
-import { DataPlaces } from '@/dto/data-create-places-DTO'
+import { DataPlaces } from '@/dto/places/data-create-places-DTO'
 
 export const createPlace = async (data: DataPlaces) => {
   try {

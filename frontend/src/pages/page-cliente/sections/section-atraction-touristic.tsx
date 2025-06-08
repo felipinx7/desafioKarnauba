@@ -1,9 +1,9 @@
 'use client'
 
-import { getAllPlaces } from '@/services/routes/get-all-places'
+import { getAllPlaces } from '@/services/routes/places/get-all-places'
 import { CardPLaces } from '../components/card-places'
 import { useEffect, useState } from 'react'
-import { CardPlacesDTO } from '@/dto/data-card-placesDTO'
+import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
 
 export const SectionAtractionTouristic = () => {
   const [infoPlaces, setInfoPlaces] = useState<CardPlacesDTO[]>([])
@@ -23,8 +23,8 @@ export const SectionAtractionTouristic = () => {
       className="flex w-full max-w-[1280px] flex-col items-start justify-start gap-5"
     >
       <div className="w-full">
-        <h1 className="text-[2rem] font-[700]">Principais Pontos de Interesse Turístico</h1>
-        <p className="text-[1.1rem] text-[400]">
+        <h1 className="text-[2rem] text-primargreen font-[700]">Principais Pontos de Interesse Turístico</h1>
+        <p className="text-[1.1rem] text-primargreen font-[400]">
           Conheça os destinos preferidos por quem valoriza cultura, natureza e lazer.
         </p>
       </div>

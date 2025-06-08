@@ -1,5 +1,5 @@
 import { backgroundloginpage } from '@/assets/image'
-import { CardPlacesDTO } from '@/dto/data-card-placesDTO'
+import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
 
 export function BaseUrlPlaces(photoURL: string, props: CardPlacesDTO) {
   const photoUrl =

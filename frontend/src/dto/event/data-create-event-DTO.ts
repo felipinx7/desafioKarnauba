@@ -1,3 +1,4 @@
+//  Data of Created Event ( PAGE ADMINISTRATIVE )
 export interface dataEventDTO {
   name: string
   date: string

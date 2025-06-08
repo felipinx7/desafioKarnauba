@@ -1,13 +1,13 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { NameAdminstrative } from '../components/layouts/name-adm'
-import { getInfoCity } from '@/services/routes/getInfoCity'
-import { updateCity } from '@/services/routes/update-city'
-import { DataInfoCityDTO } from '@/dto/data-info-city-DTO'
+import { NameAdminstrative } from '../components/layouts/header-info-adm'
+import { getInfoCity } from '@/services/routes/city/get-info-city'
+import { updateCity } from '@/services/routes/city/update-city'
+import { DataInfoCityDTO } from '@/dto/city/data-info-city-DTO'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
 import { backgroundloginpage } from '@/assets/image'
-import { updateCityImage } from '@/services/routes/update-city-image'
+import { updateCityImage } from '@/services/routes/city/update-city-image'
 import Image from 'next/image'
 
 export const SectionCity = () => {
