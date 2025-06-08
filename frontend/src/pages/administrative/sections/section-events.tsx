@@ -100,7 +100,7 @@ export const SectionEvents = () => {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Digite o nome do evento."
+            placeholder="Pesquise pelo evento"
             className="w-full rounded-[1rem] bg-primarygray p-5 outline-none focus:border-2 focus:border-primargreen"
           />
           <button
