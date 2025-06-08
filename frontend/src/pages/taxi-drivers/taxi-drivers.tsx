@@ -33,7 +33,7 @@ export const SectionTaxiPage = () => {
         </div>
       </header>
 
-      <div className="m-0 grid max-w-[1280px] grid-cols-[repeat(auto-fit,minmax(280,1fr))] gap-[10px] p-4">
+      <div className="m-0 grid max-w-[1280px] grid-cols-[repeat(auto-fit,minmax(280,1fr))] gap-12 p-4 max-sm:grid-cols-1 ">
         {taxistas.map((taxista) => (
           <CardTaxi key={taxista.whatsapp} {...taxista} />
         ))}
