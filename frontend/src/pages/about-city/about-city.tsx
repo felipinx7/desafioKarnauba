@@ -17,7 +17,6 @@ import 'swiper/css/pagination'
 import { Navigation, Pagination } from 'swiper/modules'
 import { IconWhatsapp } from '@/assets/icons/icone-whatsapp'
 import { useRouter } from 'next/navigation'
-import { IconArrowLeft } from '@/assets/icons/icon-arrow-left'
 
 export const AboutCity = () => {
   const router = useRouter()
@@ -38,12 +37,26 @@ export const AboutCity = () => {
             className="flex items-center gap-2 rounded-full px-4 py-1.5 font-semibold text-white"
             aria-label="Voltar"
           >
-            <span>
-              <IconArrowLeft />
+            <span className="">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="h-6 w-6 text-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                />
+              </svg>
             </span>
           </button>
         </div>
       </div>
+
 
       <div className="m-auto w-full max-w-[1280px] px-4 py-8">
         {/* Swiper com imagens da cidade */}

@@ -1,8 +1,16 @@
+"use client"
+
 import { dataInfoTaxi } from '@/dto/taxi/data-taxi-DTO'
 import { CardTaxi } from './components/card-taxi'
 import { IconArrowLeft } from '@/assets/icons/icon-arrow-left'
+import { useRouter } from 'next/navigation'
 
 export const SectionTaxiPage = () => {
+  const router = useRouter()
+
+  const handleBackPage = () => {
+    router.back()
+  }
   const taxistas: dataInfoTaxi[] = [
     {
       name: 'João Silva',
@@ -26,10 +34,13 @@ export const SectionTaxiPage = () => {
     <section className="flex flex-col items-center justify-start">
       <header className="font-poppins flex w-full items-start justify-start bg-[#194A99] px-4 py-6 text-white">
         <div className="mx-auto flex w-full max-w-6xl cursor-pointer items-center gap-2 text-left">
-          <h1 className="text-2xl font-semibold lg:text-[1.3rem] flex items-center gap-3">
+          <h1
+            onClick={handleBackPage}
+            className="flex w-auto items-center gap-3 text-2xl font-semibold lg:text-[1rem]"
+          >
             <IconArrowLeft />
-            Área Taxista
           </h1>
+          <p className="w-auto">Área Taxista</p>
         </div>
       </header>
 
