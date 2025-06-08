@@ -83,7 +83,8 @@ export class IPrismaCityRepository implements ICityRepository {
             include: {
                 places: {
                     include: {
-                        photos: true
+                        photos: true,
+                        rooms: true
                     }
                 },
                 events: {

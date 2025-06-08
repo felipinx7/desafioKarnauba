@@ -57,7 +57,8 @@ export class IPrismaPlaceRepository implements IPlaceRepository {
         const place = await prisma.place.findUnique({
             where: { id },
             include: {
-                photos: true
+                photos: true,
+                rooms: true,
             }
         })
 
@@ -67,7 +68,8 @@ export class IPrismaPlaceRepository implements IPlaceRepository {
     async getAllPlaces(): Promise<Place[]> {
         const places = await prisma.place.findMany({
             include: {
-                photos: true
+                photos: true,
+                rooms: true,
             }
         })
 

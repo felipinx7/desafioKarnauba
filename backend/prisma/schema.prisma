@@ -12,6 +12,7 @@ enum Category {
   HOTEL
   TOURIST_ATTRACTIONS
   LANDSCAPE
+  HOSTING
 }
 
 model Admin {
@@ -49,6 +50,15 @@ model Place {
   category    Category
   cityId      String
   city        City     @relation(fields: [cityId], references: [id])
+  rooms       Room[]
+}
+
+model Room {
+  id          String   @id
+  price       Float
+  available   Boolean @default(true)
+  placeId     String
+  place       Place    @relation(fields: [placeId], references: [id])
 }
 
 model Event {

@@ -1,4 +1,4 @@
-import { Category } from "@prisma/client";
+import { Category, Room } from "@prisma/client";
 import { PhotoDTO } from "../../infra/dto/photoDTO";
 
 export class Place {
@@ -12,5 +12,6 @@ export class Place {
         public phone: string | null,
         public instagram: string |null,
         public photos?: PhotoDTO[],
+        public rooms?: Room[]
     ){}
 }
