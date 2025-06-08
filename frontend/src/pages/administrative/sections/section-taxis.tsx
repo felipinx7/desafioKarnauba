@@ -15,7 +15,7 @@ import { DeletePlace } from '@/services/routes/places/delete-place'
 import { formatPhoneNumber } from '@/utils/formatPhone'
 import { createPlace } from '@/services/routes/places/create-places'
 
-export const SectionLocation = () => {
+export const SectionTaxi = () => {
   const [valuePhone, setValuePhone] = useState('')
   const [isVisibility, setIsVisibility] = useState(false)
   const [showPlaces, setShowPlaces] = useState<CardPlacesDTO[] | null>(null)
@@ -90,7 +90,7 @@ export const SectionLocation = () => {
       <div className="relative w-[80%] max-lg:w-full">
         <input
           type="text"
-          placeholder="Pesquise pelo local"
+          placeholder="Pesquise pelo taxi"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           className="w-[100%] rounded-[1rem] bg-primarygray p-5 outline-none focus:border-[2px] focus:border-primargreen"
@@ -108,7 +108,7 @@ export const SectionLocation = () => {
         onClick={handleVisibility}
         className="mt-4 rounded bg-primargreen p-3 font-bold text-white"
       >
-        Adicionar um Local
+        Adicionar um Taxi
       </button>
 
       {/* Modal */}
@@ -273,7 +273,7 @@ export const SectionLocation = () => {
             />
           ))
         ) : (
-          <p className="col-span-full text-center">Nenhum local encontrado.</p>
+          <p className="col-span-full text-center">Nenhum taxi encontrado.</p>
         )}
       </div>
     </section>
