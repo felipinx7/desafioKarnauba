@@ -7,5 +7,6 @@ export const getAllPlaces = async () => {
     return response.data
   } catch (error) {
     console.log('Error ao Pegar todas os Lugares', error)
+    return null
   }
 }

@@ -1,10 +1,9 @@
 import { backgroundclientpage, backgroundloginpage } from '@/assets/image'
-import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
-import { ModalLocation } from './modal-places'
 import { useState } from 'react'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
+import { dataInfoTaxi } from '@/dto/taxi/data-taxi-DTO'
 
-export function CardPLaces(data: CardPlacesDTO) {
+export function CardTaxi(data: dataInfoTaxi) {
   const [showModal, setShowModal] = useState(false)
 
   const handleShowModal = () => {
@@ -12,13 +11,13 @@ export function CardPLaces(data: CardPlacesDTO) {
     console.log('Valor do Estado:', showModal)
   }
 
-  const photoURL = baseUrlPhoto('place', data.photos[0].url)
+  const photoURL = baseUrlPhoto('place', data.photoURL[0])
   console.log('photo dos lugar: ', photoURL)
   return (
     <>
       <article
         onClick={handleShowModal}
-        className="group flex max-sm:w-full h-[316px] w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg"
+        className="group flex h-[316px] w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg max-sm:w-full"
       >
         <div className="relative h-[70%] w-full overflow-hidden bg-primarygray">
           <img
@@ -31,24 +30,10 @@ export function CardPLaces(data: CardPlacesDTO) {
 
         <div className="flex flex-1 flex-col gap-2 p-4">
           <h6 className="line-clamp-2 text-xl font-semibold text-black">{data.name}</h6>
-          <p className="line-clamp-3 text-sm text-gray-700">{data.description}</p>
+          <p className="line-clamp-3 text-sm text-gray-700">Instagram: {data.instagram}</p>
+          <p className="line-clamp-3 text-sm text-gray-700">Whatsapp: {data.whatsapp}</p>
         </div>
       </article>
-
-      <ModalLocation
-        cityId={data.cityId}
-        description={data.description}
-        id={data.id}
-        phone={data.phone}
-        instagram={data.instagram}
-        photos={photoURL}
-        handleDeleteEvent={handleShowModal}
-        key={data.id}
-        location={data.location}
-        name={data.name}
-        onClose={handleShowModal}
-        showModal={showModal}
-      />
     </>
   )
 }
