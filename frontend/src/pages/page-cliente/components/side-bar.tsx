@@ -19,8 +19,10 @@ export const SideBarCliente = () => {
         <Image src={logomonocromatic} width={200} alt="logo do sistema" />
         <nav className="flex gap-8 text-[1.2rem] font-semibold text-white">
           <a href="#home">Início</a>
+          <a href="/taxi">Taxistas</a>
           <a href="#explorer">Explorar</a>
           <a href="/about-city">Sobre a cidade</a>
+          
         </nav>
       </div>
 
@@ -66,12 +68,18 @@ export const SideBarCliente = () => {
           <a href="#home" onClick={handleToggleMenu}>
             Início
           </a>
+          <a href="/taxi">
+           Taxistas
+
+          </a>
           <a href="#explorer" onClick={handleToggleMenu}>
             Explorar
           </a>
+
           <a href="/about-city" onClick={handleToggleMenu}>
             Sobre a cidade
           </a>
+
         </nav>
       </div>
 

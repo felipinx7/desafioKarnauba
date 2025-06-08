@@ -29,11 +29,6 @@ export const LinksButtonPageCliente: LinksButtonPageClienteProps[] = [
     href: '#hotel',
   },
   {
-    name: 'Taxistas',
-    Icon: IconTaxi,
-    href: '/taxi',
-  },
-  {
     name: 'Atração Turisticas',
     Icon: IconCamera,
     href: '#atraction',
