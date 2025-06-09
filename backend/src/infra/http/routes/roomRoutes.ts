@@ -11,7 +11,7 @@ export function findAllRooms(fastify: FastifyInstance){
 }
 
 export function findAvailableRooms(fastify: FastifyInstance){
-    fastify.get("/room/available", {preHandler: authMiddleware}, (req, res) => roomInstance.findAvailableRooms({req, res}));
+    fastify.get("/rooms/available", {preHandler: authMiddleware}, (req, res) => roomInstance.findAvailableRooms({req, res}));
 }
 
 export function findUniqueRoom(fastify: FastifyInstance){

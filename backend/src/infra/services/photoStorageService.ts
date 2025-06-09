@@ -12,12 +12,14 @@ export class PhotoStorageService implements PhotoStorageInterface{
     private uploadsCity = join(this.uploads, "city");
     private uploadsEvent = join(this.uploads, "event");
     private uploadsPlace = join(this.uploads, "place");
+    private uploadsTaxiDrivers = join(this.uploads, "taxiDrivers");
 
     constructor(){
         if(!existsSync(this.uploads)) mkdirSync(this.uploads);
         if(!existsSync(this.uploadsCity)) mkdirSync(this.uploadsCity);
         if(!existsSync(this.uploadsEvent)) mkdirSync(this.uploadsEvent);
         if(!existsSync(this.uploadsPlace)) mkdirSync(this.uploadsPlace);
+        if(!existsSync(this.uploadsTaxiDrivers)) mkdirSync(this.uploadsTaxiDrivers);
     };
 
 
@@ -27,6 +29,7 @@ export class PhotoStorageService implements PhotoStorageInterface{
             city: this.uploadsCity,
             event: this.uploadsEvent,
             place: this.uploadsPlace,
+            taxiDrivers: this.uploadsTaxiDrivers
         };
         const typePath = uploadPaths[type as keyof typeof uploadPaths];
         if (!typePath) throw new ServerError("Invalid upload type", 400)
