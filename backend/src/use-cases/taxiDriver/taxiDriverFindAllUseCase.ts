@@ -1,15 +1,15 @@
 import { FastifyRequest } from "fastify";
+import { ITaxiDriverRepository } from "../../domain/repositorys/ITaxiDriverRepository";
+import { ServerError } from "../../infra/utils/serverError";
 import { IAdminRepository } from "../../domain/repositorys/IAdminRepository";
 import { ICityRepository } from "../../domain/repositorys/ICityRepository";
-import { IEventRepository } from "../../domain/repositorys/IEventRepository";
-import { ServerError } from "../../infra/utils/serverError";
 
-export class EventFindAllUseCase {
+export class TaxiDriverFindAllUseCase {
     constructor(
-        private eventRepository: IEventRepository,
+        private readonly taxiDriverRepository: ITaxiDriverRepository,
         private readonly adminRepository: IAdminRepository,
-        private readonly cityRepository: ICityRepository
-    ){}
+        private readonly cityRepository: ICityRepository,
+    ) {}
 
     async execute(req: FastifyRequest) {
         const admin = req.user;
@@ -21,12 +21,9 @@ export class EventFindAllUseCase {
         const isCityExist = await this.cityRepository.findUnique(isAdminExist.cityId);
         if (!isCityExist) throw new ServerError("City not found", 404);
 
-        const events = await this.eventRepository.getAllEvents(isCityExist.id);
-        const eventsLength = events.length > 0;
-        
-        if (!events) throw new ServerError("No events found", 404);
-        if (!eventsLength) throw new ServerError("No events found", 404);
-        
-        return events;
+        const taxiDrivers = await this.taxiDriverRepository.getAllTaxiDriversByCityId(isCityExist.id);
+        if (!taxiDrivers || taxiDrivers.length === 0) throw new Error("No taxi drivers found");
+
+        return taxiDrivers;
     }
 }

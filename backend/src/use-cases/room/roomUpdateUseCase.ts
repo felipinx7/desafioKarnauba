@@ -17,7 +17,6 @@ export class RoomUpdateUseCase {
         const isRoomExist = await this.roomRepository.findById(id);
         if (!isRoomExist) throw new ServerError("Room not found", 404);
 
-
         updateDefineFields(isRoomExist, parsedData.data);
         await this.roomRepository.updateRoom(isRoomExist);
 

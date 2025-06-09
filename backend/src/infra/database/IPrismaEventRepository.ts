@@ -65,8 +65,9 @@ export class IPrismaEventRepository implements IEventRepository {
         return event;
     }
 
-    async getAllEvents(): Promise<Events[]> {
+    async getAllEvents(cityId: string): Promise<Events[]> {
         const events = await prisma.event.findMany({
+            where: { cityId },
             include: {
                 photos: true
             }

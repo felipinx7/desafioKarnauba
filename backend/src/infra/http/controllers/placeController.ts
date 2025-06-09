@@ -57,7 +57,7 @@ export class PlaceController {
     }
 
     async findAll(fastify: FastifyContextDTO) {
-        const places = await this.findAllUseCase.execute();
+        const places = await this.findAllUseCase.execute(fastify.req);
         fastify.res.send(places)
     }
 
