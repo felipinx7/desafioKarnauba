@@ -1,27 +1,13 @@
-import { FastifyRequest } from "fastify";
-import { IAdminRepository } from "../../domain/repositorys/IAdminRepository";
-import { ICityRepository } from "../../domain/repositorys/ICityRepository";
 import { IEventRepository } from "../../domain/repositorys/IEventRepository";
 import { ServerError } from "../../infra/utils/serverError";
 
 export class EventFindAllUseCase {
     constructor(
         private eventRepository: IEventRepository,
-        private readonly adminRepository: IAdminRepository,
-        private readonly cityRepository: ICityRepository
     ){}
 
-    async execute(req: FastifyRequest) {
-        const admin = req.user;
-        if (!admin) throw new ServerError("Unauthorized", 401);
-
-        const isAdminExist = await this.adminRepository.getAdminById(admin.id);
-        if (!isAdminExist?.cityId) throw new ServerError("Admin does not have a city", 404);
-
-        const isCityExist = await this.cityRepository.findUnique(isAdminExist.cityId);
-        if (!isCityExist) throw new ServerError("City not found", 404);
-
-        const events = await this.eventRepository.getAllEvents(isCityExist.id);
+    async execute() {
+        const events = await this.eventRepository.getAllEvents();
         const eventsLength = events.length > 0;
         
         if (!events) throw new ServerError("No events found", 404);

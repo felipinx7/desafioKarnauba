@@ -6,7 +6,7 @@ export interface IEventRepository {
     updateEvent(data: Events): Promise<Events | null>;
     deleteEvent(id: string): Promise<Events | null>;
     getEventById(id: string): Promise<Events | null>;
-    getAllEvents(cityId: string): Promise<Events[]>;
+    getAllEvents(): Promise<Events[]>;
     findAvailableEvents(): Promise<Events[]>;
     updatePhoto(photoId: string, photoURLs: string): Promise<Photo | null>;
     findPhoto(photoId: string): Promise<Photo | null>;

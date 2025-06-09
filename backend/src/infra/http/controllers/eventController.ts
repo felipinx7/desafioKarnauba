@@ -51,7 +51,7 @@ export class EventController {
     }
 
     async findAll(fastify: FastifyContextDTO) {
-        const events = await this.findAllUseCase.execute(fastify.req);
+        const events = await this.findAllUseCase.execute();
         fastify.res.send({...events})
     }
 

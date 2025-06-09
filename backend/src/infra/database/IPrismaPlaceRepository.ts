@@ -65,9 +65,8 @@ export class IPrismaPlaceRepository implements IPlaceRepository {
         return place;
     }
 
-    async getAllPlaces(cityId: string): Promise<Place[]> {
+    async getAllPlaces(): Promise<Place[]> {
         const places = await prisma.place.findMany({
-            where: {cityId},
             include: {
                 photos: true,
                 rooms: true,

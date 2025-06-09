@@ -6,7 +6,7 @@ export interface IPlaceRepository {
     updatePlace(data: Place): Promise<Place | null>;
     deletePlace(id: string): Promise<Place | null>;
     getPlaceById(id: string): Promise<Place | null>;
-    getAllPlaces(cityId: string): Promise<Place[]>;
+    getAllPlaces(): Promise<Place[]>;
     getPlacesByCategory(category: Category): Promise<Place[]>;
     updatePhoto(photoId: string, photoURLs: string): Promise<Photo | null>;
     findPhoto(photoId: string): Promise<Photo | null>;
