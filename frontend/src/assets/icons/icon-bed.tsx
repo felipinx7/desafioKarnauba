@@ -1,4 +1,4 @@
-export const IconFork = () => {
+export const IconBed = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -11,8 +11,10 @@ export const IconFork = () => {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-      <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+      <path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" />
+      <path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" />
+      <path d="M12 4v6" />
+      <path d="M2 18h20" />
     </svg>
   )
 }

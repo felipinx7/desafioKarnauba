@@ -1,5 +1,4 @@
-import { Photo } from '@/dto/data-photo-DTO'
-import { City } from '@/dto/data-places-DTO'
+import { dataPlaceDTO } from '@/dto/places/data-places-DTO'
 import { StaticImageData } from 'next/image'
 
 export interface BaseLocation {
@@ -20,7 +19,7 @@ export interface Event extends BaseLocation {
 
 export interface Place extends BaseLocation {
   photos: StaticImageData
-  city: City
+  city: dataPlaceDTO
   categories: string[]
 }
 

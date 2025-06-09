@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { CardPLaces } from '../components/card-places'
-import { getAllPlaces } from '@/services/routes/get-all-places'
-import { CardPlacesDTO } from '@/dto/data-card-placesDTO'
+import { getAllPlaces } from '@/services/routes/places/get-all-places'
+import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
 
 export const SectionLandscape = () => {
   const [infoPlaces, setInfoPlaces] = useState<CardPlacesDTO[]>([])
@@ -23,8 +23,8 @@ export const SectionLandscape = () => {
       className="flex w-full max-w-[1280px] flex-col items-start justify-start gap-5"
     >
       <div className="w-full">
-        <h1 className="text-[2rem] font-[700]">Conheça a beleza da Natureza</h1>
-        <p className="text-[1.1rem] text-[400]">
+        <h1 className="text-[2rem] text-primargreen font-[700]">Conheça a beleza da Natureza</h1>
+        <p className="text-[1.1rem] text-primargreen font-[400]">
           Conheça os lugares ideais para quem valoriza paisagens naturais, tranquilidade e contato
           com a natureza
         </p>

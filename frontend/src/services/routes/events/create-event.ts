@@ -1,5 +1,5 @@
 import { api } from '@/config/axios'
-import { dataEventDTO } from '@/dto/data-create-event-DTO'
+import { dataEventDTO } from '@/dto/event/data-create-event-DTO'
 
 export const createEvent = async (data: dataEventDTO) => {
   try {

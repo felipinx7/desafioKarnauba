@@ -1,5 +1,5 @@
 import { api } from '@/config/axios'
-import { AdminDTO } from '@/dto/adminDTO'
+import { AdminDTO } from '@/dto/admin/admin-data-DTO'
 
 export const getAdmin = async (): Promise<AdminDTO | null> => {
   try {

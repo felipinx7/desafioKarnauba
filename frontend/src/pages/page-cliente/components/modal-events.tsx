@@ -5,10 +5,11 @@ import { SideBarCliente } from './side-bar'
 import { backgroundloginpage } from '@/assets/image'
 import { IconInstagram } from '@/assets/icons/icon-instagram'
 import { IconClosed } from '@/assets/icons/icone-closed'
-import { dataCardEvent } from '@/dto/data-card-event'
 import { FC, useEffect, useState } from 'react'
-import { getAllEvents } from '@/services/routes/getAllEvents'
+import { getAllEvents } from '@/services/routes/events/get-all-events'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
+import { dataCardEventClientPage } from '@/dto/event/data-card-event-client-page-DTO'
+import { IconArrowLeft } from '@/assets/icons/icon-arrow-left'
 
 // Interface para dados da cidade
 interface DataCityInfo {
@@ -18,7 +19,7 @@ interface DataCityInfo {
   location: string
 }
 
-interface ModalEventsProps extends dataCardEvent {
+interface ModalEventsProps extends dataCardEventClientPage {
   onClose: () => void
   showModal: boolean
 }
@@ -32,7 +33,7 @@ export const ModalEvents: FC<ModalEventsProps> = ({
   onClose,
   showModal,
 }) => {
-  const [placesSimilar, setPlacesSimilar] = useState<dataCardEvent[]>([])
+  const [placesSimilar, setPlacesSimilar] = useState<dataCardEventClientPage[]>([])
   const [infoCity, setInfoCity] = useState<DataCityInfo | null>(null)
 
   useEffect(() => {
@@ -69,19 +70,25 @@ export const ModalEvents: FC<ModalEventsProps> = ({
 
   return (
     <section className="fixed inset-0 z-[999] h-screen w-full overflow-y-auto bg-white">
+      <div className="flex items-center justify-center bg-primargreen px-4 py-3">
+        <div className="m-0 flex w-[100%] max-w-[1280px] flex-row-reverse items-center justify-end">
+          {/* Título */}
+          <h2 className="text-xl font-bold text-white">{name}</h2>
+
+          {/* Botão de voltar/fechar */}
+          <button
+            onClick={onClose}
+            className="flex items-center gap-2 rounded-full px-4 py-1.5 font-semibold text-white"
+            aria-label="Voltar"
+          >
+            <span>
+              <IconArrowLeft />
+            </span>
+          </button>
+        </div>
+      </div>
+
       <div className="m-auto w-full max-w-[1280px] px-4 py-8">
-        <button
-          onClick={onClose}
-          className="flex h-[40px] w-[40px] items-center justify-center gap-2"
-        >
-          <div className="text-[1.4rem]">
-            <IconClosed />
-          </div>
-          <p className="text-[1.5rem]">Fechar</p>
-        </button>
-
-        <SideBarCliente />
-
         {/* Main image */}
         <div className="max-h-[400px] w-full overflow-hidden rounded-xl">
           <Image

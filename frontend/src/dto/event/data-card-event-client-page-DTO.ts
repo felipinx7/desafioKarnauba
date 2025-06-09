@@ -1,6 +1,7 @@
-import { Photo } from "./data-photo-DTO"
+import { Photo } from '../photo/data-photo-DTO'
 
-export interface dataCardEvent {
+// Data of Card Event ( CLIENT PAGE )
+export interface dataCardEventClientPage {
   id: string
   name: string
   date: Date

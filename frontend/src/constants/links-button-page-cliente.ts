@@ -1,7 +1,9 @@
+import { IconBed } from '@/assets/icons/icon-bed'
 import { IconCalendary } from '@/assets/icons/icon-calendary'
-import { IconeCifraMusica } from '@/assets/icons/icon-cifra-musica'
+import { IconCamera } from '@/assets/icons/icon-camera'
 import { IconFork } from '@/assets/icons/icon-fork'
-import { IconePaisage } from '@/assets/icons/icon-paisage'
+import { IconMontain } from '@/assets/icons/icon-montain'
+import { IconTaxi } from '@/assets/icons/icon-taxi'
 import React from 'react'
 
 interface LinksButtonPageClienteProps {
@@ -12,24 +14,28 @@ interface LinksButtonPageClienteProps {
 
 export const LinksButtonPageCliente: LinksButtonPageClienteProps[] = [
   {
+    name: 'Destinos',
+    Icon: IconMontain,
+    href: '#destination',
+  },
+  {
     name: 'Restaurantes',
     Icon: IconFork,
-    href: "#restaurant"
+    href: '#restaurant',
+  },
+  {
+    name: 'Hospedagens',
+    Icon: IconBed,
+    href: '#hotel',
   },
   {
     name: 'Atração Turisticas',
-    Icon: IconeCifraMusica,
-    href: "#atraction"
-
+    Icon: IconCamera,
+    href: '#atraction',
   },
   {
     name: 'Eventos',
     Icon: IconCalendary,
-    href: "#events"
-  },
-  {
-    name: 'Paisagens',
-    Icon: IconePaisage,
-    href: "#landscape"
+    href: '#events',
   },
 ]

@@ -1,6 +1,7 @@
-import { Photo } from './data-photo-DTO'
+import { Photo } from '../photo/data-photo-DTO'
 
-export interface CardEventAndLocationProps {
+//  Data of Card Event ( PAGE ADMINISTRATIVE )
+export interface CardEventPageAdministrative {
   id: string
   name: string
   date: string

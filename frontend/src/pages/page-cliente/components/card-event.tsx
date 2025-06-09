@@ -1,26 +1,26 @@
 import Image from 'next/image'
-import { dataCardEvent } from '@/dto/data-card-event'
+import { dataCardEventClientPage } from '@/dto/event/data-card-event-client-page-DTO'
 import { backgroundclientpage } from '@/assets/image'
 import { ModalEvents } from './modal-events'
 import { useState } from 'react'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
 
-export function CardEvent(data: dataCardEvent) {
-  const hasImage = !!backgroundclientpage // Suponha que isso futuramente será dinâmico
+export function CardEvent(data: dataCardEventClientPage) {
+  const hasImage = !!backgroundclientpage
   const [showModal, setShowModal] = useState(false)
 
   const handleShowModal = () => {
     setShowModal((prev) => !prev)
     console.log('Valor do Estado:', showModal)
   }
-  
+
   const photoURL = baseUrlPhoto('event', data.photoURLs)
 
   return (
-    <div className="">
+    <div>
       <article
         onClick={handleShowModal}
-        className="group flex w-full max-w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg"
+        className="group flex w-full max-w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg max-sm:w-full max-sm:max-w-full"
       >
         <div className="relative h-[229px] w-full bg-primarygray">
           {hasImage ? (

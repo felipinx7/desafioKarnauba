@@ -12,6 +12,11 @@ import backgroundclientpage from './image-container-page.svg'
 import backgroundfound from './background-nofound.svg'
 import peoplenotfound from './image-404.svg'
 import logomonocromatic from './logo-monocromatica.svg'
+import photomassapeprimary from './photo-massape-primary.jpeg'
+import photomassapesecundary from './photo-massape-secundary.jpeg'
+import photomassapethird from './photo-massape-third.jpeg'
+import photomassapefourth from './photo-massape-fourth.jpeg'
+import photomassapefifth from './photo-massape-fifth.jpeg'
 
 export {
   imageLogo,
@@ -28,4 +33,9 @@ export {
   backgroundfound,
   peoplenotfound,
   logomonocromatic,
+  photomassapeprimary,
+  photomassapesecundary,
+  photomassapethird,
+  photomassapefourth,
+  photomassapefifth,
 }

@@ -5,7 +5,8 @@ import { SideBarAdministrative } from './components/layouts/side-bar'
 import { SectionCity } from './sections/section-city'
 import { SectionEvents } from './sections/section-events'
 import { SectionLocation } from './sections/section-location'
-import { NameAdminstrative } from './components/layouts/name-adm'
+import { SectionTaxi } from './sections/section-taxis'
+import { NameAdminstrative } from './components/layouts/header-info-adm'
 
 export const PageAdiminstrative = () => {
   const [activeSection, setActiveSection] = useState('city')
@@ -23,6 +24,7 @@ export const PageAdiminstrative = () => {
         {activeSection === 'city' && <SectionCity />}
         {activeSection === 'events' && <SectionEvents />}
         {activeSection === 'location' && <SectionLocation />}
+        {activeSection === 'taxis' && <SectionTaxi />}
       </div>
     </section>
   )

@@ -1,5 +1,5 @@
 import { api } from '@/config/axios'
-import { DataLoginUser } from '@/dto/data-login-user-DTO'
+import { DataLoginUser } from '@/dto/admin/data-login-admin-DTO'
 
 export async function LoginUser(data: DataLoginUser) {
   try {

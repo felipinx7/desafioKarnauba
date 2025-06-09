@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { CardPLaces } from '../components/card-places'
-import { CardPlacesDTO } from '@/dto/data-card-placesDTO'
-import { getAllPlaces } from '@/services/routes/get-all-places'
+import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
+import { getAllPlaces } from '@/services/routes/places/get-all-places'
 
 export function SectionRestaurant() {
   const [infoPlaces, setInfoPlaces] = useState<CardPlacesDTO[]>([])
@@ -11,6 +11,7 @@ export function SectionRestaurant() {
   useEffect(() => {
     const fetchPlaces = async () => {
       const response = await getAllPlaces()
+      
       setInfoPlaces(response)
     }
 
@@ -23,8 +24,10 @@ export function SectionRestaurant() {
       className="flex w-full max-w-[1280px] flex-col items-start justify-start gap-5"
     >
       <div className="w-full">
-        <h1 className="text-[2rem] font-[700]">Principais Restaurantes da Cidade</h1>
-        <p className="text-[1.1rem] text-[400]">
+        <h1 className="text-[2rem] font-[700] text-primargreen">
+          Principais Restaurantes da Cidade
+        </h1>
+        <p className="text-[1.1rem] font-[400] text-primargreen">
           Conheça os restaurantes destaques na nossa cidade
         </p>
       </div>
