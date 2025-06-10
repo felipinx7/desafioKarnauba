@@ -1,3 +1,4 @@
+import { IconBedSmall } from '@/assets/icons/icon-bed-small'
 import { IconCalendar } from '@/assets/icons/icon-calendar'
 import { IconCity } from '@/assets/icons/icon-city'
 import { IconLocation } from '@/assets/icons/icon-location'
@@ -15,4 +16,5 @@ export const LinksSideBarAdministrative: LinksSideBarAdministrativeProps[] = [
   { id: 'events', name: 'Eventos', icon: IconCalendar },
   { id: 'location', name: 'Locais', icon: IconLocation },
   { id: 'taxis', name: 'Taxis', icon: IconTaxi },
+  {id: 'room', name: 'Quarto', icon: IconBedSmall}
 ]

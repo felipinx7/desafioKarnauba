@@ -119,7 +119,6 @@ export const CardEventAndLocation = ({
           alt="Foto de Evento"
           className="h-full w-full rounded-tl-[0.9rem] rounded-tr-[0.9rem] object-cover"
         />
-
         <div className="absolute bottom-0 right-0 flex w-full items-center justify-end gap-3 p-2">
           <button
             onClick={() => handleDeleteEvent?.(id)}

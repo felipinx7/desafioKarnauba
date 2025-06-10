@@ -1,8 +1,7 @@
 export interface dataInfoTaxi {
+  id: string
   name: string
-  photoURL: string
-  instagram: string
-  whatsapp: string
-  dataInicial: string 
-  dataEnd: string
+  photoURLs: string[]
+  phone: string
+  workingDescription: string
 }

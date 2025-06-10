@@ -1,13 +1,6 @@
-'use client'
-import { useRouter } from "next/navigation"
-
 export const IconArrowLeft = () => {
-  const router = useRouter()
-  
-
   return (
     <svg
-    onClick={() => router.back()}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

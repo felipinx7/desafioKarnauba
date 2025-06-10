@@ -1,10 +1,15 @@
+import { backgroundclientpage } from '@/assets/image'
 import { dataInfoTaxi } from '@/dto/taxi/data-taxi-DTO'
+import { baseUrlPhoto } from '@/utils/base-url-photos'
+import Image from 'next/image'
 
 export const CardTaxi = (props: dataInfoTaxi) => {
+  const photoBaseUrl = baseUrlPhoto("taxiDrivers", props.photoURLs[0])
   return (
-    <article className="font-poppins w-[300px] rounded-xl bg-white shadow-lg">
-      <img
-        src={props.photoURL}
+    <article className="w-[300px] rounded-xl bg-white shadow-lg">
+      <Image
+        fill
+        src={photoBaseUrl || backgroundclientpage}
         alt="Foto do taxista"
         className="h-48 w-full rounded-t-xl object-cover"
       />
@@ -19,16 +24,17 @@ export const CardTaxi = (props: dataInfoTaxi) => {
             target="_blank"
             className="text-[#194A99] hover:underline"
           >
-            {props.instagram}
+            {props.phone}
           </a>
         </p>
 
         <p className="text-sm text-gray-700">
-          <strong>Disponível:</strong> {props.dataInicial} ás {props.dataEnd}
+          <strong>Descrição:</strong>
+          {props.workingDescription}
         </p>
 
         <a
-          href={`https://wa.me/${props.whatsapp}`}
+          href={`https://wa.me/${props.phone}`}
           target="_blank"
           className="mt-3 inline-block rounded-lg bg-[#194A99] px-4 py-2 text-center text-white transition hover:bg-[#143d7a]"
         >
