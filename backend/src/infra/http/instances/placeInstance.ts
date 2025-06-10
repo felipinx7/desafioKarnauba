@@ -13,6 +13,7 @@ import { PhotoStorageService } from "../../services/photoStorageService";
 import { PlaceController } from "../controllers/placeController";
 import { Multipart } from "../plugins/multipart";
 import { IPrismaAdminReposotory } from "../../database/IPrismaAdminRepository";
+import { PlaceGetRelatedPlacesByIdUseCase } from "../../../use-cases/place/placegetRelatedPlacesByIdUseCase";
 
 const prismaPlaceRepository = new IPrismaPlaceRepository();
 const photoStorage = new PhotoStorageService();
@@ -28,6 +29,6 @@ const findAllUseCase = new PlaceFindAllUseCase(prismaPlaceRepository);
 const updatePhotoUseCase = new PlaceUpdatePhotoUseCase(prismaPlaceRepository);
 const createPhotoUseCase = new PlaceCreatePhotoUseCase(prismaPlaceRepository);
 const deletePhotoUseCase = new PlaceDeletePhotoUseCase(prismaPlaceRepository);
+const getRelatedPlacesByIdUseCase = new PlaceGetRelatedPlacesByIdUseCase(prismaPlaceRepository);
 
-
-export const placeInstance = new PlaceController(multipart, createPlaceUseCase, updatePlaceUseCase, deletePlaceUseCase, findByCategoryUseCase, findUniqueUseCase, findAllUseCase, updatePhotoUseCase, createPhotoUseCase, deletePhotoUseCase);
+export const placeInstance = new PlaceController(multipart, createPlaceUseCase, updatePlaceUseCase, deletePlaceUseCase, findByCategoryUseCase, findUniqueUseCase, findAllUseCase, updatePhotoUseCase, createPhotoUseCase, deletePhotoUseCase, getRelatedPlacesByIdUseCase);

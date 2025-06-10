@@ -393,3 +393,9 @@ export function placeDeletePhoto(fastify: FastifyInstance) {
         }
     }, (req, res) => placeInstance.deletePhoto({ req, res }))
 }
+
+export function relatedPlacesById(fastify: FastifyInstance) {
+    fastify.get('/place/related/:id', { preHandler: authMiddleware }, (req, res) => 
+        placeInstance.getRelatedPlacesById({ req, res })
+    );
+}

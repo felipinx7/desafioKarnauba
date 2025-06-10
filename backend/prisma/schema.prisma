@@ -56,6 +56,9 @@ model Place {
   phone       String?
   instagram   String?
   location    String
+latitude    Float?
+longitude   Float?
+
   description String
   photos      Photo[]
   category    Category

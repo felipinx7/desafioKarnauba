@@ -7,11 +7,14 @@ export class Place {
         public location: string,
         public description: string,
         public category: Category,
+
         public cityId: string,
         public readonly id: string,
         public phone: string | null,
-        public instagram: string |null,
+        public instagram: string | null,
+        public latitude?: number | null,
+        public longitude?: number | null,
         public photos?: PhotoDTO[],
         public rooms?: Room[]
-    ){}
+    ) { }
 }
