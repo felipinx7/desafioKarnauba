@@ -10,6 +10,7 @@ import { Multipart } from "../plugins/multipart";
 import { PlaceUpdatePhotoUseCase } from "../../../use-cases/place/photo/placeUpdatePhotoUseCase";
 import { PlaceCreatePhotoUseCase } from "../../../use-cases/place/photo/placeCreatePhotoUseCase";
 import { PlaceDeletePhotoUseCase } from "../../../use-cases/place/photo/placeDeletePhotoUseCase";
+import { PlaceGetRelatedPlacesByIdUseCase } from "../../../use-cases/place/placegetRelatedPlacesByIdUseCase";
 
 export class PlaceController {
     constructor(
@@ -22,7 +23,8 @@ export class PlaceController {
         private readonly findAllUseCase: PlaceFindAllUseCase,
         private readonly updatePhotoUseCase: PlaceUpdatePhotoUseCase,
         private readonly createPhotoUseCase: PlaceCreatePhotoUseCase,
-        private readonly deletePhotoUseCase: PlaceDeletePhotoUseCase
+        private readonly deletePhotoUseCase: PlaceDeletePhotoUseCase,
+        private readonly getRelatedPlacesByIdUseCase: PlaceGetRelatedPlacesByIdUseCase
     ) { }
 
     async create(fastify: FastifyContextDTO) {
@@ -80,4 +82,16 @@ export class PlaceController {
         await this.deletePhotoUseCase.execute(id);
         fastify.res.send("Deleted photo");
     }
+
+    async getRelatedPlacesById(fastify: FastifyContextDTO) {
+        const { id } = fastify.req.params as { id: string }
+
+        const relatedPlaces = await this.getRelatedPlacesByIdUseCase.execute(id)
+
+        fastify.res.send({
+            message: `Related places to ${id}`,
+            relatedPlaces,
+        })
+    }
+
 }

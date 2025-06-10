@@ -8,6 +8,8 @@ export interface IPlaceRepository {
     getPlaceById(id: string): Promise<Place | null>;
     getAllPlaces(): Promise<Place[]>;
     getPlacesByCategory(category: Category): Promise<Place[]>;
+    getRelatedPlacesById(id: string): Promise<Place[]>
+    getPlacesByCategoryExcludingId(category: string, excludeId: string): Promise<Place[]>
     updatePhoto(photoId: string, photoURLs: string): Promise<Photo | null>;
     findPhoto(photoId: string): Promise<Photo | null>;
     createPhoto(id: string, photoURLs: string, idPlace): Promise<Photo | null>;
