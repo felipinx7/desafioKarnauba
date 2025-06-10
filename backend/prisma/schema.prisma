@@ -15,7 +15,7 @@ enum Category {
   HOSTING
 }
 
-model TaxiDrivers {
+model TaxiDriver {
   id        String  @id
   name       String
   photoURLs String
@@ -47,7 +47,7 @@ model City {
   events      Event[]
   adminId     String  @unique
   admin       Admin   @relation(fields: [adminId], references: [id])
-  taxiDrivers TaxiDrivers[]
+  taxiDrivers TaxiDriver[]
 }
 
 model Place {

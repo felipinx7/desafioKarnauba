@@ -4,7 +4,7 @@ import { ITaxiDriverRepository } from "../../domain/repositorys/ITaxiDriverRepos
 
 export class IPrismaTaxiDriverRepository implements ITaxiDriverRepository {
     async createTaxiDriver(taxiDriver: TaxiDriver): Promise<TaxiDriver | null> {
-        const taxiDriverCreated = await prisma.taxiDrivers.create({
+        const taxiDriverCreated = await prisma.taxiDriver.create({
             data: {
                 id: taxiDriver.id,
                 name: taxiDriver.name,
@@ -19,7 +19,7 @@ export class IPrismaTaxiDriverRepository implements ITaxiDriverRepository {
     }
 
     async updateTaxiDriver(taxiDriver: TaxiDriver): Promise<TaxiDriver | null> {
-        const taxiDriverUpdated = await prisma.taxiDrivers.update({
+        const taxiDriverUpdated = await prisma.taxiDriver.update({
             where: { id: taxiDriver.id },
             data: {
                 name: taxiDriver.name,
@@ -33,13 +33,13 @@ export class IPrismaTaxiDriverRepository implements ITaxiDriverRepository {
     }
 
     async deleteTaxiDriver(id: string): Promise<void> {
-        await prisma.taxiDrivers.delete({
+        await prisma.taxiDriver.delete({
             where: { id }
         });
     }
 
     async getTaxiDriverById(id: string): Promise<TaxiDriver | null> {
-        const taxiDriver = await prisma.taxiDrivers.findUnique({
+        const taxiDriver = await prisma.taxiDriver.findUnique({
             where: { id }
         });
 
@@ -47,7 +47,7 @@ export class IPrismaTaxiDriverRepository implements ITaxiDriverRepository {
     }
 
     async getAllTaxiDriversByCityId(cityId: string): Promise<TaxiDriver[]> {
-        const taxiDrivers = await prisma.taxiDrivers.findMany({
+        const taxiDrivers = await prisma.taxiDriver.findMany({
             where: { cityId }
         });
 
