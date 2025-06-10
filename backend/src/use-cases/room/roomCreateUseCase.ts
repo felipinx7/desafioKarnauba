@@ -16,7 +16,7 @@ export class RoomCreateUseCase {
         const parsed = roomSchema.safeParse(data);
         if (!parsed.success) throw new ServerError("Bad request");
 
-        const { price, available,  } = parsed.data;
+        const { price, available, photoURLs, description } = parsed.data;
 
         const place = await this.placeRepository.getPlaceById(placeId);
         if (!place) throw new ServerError("Place not found", 404);
@@ -28,7 +28,8 @@ export class RoomCreateUseCase {
         if (category === "HOSTING" && roomCount >= 1) throw new ServerError("HOSTING places can have only one room", 409);
 
         const id = randomUUID();
-        const room = new Room(id, price, available, placeId);
+        const room = new Room(id, price, available, placeId, photoURLs, description);
+        console.log(room)
 
         await this.roomRepository.createRoom(room);
         return room;

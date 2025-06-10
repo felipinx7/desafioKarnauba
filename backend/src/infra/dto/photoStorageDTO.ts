@@ -4,4 +4,4 @@ export interface IPhotoStorage {
     mimetype: string;
 }
 
-export type PhotoStorageType = "event" | "place" | "city" | "taxiDrivers";
+export type PhotoStorageType = "event" | "place" | "city" | "taxiDrivers" | 'room';

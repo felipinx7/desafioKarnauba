@@ -28,7 +28,9 @@ export class IPrismaRoomRepository implements IRoomRepository {
                 id: data.id,
                 price: data.price,
                 available: data.available,
-                placeId: data.placeId
+                placeId: data.placeId,
+                photoURLs: data.photoURLs,
+                description: data.description
             }
         });
         return room;
@@ -39,7 +41,9 @@ export class IPrismaRoomRepository implements IRoomRepository {
             where: { id: data.id },
             data: {
                 price: data.price,
-                available: data.available
+                available: data.available,
+                photoURLs: data.photoURLs,
+                description: data.description
             }
         });
         return room;

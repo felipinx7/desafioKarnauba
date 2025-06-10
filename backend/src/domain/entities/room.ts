@@ -4,5 +4,7 @@ export class Room {
         public price: number,
         public available: boolean = true,
         public readonly placeId: string,
+        public photoURLs: string[] = [],
+        public description: string
     ) {}
 }

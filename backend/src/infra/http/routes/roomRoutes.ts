@@ -7,15 +7,15 @@ export function createRoom(fastify: FastifyInstance){
 }
 
 export function findAllRooms(fastify: FastifyInstance){
-    fastify.get("/rooms", {preHandler: authMiddleware}, (req, res) => roomInstance.findAll({req, res}));
+    fastify.get("/rooms", (req, res) => roomInstance.findAll({req, res}));
 }
 
 export function findAvailableRooms(fastify: FastifyInstance){
-    fastify.get("/rooms/available", {preHandler: authMiddleware}, (req, res) => roomInstance.findAvailableRooms({req, res}));
+    fastify.get("/rooms/available", (req, res) => roomInstance.findAvailableRooms({req, res}));
 }
 
 export function findUniqueRoom(fastify: FastifyInstance){
-    fastify.get("/room/:id", {preHandler: authMiddleware}, (req, res) => roomInstance.findUnique({req, res}));
+    fastify.get("/room/:id", (req, res) => roomInstance.findUnique({req, res}));
 }
 
 export function updateRoom(fastify: FastifyInstance){

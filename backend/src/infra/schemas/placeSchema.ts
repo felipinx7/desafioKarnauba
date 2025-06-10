@@ -8,8 +8,8 @@ export const placeSchema = z.object({
     category: z.enum(['RESTAURANT', 'HOTEL', 'TOURIST_ATTRACTIONS', 'LANDSCAPE', 'HOSTING']),
     phone: z.string().max(15).regex(/^[^<>]*$/, "Sem tags HTML").optional(),
     instagram: z.string().regex(/^[^<>]*$/, "Sem tags HTML").optional(),
-    latitude: z.number().optional(),
-    longitude: z.number().optional(),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
 });
 
 

@@ -8,11 +8,11 @@ export function createTaxiDriver(fastify: FastifyInstance){
 }
 
 export function findAllTaxiDrivers(fastify: FastifyInstance){
-    fastify.get("/taxi-driver", {preHandler: authMiddleware}, (req, res) => taxiDriverInstance.findAll({req, res}));
+    fastify.get("/taxi-driver", (req, res) => taxiDriverInstance.findAll({req, res}));
 }
 
 export function findUniqueTaxiDriver(fastify: FastifyInstance){
-    fastify.get("/taxi-driver/:id", {preHandler: authMiddleware}, (req, res) => taxiDriverInstance.findUnique({req, res}));
+    fastify.get("/taxi-driver/:id", (req, res) => taxiDriverInstance.findUnique({req, res}));
 }
 
 export function updateTaxiDriver(fastify: FastifyInstance){
