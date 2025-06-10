@@ -21,7 +21,7 @@ model TaxiDriver {
   photoURLs String
   phone    String
   workingDescription String
-  cityId     String @unique
+  cityId     String
   city       City?   @relation(fields: [cityId], references: [id])
 }
 
