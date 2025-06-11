@@ -13,10 +13,10 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { IconClosed } from '@/assets/icons/icone-closed'
 
-type UpdateTaxiFormData = {
+export type UpdateTaxiFormData = {
   name: string
   phone: string
-  description: string
+  workingDescription: string
   photoURLs: File[]
 }
 
@@ -35,14 +35,14 @@ export function CardTaxi(data: dataCardTaxiDTO) {
     defaultValues: {
       name: data.name,
       phone: data.phone,
-      description: data.workingDescription,
+      workingDescription: data.workingDescription,
       photoURLs: [],
     },
   })
 
   const handleShowModal = () => {
-    console.log('Estado do modal', showModal)
     setShowModal((prev) => !prev)
+    console.log('Estado do modal', showModal)
   }
 
   const handlePreviewImages = (files: File[]) => {
@@ -82,7 +82,6 @@ export function CardTaxi(data: dataCardTaxiDTO) {
   return (
     <>
       <article
-        onClick={handleShowModal}
         className="flex h-[300px] w-[280px] cursor-pointer flex-col overflow-hidden rounded-[0.9rem] bg-white shadow-shadowCardEventLocation transition-shadow hover:shadow-lg max-sm:w-full"
       >
         <div className="relative h-[80%] w-full">
@@ -207,7 +206,7 @@ export function CardTaxi(data: dataCardTaxiDTO) {
                 {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
 
                 <textarea
-                  {...register('description')}
+                  {...register('workingDescription')}
                   rows={3}
                   className="w-full rounded border border-gray-300 p-2 text-sm"
                   placeholder="Descrição"

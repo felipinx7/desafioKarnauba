@@ -46,10 +46,8 @@ export class IPrismaTaxiDriverRepository implements ITaxiDriverRepository {
         return taxiDriver;
     }
 
-    async getAllTaxiDriversByCityId(cityId: string): Promise<TaxiDriver[]> {
-        const taxiDrivers = await prisma.taxiDriver.findMany({
-            where: { cityId }
-        });
+    async getAllTaxiDriversByCityId(): Promise<TaxiDriver[]> {
+        const taxiDrivers = await prisma.taxiDriver.findMany();
 
         return taxiDrivers;
     }

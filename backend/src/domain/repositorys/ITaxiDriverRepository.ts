@@ -5,5 +5,5 @@ export interface ITaxiDriverRepository {
     updateTaxiDriver(taxiDriver: TaxiDriver): Promise<TaxiDriver | null>;
     deleteTaxiDriver(id: string): Promise<void>;
     getTaxiDriverById(id: string): Promise<TaxiDriver | null>;
-    getAllTaxiDriversByCityId(cityId: string): Promise<TaxiDriver[]>;
+    getAllTaxiDriversByCityId(): Promise<TaxiDriver[]>;
 }

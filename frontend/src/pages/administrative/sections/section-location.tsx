@@ -65,6 +65,10 @@ export const SectionLocation = () => {
     setFilteredPlaces(filtered ?? [])
   }
 
+  useEffect(() => {
+    handleFilter()
+  }, [searchValue])
+
   //Function formated phone
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhoneNumber(e.target.value)
@@ -95,10 +99,7 @@ export const SectionLocation = () => {
           onChange={(e) => setSearchValue(e.target.value)}
           className="w-[100%] rounded-[1rem] bg-primarygray p-5 outline-none focus:border-[2px] focus:border-primargreen"
         />
-        <button
-          onClick={handleFilter}
-          className="absolute right-2 top-1.5 w-auto rounded-[1rem] bg-primargreen p-3.5 font-[700] text-white"
-        >
+        <button className="absolute right-2 top-1.5 w-auto rounded-[1rem] bg-primargreen p-3.5 font-[700] text-white">
           Buscar
         </button>
       </div>

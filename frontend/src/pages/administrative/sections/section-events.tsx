@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -85,6 +84,10 @@ export const SectionEvents = () => {
     setEvents((prev) => prev?.filter((event) => event.id !== id) || null)
     setOriginalEvents((prev) => prev.filter((event) => event.id !== id))
   }
+
+  useEffect(() => {
+    handleSearch()
+  }, [searchTerm])
 
   return (
     <section>

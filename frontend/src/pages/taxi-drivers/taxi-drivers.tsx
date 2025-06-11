@@ -5,7 +5,7 @@ import { CardTaxi } from './components/card-taxi'
 import { IconArrowLeft } from '@/assets/icons/icon-arrow-left'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { GetAllTaxi } from '@/services/routes/taxi/get-taxi'
+import { GetAllTaxi } from '@/services/routes/taxi/get-all-taxi'
 
 export const SectionTaxiPage = () => {
   const [showTaxi, setShowTaxi] = useState<dataInfoTaxi[]>([])

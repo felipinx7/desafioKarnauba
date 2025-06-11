@@ -9,7 +9,7 @@ import { IconClosed } from '@/assets/icons/icone-closed'
 import { formatPhoneNumber } from '@/utils/formatPhone'
 import { CardTaxi } from '../components/layouts/card-taxi'
 import { CreateTaxi } from '@/services/routes/taxi/create-taxi'
-import { GetAllTaxi } from '@/services/routes/taxi/get-taxi'
+import { GetAllTaxi } from '@/services/routes/taxi/get-all-taxi'
 import { dataInfoTaxi } from '@/dto/taxi/data-taxi-DTO'
 import { deleteTaxi } from '@/services/routes/taxi/delete-taxi'
 

@@ -8,7 +8,7 @@ export function createTaxiDriver(fastify: FastifyInstance){
 }
 
 export function findAllTaxiDrivers(fastify: FastifyInstance){
-    fastify.get("/taxi-driver", (req, res) => taxiDriverInstance.findAll({req, res}));
+    fastify.get("/taxi-drivers", (req, res) => taxiDriverInstance.findAll({req, res}));
 }
 
 export function findUniqueTaxiDriver(fastify: FastifyInstance){

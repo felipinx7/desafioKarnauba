@@ -31,7 +31,7 @@ export class taxiDriverController {
   }
 
   async findAll(fastify: FastifyContextDTO) {
-    const taxiDriver = await this.taxiDriverFindAllUseCase.execute(fastify.req);
+    const taxiDriver = await this.taxiDriverFindAllUseCase.execute();
     fastify.res.send(taxiDriver);
   }
 

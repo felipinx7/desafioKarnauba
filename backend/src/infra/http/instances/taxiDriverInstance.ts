@@ -17,7 +17,7 @@ const cityRepository = new IPrismaCityRepository();
 const multipart = new Multipart(photoStorage);
 
 const taxiDriverCreateUseCase = new TaxiDriverCreateUseCase(taxiDriverRepository, adminRepository, cityRepository );
-const taxiDriverFindAllUseCase = new TaxiDriverFindAllUseCase(taxiDriverRepository, adminRepository, cityRepository);
+const taxiDriverFindAllUseCase = new TaxiDriverFindAllUseCase(taxiDriverRepository);
 const taxiDriverFindUniqueUseCase = new TaxiDriverFindUniqueUseCase(taxiDriverRepository);
 const taxiDriverUpdateUseCase = new TaxiDriverUpdateUseCase(taxiDriverRepository);
 const taxiDriverDeleteUseCase = new TaxiDriverDeleteUseCase(taxiDriverRepository);

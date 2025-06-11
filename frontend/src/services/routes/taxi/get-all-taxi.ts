@@ -2,7 +2,7 @@ import { api } from '@/config/axios'
 
 export const GetAllTaxi = async () => {
   try {
-    const response = await api.get('/taxi-driver')
+    const response = await api.get(`/taxi-drivers`)
     console.log('Sucesso ao pegar todos os taxistas', response)
     return response
   } catch (error) {

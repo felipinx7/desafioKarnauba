@@ -4,7 +4,7 @@ export const getInfoCity = async () => {
   try {
     const { data } = await api.get('/city')
     const city = data
-    console.log('dados da API', city)
+    console.log('Informações da Cidade:', city)
     return city
   } catch (error) {
     console.log('Error', error)
