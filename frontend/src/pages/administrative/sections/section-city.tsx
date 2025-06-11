@@ -22,7 +22,6 @@ export const SectionCity = () => {
     instagram: '',
     adminId: '',
   })
-
   // Revogar URL local para liberar memória
   useEffect(() => {
     return () => {
