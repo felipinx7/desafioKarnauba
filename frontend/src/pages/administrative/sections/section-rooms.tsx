@@ -6,19 +6,20 @@ import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DataPlaces } from '@/dto/places/data-create-places-DTO'
-import { placeSchema } from '@/schemas/places-schema'
 import { IconClosed } from '@/assets/icons/icone-closed'
+import { roomData } from '@/dto/places/roomData'
 import { CardPlaces } from '../components/layouts/card-places'
 import { getInfoCity } from '@/services/routes/city/get-info-city'
 import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
 import { DeletePlace } from '@/services/routes/places/delete-place'
 import { formatPhoneNumber } from '@/utils/formatPhone'
 import { createPlace } from '@/services/routes/places/create-places'
+import { roomSchema } from '@/schemas/room-schema'
 
-export const SectionRoom = () => {
+export const SectionRooms = () => {
   const [valuePhone, setValuePhone] = useState('')
   const [isVisibility, setIsVisibility] = useState(false)
-  const [showPlaces, setShowPlaces] = useState<CardPlacesDTO[] | null>(null)
+  const [rooms,setRooms] = useState<roomData>([])
   const [searchValue, setSearchValue] = useState('')
   const [filteredPlaces, setFilteredPlaces] = useState<CardPlacesDTO[] | null>(null)
 
@@ -32,25 +33,17 @@ export const SectionRoom = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<z.infer<typeof placeSchema>>({
-    resolver: zodResolver(placeSchema),
+  } = useForm<z.infer<typeof roomSchema>>({
+    resolver: zodResolver(roomSchema),
   })
 
-  async function onSubmit(data: DataPlaces) {
+  async function onSubmit(data: roomData) {
     const response = await createPlace(data)
     console.log('Resposta da API:', response)
     reset()
     setIsVisibility(false)
   }
 
-  useEffect(() => {
-    const fetchInfoEvents = async () => {
-      const places = await getInfoCity()
-      setShowPlaces(places.places)
-    }
-
-    fetchInfoEvents()
-  }, [])
 
   const handleFilter = () => {
     if (!searchValue.trim()) {
@@ -90,7 +83,7 @@ export const SectionRoom = () => {
       <div className="relative w-[80%] max-lg:w-full">
         <input
           type="text"
-          placeholder="Pesquise pelo local"
+          placeholder="Pesquise pelos quartos"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           className="w-[100%] rounded-[1rem] bg-primarygray p-5 outline-none focus:border-[2px] focus:border-primargreen"
@@ -108,7 +101,7 @@ export const SectionRoom = () => {
         onClick={handleVisibility}
         className="mt-4 rounded bg-primargreen p-3 font-bold text-white"
       >
-        Adicionar um acsadasd
+        Adicionar um Taxi
       </button>
 
       {/* Modal */}
@@ -273,7 +266,7 @@ export const SectionRoom = () => {
             />
           ))
         ) : (
-          <p className="col-span-full text-center">Nenhum local encontrado.</p>
+          <p className="col-span-full text-center">Nenhum taxi encontrado.</p>
         )}
       </div>
     </section>
