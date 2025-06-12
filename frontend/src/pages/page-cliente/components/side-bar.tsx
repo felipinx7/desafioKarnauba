@@ -10,7 +10,7 @@ export const SideBarCliente = () => {
 
   const handleToggleMenu = () => {
     setIsMenuOpen((prev) => !prev)
-  }http://localhost:3000/client-page
+  }
 
   return (
     <header className="relative z-10 flex w-full items-center justify-center px-5 py-8">

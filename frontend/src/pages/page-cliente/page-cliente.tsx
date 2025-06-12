@@ -4,7 +4,7 @@ import { LinksButtonPageCliente } from '@/constants/links-button-page-cliente'
 import { SideBarCliente } from './components/side-bar'
 import { IconeSearch } from '@/assets/icons/icon-search'
 import Image from 'next/image'
-import { backgroundclientpage, imageLogo } from '@/assets/image'
+import { backgroundclientpage, imagecitymassape, imageLogo } from '@/assets/image'
 import { SectionAtractionTouristic } from './sections/section-atraction-touristic'
 import { SectionEvents } from './sections/section-events'
 import { SectionLandscape } from './sections/section-landscape'
@@ -31,7 +31,7 @@ export const PageCliente = () => {
         <p className="w-full text-center text-[1.1rem] font-[400] text-primargreen">
           Veja abaixo as categorias que vão guiar sua próxima descoberta.
         </p>
-        <div className='max-w-[1280px] w-[100%] flex items-center justify-center'>
+        <div className="flex w-[100%] max-w-[1280px] items-center justify-center max-md:hidden">
           <div className="flex items-center justify-end gap-3 py-7 max-lg:w-full max-lg:flex-col">
             {LinksButtonPageCliente.map((card, index) => (
               <button
@@ -46,6 +46,32 @@ export const PageCliente = () => {
             ))}
           </div>
         </div>
+        {/* CATEGORY RESPONSIVER  */}
+        <div className="hidden w-full max-w-[1280px] items-center justify-center p-4 max-md:block">
+          <div className="grid grid-cols-2 max-sm:w-full max-sm:grid-cols-1 place-items-center gap-5">
+            {LinksButtonPageCliente.map((card, index) => (
+              <div
+                key={index}
+                className="relative flex h-[100px] w-[340px] items-center justify-center overflow-hidden rounded-[0.2rem] bg-white shadow-md max-sm:w-full"
+              >
+                <Image
+                  src={imagecitymassape}
+                  alt="Imagem cidade"
+                  fill
+                  className="rounded object-cover"
+                />
+                <a
+                  href={card.href}
+                  className="bg-primargreen/80 absolute flex items-center gap-4 rounded-full px-4 py-2 text-[1.2rem] text-white"
+                >
+                  {card.name}
+                  <card.Icon />
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="relative w-[70%] max-lg:w-[100%]">
           <input
             type="text"
@@ -57,9 +83,7 @@ export const PageCliente = () => {
           <div className="absolute left-3 top-3">
             <IconeSearch />
           </div>
-          <button
-            className="absolute right-2 top-2 rounded-full bg-primargreen p-2.5 px-5 font-[700] text-white"
-          >
+          <button className="absolute right-2 top-2 rounded-full bg-primargreen p-2.5 px-5 font-[700] text-white">
             Buscar
           </button>
         </div>

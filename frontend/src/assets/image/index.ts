@@ -17,6 +17,7 @@ import photomassapesecundary from './photo-massape-secundary.jpeg'
 import photomassapethird from './photo-massape-third.jpeg'
 import photomassapefourth from './photo-massape-fourth.jpeg'
 import photomassapefifth from './photo-massape-fifth.jpeg'
+import imagecitymassape from './image-background-about-massape.png'
 
 export {
   imageLogo,
@@ -38,4 +39,5 @@ export {
   photomassapethird,
   photomassapefourth,
   photomassapefifth,
+  imagecitymassape,
 }

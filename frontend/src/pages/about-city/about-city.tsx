@@ -153,7 +153,7 @@ export const AboutCity = () => {
           <div className="flex items-center gap-3">
             <div className="flex flex-wrap gap-4">
               <a
-                href="https://instagram.com/moraujoce"
+                href="https://instagram.com/prefeituramassape"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 rounded-full border border-black px-6 py-2 transition hover:bg-gray-100"
@@ -163,7 +163,7 @@ export const AboutCity = () => {
             </div>
             <div className="flex flex-wrap gap-4">
               <a
-                href="https://instagram.com/moraujoce"
+                href="https"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 rounded-full border border-black px-6 py-2 transition hover:bg-gray-100"
