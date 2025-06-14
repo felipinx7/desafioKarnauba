@@ -3,7 +3,7 @@ import { IconCalendary } from '@/assets/icons/icon-calendary'
 import { IconCamera } from '@/assets/icons/icon-camera'
 import { IconFork } from '@/assets/icons/icon-fork'
 import { IconMontain } from '@/assets/icons/icon-montain'
-import { IconTaxi } from '@/assets/icons/icon-taxi'
+import { IconTaxista } from '@/assets/icons/icon-taxista'
 import React from 'react'
 
 interface LinksButtonPageClienteProps {
@@ -37,5 +37,10 @@ export const LinksButtonPageCliente: LinksButtonPageClienteProps[] = [
     name: 'Eventos',
     Icon: IconCalendary,
     href: '#events',
+  },
+  {
+    name: 'Taxistas',
+    Icon: IconTaxista,
+    href: '/taxi',
   },
 ]

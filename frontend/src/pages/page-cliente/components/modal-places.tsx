@@ -73,11 +73,14 @@ export const ModalLocation: FC<ModalLocationProps> = ({
 
       <div className="m-auto w-full max-w-[1280px] px-4 py-8">
         {/* Imagem do local */}
-        <div className="max-h-[400px] w-full overflow-hidden rounded-xl">
+        <div
+          className="max-h-[500px] w-full overflow-hidden rounded-xl"
+          style={{ height: '500px' }}
+        >
           <img
             src={photos ? photos : backgroundloginpage}
             alt={`Imagem de ${name}`}
-            className="h-auto w-full rounded-xl"
+            className="h-full w-full rounded-xl object-cover"
           />
         </div>
 
@@ -87,6 +90,34 @@ export const ModalLocation: FC<ModalLocationProps> = ({
           <p className="mt-4 text-[1rem] leading-6 text-gray-700">{description}</p>
         </div>
 
+        {/* Contact */}
+        <div className="mt-10">
+          <h2 className="mb-4 text-lg font-bold">Contatos</h2>
+          <div className="flex  gap-4">
+            {instagram && (
+              <a
+                href={`https://instagram.com/${instagram}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-full border border-black px-6 py-2 hover:bg-gray-100"
+              >
+                <IconInstagram />
+                <p className="max-sm:hidden">Instagram</p>
+              </a>
+            )}
+            {phone && (
+              <a
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-full border border-black px-6 py-2 hover:bg-gray-100"
+              >
+                <IconWhatsapp />
+                <p className="max-sm:hidden">Whatsapp</p>
+              </a>
+            )}
+          </div>
+        </div>
         {/* Localização - Google Maps */}
         <div className="mt-10">
           <h2 className="mb-4 text-lg font-bold">Localização</h2>
@@ -102,36 +133,6 @@ export const ModalLocation: FC<ModalLocationProps> = ({
             ></iframe>
           </div>
         </div>
-
-        {/* Redes Sociais */}
-        <div className="mt-10">
-          <h2 className="mb-4 text-lg font-bold">Rede Sociais</h2>
-          <div className="flex flex-wrap gap-4">
-            {instagram && (
-              <a
-                href={`https://instagram.com/${instagram}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full border border-black px-6 py-2 hover:bg-gray-100"
-              >
-                <IconInstagram />
-                Instagram
-              </a>
-            )}
-            {phone && (
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full border border-black px-6 py-2 hover:bg-gray-100"
-              >
-                <IconWhatsapp />
-                Whatsapp
-              </a>
-            )}
-          </div>
-        </div>
-
         {/* Indicações de lugares semelhantes */}
         <div className="mt-10">
           <h2 className="mb-6 text-lg font-bold">Indicações de Lugares Semelhantes</h2>

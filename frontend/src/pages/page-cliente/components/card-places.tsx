@@ -1,4 +1,4 @@
-import { backgroundclientpage, backgroundloginpage } from '@/assets/image'
+import { backgroundclientpage } from '@/assets/image'
 import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
 import { ModalLocation } from './modal-places'
 import { useState } from 'react'
@@ -14,17 +14,18 @@ export function CardPLaces(data: CardPlacesDTO) {
 
   const photoURL = baseUrlPhoto('place', data.photos[0].url)
   console.log('photo dos lugar: ', photoURL)
+
   return (
     <>
       <article
         onClick={handleShowModal}
-        className="group flex max-sm:w-full h-[316px] w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg"
+        className="group flex h-[368px] w-[368px] cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-lg max-sm:w-full"
       >
-        <div className="relative h-[70%] w-full overflow-hidden bg-primarygray">
+        <div className="relative flex h-[80%] w-full items-center justify-center overflow-hidden bg-primarygray">
           <img
             src={photoURL ? photoURL : backgroundclientpage}
-            alt={backgroundloginpage}
-            className="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            alt={data.name}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 368px"
           />
         </div>

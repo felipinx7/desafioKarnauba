@@ -9,8 +9,6 @@ import { baseUrlPhoto } from '@/utils/base-url-photos'
 import { dataCardEventClientPage } from '@/dto/event/data-card-event-client-page-DTO'
 import { IconArrowLeft } from '@/assets/icons/icon-arrow-left'
 
-
-// Interface para dados da cidade
 interface DataCityInfo {
   name: string
   state: string
@@ -40,7 +38,6 @@ export const ModalEvents: FC<ModalEventsProps> = ({
       const fetchPlacesSimilar = async () => {
         try {
           const response = await getAllEvents()
-
           if (response && typeof response === 'object') {
             const placesArray: any[] = Object.values(response)
             setPlacesSimilar(placesArray)
@@ -54,36 +51,27 @@ export const ModalEvents: FC<ModalEventsProps> = ({
           setInfoCity(null)
         }
       }
-
       fetchPlacesSimilar()
     }
   }, [showModal])
 
   if (!showModal) return null
 
-  console.log('location: ', placesSimilar[0])
-  console.log('photo: ', photoURLs)
-
   const photo = baseUrlPhoto('event', photoURLs)
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(location)}&output=embed`
-
 
   return (
     <section className="fixed inset-0 z-[999] h-screen w-full overflow-y-auto bg-white">
       <div className="flex items-center justify-center bg-primargreen px-4 py-3">
-        <div className="m-0 flex w-[100%] max-w-[1280px] flex-row-reverse items-center justify-end">
-          {/* Título */}
+        <div className="flex w-full max-w-[1280px] flex-row-reverse items-center justify-end gap-4">
           <h2 className="text-xl font-bold text-white">{name}</h2>
-
-          {/* Botão de voltar/fechar */}
           <button
             onClick={onClose}
-            className="flex items-center gap-2 rounded-full px-4 py-1.5 font-semibold text-white"
+            className="hover:bg-primargreen/80 flex items-center gap-2 rounded-full px-4 py-1.5 font-semibold text-white transition"
             aria-label="Voltar"
           >
-            <span>
-              <IconArrowLeft />
-            </span>
+            <IconArrowLeft />
+            Voltar
           </button>
         </div>
       </div>
@@ -94,16 +82,17 @@ export const ModalEvents: FC<ModalEventsProps> = ({
           <Image
             src={photo || backgroundloginpage}
             alt={`Imagem de ${name}`}
-            className="h-auto w-full rounded-xl"
+            className="h-full w-full rounded-xl object-cover"
             width={1200}
             height={400}
+            priority
           />
         </div>
 
         {/* Title & description */}
         <div className="mt-6">
-          <h1 className="text-[2rem] font-bold">{name}</h1>
-          <p className="mt-4 text-[1rem] leading-6 text-gray-700">{description}</p>
+          <h1 className="text-3xl font-bold">{name}</h1>
+          <p className="mt-4 text-base leading-7 text-gray-700">{description}</p>
         </div>
 
         {/* Location map */}
@@ -118,27 +107,26 @@ export const ModalEvents: FC<ModalEventsProps> = ({
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title={`Mapa de ${name}`}
-            ></iframe>
+              className="rounded-xl border-0"
+            />
           </div>
         </div>
 
-        {/* Social Media */}
-        <div className="mt-10">
-          <h2 className="mb-4 text-lg font-bold">Redes Sociais</h2>
-          <div className="flex flex-wrap gap-4">
-            {instagram && (
-              <a
-                href={`https://instagram.com/${instagram}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-full border border-black px-6 py-2 transition hover:bg-gray-100"
-              >
-                <IconInstagram />
-                Instagram
-              </a>
-            )}
+        {/* Contato */}
+        {instagram && (
+          <div className="mt-10">
+            <h2 className="mb-4 text-lg font-bold">Contato</h2>
+            <a
+              href={`https://instagram.com/${instagram}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-black px-6 py-2 text-black transition hover:bg-gray-100"
+            >
+              <IconInstagram />
+              Instagram
+            </a>
           </div>
-        </div>
+        )}
 
         {/* Similar places */}
         <div className="mt-10">
@@ -146,16 +134,17 @@ export const ModalEvents: FC<ModalEventsProps> = ({
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {placesSimilar.map((place, index) => (
               <div key={index} className="flex flex-col">
-                {place?.photos?.map((photo, index) => {
-                  const photos = baseUrlPhoto('event', photo.url)
+                {place?.photos?.map((photoItem, idx) => {
+                  const photoUrl = baseUrlPhoto('event', photoItem.url)
                   return (
-                    <div key={index} className="h-[250px] w-full overflow-hidden rounded-lg">
+                    <div key={idx} className="h-[250px] w-full overflow-hidden rounded-lg">
                       <Image
-                        src={photos || backgroundloginpage}
+                        src={photoUrl || backgroundloginpage}
                         alt={`Imagem de ${place.name}`}
                         className="h-full w-full object-cover"
                         width={400}
                         height={250}
+                        priority={idx === 0}
                       />
                     </div>
                   )

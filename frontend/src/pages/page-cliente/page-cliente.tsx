@@ -21,12 +21,12 @@ export const PageCliente = () => {
 
       {/* CONATINER INFO MAIN  */}
       <div id="home" className="flex w-full flex-col items-center justify-center p-4 py-[70px]">
-        <h1 className="mx-auto w-full animate-typing-with-cursor overflow-hidden whitespace-nowrap break-words border-r-4 border-white text-center text-[2rem] font-bold text-primargreen max-lg:hidden sm:text-[3rem] md:text-[4.6rem] lg:w-[50%] lg:border-none">
-          Qual local deseja visitar?
+        <h1 className="mx-auto w-full animate-typing-with-cursor overflow-hidden whitespace-nowrap break-words border-r-4 border-white text-center text-[2rem] font-bold text-primargreen max-lg:hidden sm:text-[3rem] md:text-[3.6rem] lg:w-[50%] lg:border-none">
+          Conheça melhor a cidade de Massapê
         </h1>
 
-        <h1 className="max mb-5 hidden w-full text-center text-[3.1rem] font-bold leading-[70px] text-primargreen max-lg:block">
-          Qual local deseja visitar?
+        <h1 className="max mb-5 hidden w-full text-center text-[2.5rem] font-bold leading-[70px] text-primargreen max-lg:block">
+          Conheça melhor a cidade de Massapê
         </h1>
 
         <p className="w-full text-center text-[1.1rem] font-[400] text-primargreen">
@@ -53,7 +53,7 @@ export const PageCliente = () => {
             {LinksButtonPageCliente.map((card, index) => (
               <div
                 key={index}
-                className="relative flex h-[100px] w-full items-center justify-center overflow-hidden rounded-[0.2rem] bg-white shadow-md max-sm:w-full"
+                className="relative flex h-[154px] w-full items-center justify-center overflow-hidden rounded-[0.2rem] bg-white shadow-md max-sm:w-full"
               >
                 <Image
                   src={imagecitymassape}
