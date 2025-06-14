@@ -1,15 +1,14 @@
 'use client'
 
 import Image from 'next/image'
-import { SideBarCliente } from './side-bar'
 import { backgroundloginpage } from '@/assets/image'
 import { IconInstagram } from '@/assets/icons/icon-instagram'
-import { IconClosed } from '@/assets/icons/icone-closed'
 import { FC, useEffect, useState } from 'react'
 import { getAllEvents } from '@/services/routes/events/get-all-events'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
 import { dataCardEventClientPage } from '@/dto/event/data-card-event-client-page-DTO'
 import { IconArrowLeft } from '@/assets/icons/icon-arrow-left'
+
 
 // Interface para dados da cidade
 interface DataCityInfo {
@@ -67,6 +66,7 @@ export const ModalEvents: FC<ModalEventsProps> = ({
 
   const photo = baseUrlPhoto('event', photoURLs)
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(location)}&output=embed`
+
 
   return (
     <section className="fixed inset-0 z-[999] h-screen w-full overflow-y-auto bg-white">

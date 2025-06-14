@@ -5,11 +5,12 @@ import { SideBarCliente } from './components/side-bar'
 import { IconeSearch } from '@/assets/icons/icon-search'
 import Image from 'next/image'
 import { backgroundclientpage, imagecitymassape, imageLogo } from '@/assets/image'
-import { SectionAtractionTouristic } from './sections/section-atraction-touristic'
+import { SectionAtractionTouristic } from './sections/section-destination'
 import { SectionEvents } from './sections/section-events'
 import { SectionLandscape } from './sections/section-landscape'
 import { useState } from 'react'
 import { SectionRestaurant } from './sections/section-restaurant'
+import { SectionHotel } from './sections/section-hotel'
 
 export const PageCliente = () => {
   const [cityName, setCityName] = useState('')
@@ -47,12 +48,12 @@ export const PageCliente = () => {
           </div>
         </div>
         {/* CATEGORY RESPONSIVER  */}
-        <div className="hidden w-full max-w-[1280px] items-center justify-center p-4 max-md:block">
-          <div className="grid grid-cols-2 max-sm:w-full max-sm:grid-cols-1 place-items-center gap-5">
+        <div className="hidden w-full max-w-[1280px] items-center py-4 justify-center max-md:block">
+          <div className="grid grid-cols-2 place-items-center gap-3 max-sm:w-full">
             {LinksButtonPageCliente.map((card, index) => (
               <div
                 key={index}
-                className="relative flex h-[100px] w-[340px] items-center justify-center overflow-hidden rounded-[0.2rem] bg-white shadow-md max-sm:w-full"
+                className="relative flex h-[100px] w-full items-center justify-center overflow-hidden rounded-[0.2rem] bg-white shadow-md max-sm:w-full"
               >
                 <Image
                   src={imagecitymassape}
@@ -62,7 +63,7 @@ export const PageCliente = () => {
                 />
                 <a
                   href={card.href}
-                  className="bg-primargreen/80 absolute flex items-center gap-4 rounded-full px-4 py-2 text-[1.2rem] text-white"
+                  className="bg-primargreen/80 absolute flex items-center gap-4 rounded-full max-md:flex-col  px-4 py-2 text-[1.2rem] font-[600] text-white"
                 >
                   {card.name}
                   <card.Icon />
@@ -100,6 +101,7 @@ export const PageCliente = () => {
         <SectionRestaurant />
         <SectionAtractionTouristic />
         <SectionEvents />
+        <SectionHotel />
         <SectionLandscape />
       </section>
       <footer className="flex min-h-[20vh] w-full flex-col items-center justify-center gap-3 bg-primarygray max-lg:min-h-[14vh]">

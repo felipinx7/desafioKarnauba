@@ -1,6 +1,6 @@
 'use client'
 
-import { logomonocromatic } from '@/assets/image'
+import { imageLogo, logococotourmonochrome } from '@/assets/image'
 import { LinksSideBarAdministrative } from '@/constants/links-side-bar-adiministrative'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -19,13 +19,8 @@ export const SideBarAdministrative = ({ setActiveSection }: SideBarProps) => {
 
   return (
     <article className="flex min-h-[100vh] w-[20%] flex-col items-start bg-primargreen p-2 max-lg:hidden">
-      <div className="justify-centerM flex w-full items-center">
-        <Image
-          src={logomonocromatic}
-          width={600}
-          className="w-full"
-          alt="Logo CocoTour"
-        />
+      <div className="justify-center flex py-3 w-full items-center">
+        <Image src={imageLogo} width={250} className="" alt="Logo CocoTour" />
       </div>
       <nav className="mt-14 flex w-full flex-col items-start gap-4">
         {LinksSideBarAdministrative.map((link, index) => {

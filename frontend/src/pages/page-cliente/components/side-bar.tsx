@@ -15,8 +15,8 @@ export const SideBarCliente = () => {
   return (
     <header className="relative z-10 flex w-full items-center justify-center px-5 py-8">
       {/* DESKTOP HEADER */}
-      <div className="m-auto hidden w-full max-w-[1280px] items-center justify-between rounded-[1.6rem] bg-primargreen px-4 py-2 lg:flex">
-        <Image src={logomonocromatic} width={200} alt="logo do sistema" />
+      <div className="m-auto hidden w-full max-w-[1280px] items-center justify-between rounded-[1.6rem] bg-primargreen px-4 py-4 lg:flex">
+        <Image src={logomonocromatic} width={170} alt="logo do sistema" />
         <nav className="flex gap-8 text-[1.2rem] font-semibold text-white">
           <a href="#home">Início</a>
           <a href="/taxi">Taxistas</a>

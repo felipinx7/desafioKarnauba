@@ -19,8 +19,8 @@ export const NavBar = () => {
   return (
     <header className="relative z-10 w-full px-5 py-[2.5rem]">
       {/* DESKTOP AND LAPTOP NAVIGATION */}
-      <div className="m-auto hidden max-w-[1280px] items-center justify-between rounded-[20px] bg-white p-1 lg:flex">
-        <Image src={imageLogo} alt="Logo of sistem" width={250} />
+      <div className="m-auto hidden max-w-[1280px] items-center justify-between rounded-[20px] bg-white p-3 lg:flex">
+        <Image src={imageLogo} alt="Logo of sistem" width={180} />
         {/* Navigation links */}
         <nav
           className="text-primargreen flex list-none gap-10 whitespace-nowrap text-[1.2rem] font-[700]"

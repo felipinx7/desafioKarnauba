@@ -9,7 +9,7 @@ export const Footer = () => {
       <div className="m-auto flex w-full max-w-[1280px] flex-col items-start justify-between px-2 py-2">
         <div className="flex w-full items-start justify-between max-md:flex-col">
           <div className="flex flex-col gap-3">
-            <Image src={imageLogo} width={250} alt="" />
+            <Image src={imageLogo} width={180} alt="" />
             <p className="text-primargreen w-[70%] text-[1.01rem] font-[--font-sora] font-[300]">
               Uma nova forma de tornar a experiência turística mais acessível, confiável e
               inteligente.

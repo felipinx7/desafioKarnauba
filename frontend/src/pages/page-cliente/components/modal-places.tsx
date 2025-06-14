@@ -15,6 +15,13 @@ interface ModalLocationProps extends CardEventPageAdministrative {
   showModal: boolean
 }
 
+// ✅ Função que gera o link do WhatsApp com o número limpo e formatado corretamente
+function gerarLinkWhatsApp(numero: string): string {
+  const numeroLimpo = numero.replace(/\D/g, '') // Remove tudo que não for número
+  const comCodigo = numeroLimpo.startsWith('55') ? numeroLimpo : `55${numeroLimpo}` // Adiciona código do Brasil se não tiver
+  return `https://wa.me/${comCodigo}`
+}
+
 export const ModalLocation: FC<ModalLocationProps> = ({
   name,
   description,
@@ -41,6 +48,9 @@ export const ModalLocation: FC<ModalLocationProps> = ({
   if (!showModal) return null
 
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(location)}&output=embed`
+
+  const whatsappLink = gerarLinkWhatsApp(phone)
+
   return (
     <section className="fixed inset-0 z-[999] h-screen w-full overflow-y-auto bg-white">
       <div className="flex items-center justify-center bg-primargreen px-4 py-3">
@@ -110,7 +120,7 @@ export const ModalLocation: FC<ModalLocationProps> = ({
             )}
             {phone && (
               <a
-                href={`https://wa.me/${phone}?text=${encodeURIComponent('Olá! Gostaria de falar com você.')}`}
+                href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 rounded-full border border-black px-6 py-2 hover:bg-gray-100"
