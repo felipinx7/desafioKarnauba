@@ -23,7 +23,7 @@ export class PlaceCreateUseCase {
 
         const { name, location, description, photoURLs, category, phone, instagram, latitude, longitude } = parsedData.data!
 
-         const adminId = req.user?.id
+        const adminId = req.user?.id
         if (!adminId) throw new ServerError("Admin not authorized", 401);
 
         const isAdminExist = await this.adminRepository.getAdminById(adminId)
