@@ -2,13 +2,22 @@ import { roomSchema } from "@/schemas/room-schema"
 import { z } from "zod"
 
 export type roomData = {
-    id: string,
     price: number,
-    avaliable: boolean,
-    placeId: string,
+    available: boolean,
+    placeId?: string,
     description?: string,
     photoURLs?: File[],
 }
+
+export type roomCardData = {
+    id: string,
+    price: number,
+    available: boolean,
+    placeId?: string,
+    description?: string,
+    photoURLs?: File[],
+}
+
 
 export type roomDTO = z.infer<typeof roomSchema>;
 

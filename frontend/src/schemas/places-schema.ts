@@ -17,7 +17,7 @@ export const placeSchema = z.object({
     .regex(/^[^<>]*$/, 'Sem tags HTML'),
   photoURLs: z.array(z.instanceof(File)),
 
-  category: z.enum(['RESTAURANT', 'HOTEL', 'TOURIST_ATTRACTIONS', 'LANDSCAPE']),
+  category: z.enum(['RESTAURANT', 'HOTEL', 'TOURIST_ATTRACTIONS', 'LANDSCAPE', "HOSTING"]),
 })
 
 export type eventSchema = z.infer<typeof placeSchema>

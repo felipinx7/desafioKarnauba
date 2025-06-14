@@ -229,6 +229,8 @@ export const SectionLocation = () => {
                   <option value="LANDSCAPE">Paisagem</option>
                   <option value="HOTEL">Hotel</option>
                   <option value="TOURIST_ATTRACTIONS">Turismo</option>
+                  <option value="HOSTING">Hospedagem</option>
+
                 </select>
                 {errors.category && (
                   <p className="text-sm text-red-500">{errors.category.message}</p>

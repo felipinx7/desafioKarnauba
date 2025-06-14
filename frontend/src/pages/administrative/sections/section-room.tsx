@@ -5,22 +5,22 @@ import { NameAdminstrative } from '../components/layouts/header-info-adm'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { DataPlaces } from '@/dto/places/data-create-places-DTO'
-import { placeSchema } from '@/schemas/places-schema'
+import { roomSchema } from '@/schemas/room-schema'
 import { IconClosed } from '@/assets/icons/icone-closed'
-import { CardPlaces } from '../components/layouts/card-places'
 import { getInfoCity } from '@/services/routes/city/get-info-city'
-import { CardPlacesDTO } from '@/dto/places/data-card-placesDTO'
-import { DeletePlace } from '@/services/routes/places/delete-place'
-import { formatPhoneNumber } from '@/utils/formatPhone'
-import { createPlace } from '@/services/routes/places/create-places'
+import { DeleteRoom } from '@/services/routes/rooms/delete-room'
+
+import { createRoom } from '@/services/routes/rooms/create-rooms'
+import { roomCardData, roomDTO } from '@/dto/places/roomData'
+import { roomData } from '@/dto/places/roomData'
+import { CardRoom } from '../components/layouts/card-room'
+
 
 export const SectionRoom = () => {
-  const [valuePhone, setValuePhone] = useState('')
   const [isVisibility, setIsVisibility] = useState(false)
-  const [showPlaces, setShowPlaces] = useState<CardPlacesDTO[] | null>(null)
+  const [showRooms, setShowRooms] = useState<roomCardData[] | null>(null)
   const [searchValue, setSearchValue] = useState('')
-  const [filteredPlaces, setFilteredPlaces] = useState<CardPlacesDTO[] | null>(null)
+  const [filteredRooms, setFilteredRooms] = useState<roomCardData[] | null>(null)
 
   const handleVisibility = () => {
     setIsVisibility((prev) => !prev)
@@ -32,52 +32,47 @@ export const SectionRoom = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<z.infer<typeof placeSchema>>({
-    resolver: zodResolver(placeSchema),
+  } = useForm<z.infer<typeof roomSchema>>({
+    resolver: zodResolver(roomSchema),
   })
 
-  async function onSubmit(data: DataPlaces) {
-    const response = await createPlace(data)
+  async function onSubmit(data: roomDTO) {
+    const response = await createRoom(data)
     console.log('Resposta da API:', response)
     reset()
     setIsVisibility(false)
   }
 
   useEffect(() => {
-    const fetchInfoEvents = async () => {
+    const fetchInfoCity = async () => {
       const places = await getInfoCity()
-      setShowPlaces(places.places)
+      setShowRooms(places.places.room)
     }
 
-    fetchInfoEvents()
+    fetchInfoCity()
   }, [])
 
   const handleFilter = () => {
     if (!searchValue.trim()) {
-      setFilteredPlaces(null)
+      setFilteredRooms(null)
       return
     }
 
-    const filtered = showPlaces?.filter((place) =>
-      place.name.toLowerCase().includes(searchValue.toLowerCase()),
+    const filtered = showRooms?.filter((room) =>
+      room.description.toLowerCase().includes(searchValue.toLowerCase()),
     )
 
-    setFilteredPlaces(filtered ?? [])
+    setFilteredRooms(filtered ?? [])
   }
 
-  //Function formated phone
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhoneNumber(e.target.value)
-    setValuePhone(formatted)
-  }
 
-  const FunctiondeletePlace = async (id: string) => {
-    await DeletePlace(id)
+  const FunctiondeleteRoom = async (id: string) => {
+    await DeleteRoom(id)
     console.log('Card Excluido com sucesso!')
 
     // Update list of Places with alters
-    setShowPlaces((prev) => prev?.filter((place) => place.id !== id) ?? null)
-    setFilteredPlaces((prev) => prev?.filter((place) => place.id !== id) ?? null)
+    setShowRooms((prev) => prev?.filter((room) => room.id !== id) ?? null)
+    setFilteredRooms((prev) => prev?.filter((room) => room.id !== id) ?? null)
   }
 
   return (
@@ -90,7 +85,7 @@ export const SectionRoom = () => {
       <div className="relative w-[80%] max-lg:w-full">
         <input
           type="text"
-          placeholder="Pesquise pelo local"
+          placeholder="Pesquise pelo quarto"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           className="w-[100%] rounded-[1rem] bg-primarygray p-5 outline-none focus:border-[2px] focus:border-primargreen"
@@ -108,7 +103,7 @@ export const SectionRoom = () => {
         onClick={handleVisibility}
         className="mt-4 rounded bg-primargreen p-3 font-bold text-white"
       >
-        Adicionar um acsadasd
+        Adicionar um quarto
       </button>
 
       {/* Modal */}
@@ -120,7 +115,7 @@ export const SectionRoom = () => {
         <article className="relative max-h-[90vh] w-[95%] max-w-lg overflow-y-auto rounded-xl bg-white p-5 shadow-lg">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-800">New Place</h2>
+              <h2 className="text-lg font-semibold text-gray-800">Novo Quarto</h2>
               <button
                 onClick={handleVisibility}
                 type="button"
@@ -132,7 +127,7 @@ export const SectionRoom = () => {
 
             {/* Upload de fotos */}
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">Upload Photos</label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Imagens</label>
               <div className="relative flex h-48 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 text-sm text-gray-500">
                 <Controller
                   name="photoURLs"
@@ -150,7 +145,7 @@ export const SectionRoom = () => {
                           field.onChange(files ? Array.from(files) : [])
                         }}
                       />
-                      <span>Click to upload images</span>
+                      <span>Clique para adicionar imagens</span>
                     </>
                   )}
                 />
@@ -162,85 +157,33 @@ export const SectionRoom = () => {
 
             {/* Campos de nome e telefone */}
             <div className="flex gap-2">
-              <div className="flex-1">
-                <label className="mb-1 block text-sm font-medium text-gray-700">Name</label>
+              <div className="flex-1 relative">
+                <label className="mb-1 block text-sm font-medium text-gray-700">Valor</label>
+                <h1 className='absolute left-2 bottom-2 '>R$</h1>
                 <input
-                  {...register('name')}
-                  type="text"
-                  placeholder="Example: Beach Restaurant"
-                  className="w-full rounded border border-gray-300 p-2 text-sm"
+                  {...register('price')}
+                  type="number"
+                  placeholder="300,00"
+                  className="w-full rounded border border-gray-300 p-2 pl-8 text-sm"
                 />
-                {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
+
               </div>
-              <div className="flex-1">
-                <label className="mb-1 block text-sm font-medium text-gray-700">Phone</label>
-                <input
-                  {...register('phone')}
-                  type="text"
-                  value={valuePhone}
-                  maxLength={15}
-                  onChange={(e) => handleChange(e)}
-                  placeholder="(99) 99999-9999"
-                  className="w-full rounded border border-gray-300 p-2 text-sm"
-                />
-                {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
-              </div>
+              
             </div>
 
             {/* Campos Instagram e local */}
             <div className="flex gap-2">
-              <div className="flex-1">
-                <label className="mb-1 block text-sm font-medium text-gray-700">Instagram</label>
-                <input
-                  {...register('instagram')}
-                  type="text"
-                  placeholder="@placehandle"
-                  className="w-full rounded border border-gray-300 p-2 text-sm"
-                />
-                {errors.instagram && (
-                  <p className="text-sm text-red-500">{errors.instagram.message}</p>
-                )}
-              </div>
-              <div className="flex-1">
-                <label className="mb-1 block text-sm font-medium text-gray-700">Location</label>
-                <input
-                  {...register('location')}
-                  type="text"
-                  placeholder="Street, Neighborhood"
-                  className="w-full rounded border border-gray-300 p-2 text-sm"
-                />
-                {errors.location && (
-                  <p className="text-sm text-red-500">{errors.location.message}</p>
-                )}
-              </div>
+              
             </div>
 
-            {/* Categoria */}
-            <div className="flex gap-2">
-              <div className="flex-1">
-                <label className="mb-1 block text-sm font-medium text-gray-700">Category</label>
-                <select
-                  {...register('category')}
-                  className="w-full rounded border border-gray-300 p-2 text-sm"
-                >
-                  <option value="">Selecione a Categoria</option>
-                  <option value="RESTAURANT">Restaurante</option>
-                  <option value="LANDSCAPE">Paisagem</option>
-                  <option value="HOTEL">Hotel</option>
-                  <option value="TOURIST_ATTRACTIONS">Turismo</option>
-                </select>
-                {errors.category && (
-                  <p className="text-sm text-red-500">{errors.category.message}</p>
-                )}
-              </div>
-            </div>
+         
 
             {/* Descrição */}
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">Description</label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Descrição</label>
               <textarea
                 {...register('description')}
-                placeholder="Tell more about this place..."
+                placeholder="Uma descrição sobre o quarto."
                 rows={3}
                 className="w-full resize-none rounded border border-gray-300 p-2 text-sm"
               />
@@ -255,7 +198,7 @@ export const SectionRoom = () => {
                 type="submit"
                 className="w-full rounded bg-primargreen px-4 py-2 font-semibold text-white transition hover:bg-green-600"
               >
-                Register Place
+                Registrar quarto
               </button>
             </div>
           </form>
@@ -264,16 +207,16 @@ export const SectionRoom = () => {
 
       {/* Filtered cards or all */}
       <div className="mt-4 grid min-h-[80vh] w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-10 overflow-y-auto">
-        {(filteredPlaces ?? showPlaces)?.length ? (
-          (filteredPlaces ?? showPlaces)?.map((place, index) => (
-            <CardPlaces
+        {(filteredRooms ?? showRooms)?.length ? (
+          (filteredRooms ?? showRooms)?.map((room, index) => (
+            <CardRoom
               key={index}
-              {...place}
-              handleDeletePlace={() => FunctiondeletePlace(place.id)}
+              props={room}
+              handleDeleteRoom={() => FunctiondeleteRoom(room.id)}
             />
           ))
         ) : (
-          <p className="col-span-full text-center">Nenhum local encontrado.</p>
+          <p className="col-span-full text-center">Nenhum quarto encontrado.</p>
         )}
       </div>
     </section>
