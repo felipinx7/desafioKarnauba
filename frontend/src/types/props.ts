@@ -1,7 +1,7 @@
-import { roomCardData } from "@/dto/places/roomData"
+import { HostingCardData } from "@/dto/places/roomData"
 
 
 export type CardRoomProps = {
-  props: roomCardData
+  props: HostingCardData
   handleDeleteRoom: (id: string) => void
 }

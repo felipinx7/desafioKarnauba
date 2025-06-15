@@ -1,5 +1,7 @@
 import { roomSchema } from "@/schemas/room-schema"
 import { z } from "zod"
+import { Photo } from "../photo/data-photo-DTO"
+
 
 export type roomData = {
     price: number,
@@ -16,6 +18,26 @@ export type roomCardData = {
     placeId?: string,
     description?: string,
     photoURLs?: File[],
+}
+
+export type HostingCardData = {
+
+    id: string
+     name: string
+     phone: string
+     instagram?: string
+     location: string
+     description: string
+     photos: Photo[],
+     category: "HOSTING",
+     cityId: string
+  room: {
+    id: string,
+    price: number,
+    available: boolean,
+    placeId?: string,
+  }
+  handleDeletePlace?: (id: string) => void
 }
 
 

@@ -10,5 +10,13 @@ export interface CardPlacesDTO {
   photos: Photo[]
   category: "RESTAURANT"| "HOTEL" | "TOURIST_ATTRACTIONS" | "LANDSCAPE"
   cityId: string
+  room?: {
+    id: string,
+    price: number,
+    available: boolean,
+    placeId?: string,
+    description?: string,
+    photoURLs?: string[],
+  },
   handleDeletePlace?: (id: string) => void
 }

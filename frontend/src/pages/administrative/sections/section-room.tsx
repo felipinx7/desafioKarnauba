@@ -10,17 +10,25 @@ import { IconClosed } from '@/assets/icons/icone-closed'
 import { getInfoCity } from '@/services/routes/city/get-info-city'
 import { DeleteRoom } from '@/services/routes/rooms/delete-room'
 
-import { createRoom } from '@/services/routes/rooms/create-rooms'
-import { roomCardData, roomDTO } from '@/dto/places/roomData'
-import { roomData } from '@/dto/places/roomData'
-import { CardRoom } from '../components/layouts/card-room'
+import { getAllPlaces } from '@/services/routes/places/get-all-places'
 
+import { HostingCardData, roomDTO } from '@/dto/places/roomData'
+import { roomData } from '@/dto/places/roomData'
+import { formatPhoneNumber } from '@/utils/formatPhone'
+
+import { dataHostingSchema } from '@/schemas/places-schema'
+import { HostingDTO } from '@/dto/places/data-places-DTO'
+import { createHostingWithRoom } from '@/services/routes/places/hosting/create-hosting'
+import { CardHost } from '../components/layouts/card-host'
 
 export const SectionRoom = () => {
   const [isVisibility, setIsVisibility] = useState(false)
-  const [showRooms, setShowRooms] = useState<roomCardData[] | null>(null)
+  const [valuePhone, setValuePhone] = useState('')
+
+  const [showRooms, setShowRooms] = useState<HostingCardData[] | null>(null)
   const [searchValue, setSearchValue] = useState('')
-  const [filteredRooms, setFilteredRooms] = useState<roomCardData[] | null>(null)
+  const [filteredRooms, setFilteredRooms] = useState<HostingCardData[] | null>(null)
+  const [cityID, setCityID] = useState<string>('')
 
   const handleVisibility = () => {
     setIsVisibility((prev) => !prev)
@@ -32,21 +40,46 @@ export const SectionRoom = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<z.infer<typeof roomSchema>>({
-    resolver: zodResolver(roomSchema),
+  } = useForm<z.infer<typeof dataHostingSchema>>({
+    resolver: zodResolver(dataHostingSchema),
   })
 
-  async function onSubmit(data: roomDTO) {
-    const response = await createRoom(data)
+  async function onSubmit(data: HostingDTO) {
+    console.log('foi')
+    const response = await createHostingWithRoom(data, cityID)
     console.log('Resposta da API:', response)
     reset()
     setIsVisibility(false)
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value)
+    setValuePhone(formatted)
+  }
   useEffect(() => {
     const fetchInfoCity = async () => {
-      const places = await getInfoCity()
-      setShowRooms(places.places.room)
+      const city = await getInfoCity()
+      const places = await getAllPlaces()
+
+      const hostingPlaces = places
+        .filter((place: any) => place.category === 'HOSTING')
+        .map((place: any) => ({
+          ...place,
+          // garantir que room seja só o primeiro item do array rooms
+          room:
+            Array.isArray(place.rooms) && place.rooms.length > 0
+              ? place.rooms[0]
+              : {
+                  id: '',
+                  price: 0,
+                  available: false,
+                },
+        }))
+
+      console.log('hostings :', hostingPlaces)
+
+      setShowRooms(hostingPlaces)
+      setCityID(city.id)
     }
 
     fetchInfoCity()
@@ -65,12 +98,10 @@ export const SectionRoom = () => {
     setFilteredRooms(filtered ?? [])
   }
 
-
   const FunctiondeleteRoom = async (id: string) => {
     await DeleteRoom(id)
     console.log('Card Excluido com sucesso!')
 
-    // Update list of Places with alters
     setShowRooms((prev) => prev?.filter((room) => room.id !== id) ?? null)
     setFilteredRooms((prev) => prev?.filter((room) => room.id !== id) ?? null)
   }
@@ -115,7 +146,7 @@ export const SectionRoom = () => {
         <article className="relative max-h-[90vh] w-[95%] max-w-lg overflow-y-auto rounded-xl bg-white p-5 shadow-lg">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-800">Novo Quarto</h2>
+              <h2 className="text-lg font-semibold text-gray-800">Nova Hospedagem</h2>
               <button
                 onClick={handleVisibility}
                 type="button"
@@ -125,9 +156,8 @@ export const SectionRoom = () => {
               </button>
             </div>
 
-            {/* Upload de fotos */}
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">Imagens</label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Upload Photos</label>
               <div className="relative flex h-48 w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 text-sm text-gray-500">
                 <Controller
                   name="photoURLs"
@@ -145,7 +175,7 @@ export const SectionRoom = () => {
                           field.onChange(files ? Array.from(files) : [])
                         }}
                       />
-                      <span>Clique para adicionar imagens</span>
+                      <span>Click to upload images</span>
                     </>
                   )}
                 />
@@ -157,33 +187,65 @@ export const SectionRoom = () => {
 
             {/* Campos de nome e telefone */}
             <div className="flex gap-2">
-              <div className="flex-1 relative">
-                <label className="mb-1 block text-sm font-medium text-gray-700">Valor</label>
-                <h1 className='absolute left-2 bottom-2 '>R$</h1>
+              <div className="flex-1">
+                <label className="mb-1 block text-sm font-medium text-gray-700">Name</label>
                 <input
-                  {...register('price')}
-                  type="number"
-                  placeholder="300,00"
-                  className="w-full rounded border border-gray-300 p-2 pl-8 text-sm"
+                  {...register('name')}
+                  type="text"
+                  placeholder="Example: Beach Restaurant"
+                  className="w-full rounded border border-gray-300 p-2 text-sm"
                 />
-
+                {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
               </div>
-              
+              <div className="flex-1">
+                <label className="mb-1 block text-sm font-medium text-gray-700">Phone</label>
+                <input
+                  {...register('phone')}
+                  type="text"
+                  value={valuePhone}
+                  maxLength={15}
+                  onChange={(e) => handleChange(e)}
+                  placeholder="(99) 99999-9999"
+                  className="w-full rounded border border-gray-300 p-2 text-sm"
+                />
+                {errors.phone && <p className="text-sm text-red-500">{errors.phone.message}</p>}
+              </div>
             </div>
 
             {/* Campos Instagram e local */}
             <div className="flex gap-2">
-              
+              <div className="flex-1">
+                <label className="mb-1 block text-sm font-medium text-gray-700">Instagram</label>
+                <input
+                  {...register('instagram')}
+                  type="text"
+                  placeholder="@placehandle"
+                  className="w-full rounded border border-gray-300 p-2 text-sm"
+                />
+                {errors.instagram && (
+                  <p className="text-sm text-red-500">{errors.instagram.message}</p>
+                )}
+              </div>
+              <div className="flex-1">
+                <label className="mb-1 block text-sm font-medium text-gray-700">Location</label>
+                <input
+                  {...register('location')}
+                  type="text"
+                  placeholder="Street, Neighborhood"
+                  className="w-full rounded border border-gray-300 p-2 text-sm"
+                />
+                {errors.location && (
+                  <p className="text-sm text-red-500">{errors.location.message}</p>
+                )}
+              </div>
             </div>
-
-         
 
             {/* Descrição */}
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">Descrição</label>
+              <label className="mb-1 block text-sm font-medium text-gray-700">Description</label>
               <textarea
                 {...register('description')}
-                placeholder="Uma descrição sobre o quarto."
+                placeholder="Tell more about this place..."
                 rows={3}
                 className="w-full resize-none rounded border border-gray-300 p-2 text-sm"
               />
@@ -191,6 +253,29 @@ export const SectionRoom = () => {
                 <p className="text-sm text-red-500">{errors.description.message}</p>
               )}
             </div>
+
+            {/* Upload de fotos */}
+
+
+            {/* Campos de nome e telefone */}
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <label className="mb-1 block text-sm font-medium text-gray-700">Valor</label>
+                <h1 className="absolute bottom-2 left-2">R$</h1>
+                <input
+                  {...register('room.price', { valueAsNumber: true })}
+                  type="number"
+                  placeholder="300,00"
+                  className="w-full rounded border border-gray-300 p-2 pl-8 text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Campos Instagram e local */}
+            <div className="flex gap-2"></div>
+
+            {/* Descrição */}
+
 
             {/* Botão de envio */}
             <div>
@@ -208,13 +293,7 @@ export const SectionRoom = () => {
       {/* Filtered cards or all */}
       <div className="mt-4 grid min-h-[80vh] w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-10 overflow-y-auto">
         {(filteredRooms ?? showRooms)?.length ? (
-          (filteredRooms ?? showRooms)?.map((room, index) => (
-            <CardRoom
-              key={index}
-              props={room}
-              handleDeleteRoom={() => FunctiondeleteRoom(room.id)}
-            />
-          ))
+          (filteredRooms ?? showRooms)?.map((room, index) => <CardHost key={index} {...room} />)
         ) : (
           <p className="col-span-full text-center">Nenhum quarto encontrado.</p>
         )}
