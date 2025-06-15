@@ -16,6 +16,8 @@ import { HostingCardData, roomDTO } from '@/dto/places/roomData'
 import { roomData } from '@/dto/places/roomData'
 import { formatPhoneNumber } from '@/utils/formatPhone'
 
+import { DeleteHosting } from '@/services/routes/places/hosting/delete-hosting'
+
 import { dataHostingSchema } from '@/schemas/places-schema'
 import { HostingDTO } from '@/dto/places/data-places-DTO'
 import { createHostingWithRoom } from '@/services/routes/places/hosting/create-hosting'
@@ -98,9 +100,9 @@ export const SectionRoom = () => {
     setFilteredRooms(filtered ?? [])
   }
 
-  const FunctiondeleteRoom = async (id: string) => {
-    await DeleteRoom(id)
-    console.log('Card Excluido com sucesso!')
+  const FunctiondeleteHost = async (id: string) => {
+    await DeleteHosting(id)
+    console.log('Hosting Excluido com sucesso!')
 
     setShowRooms((prev) => prev?.filter((room) => room.id !== id) ?? null)
     setFilteredRooms((prev) => prev?.filter((room) => room.id !== id) ?? null)
@@ -293,7 +295,7 @@ export const SectionRoom = () => {
       {/* Filtered cards or all */}
       <div className="mt-4 grid min-h-[80vh] w-full grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-10 overflow-y-auto">
         {(filteredRooms ?? showRooms)?.length ? (
-          (filteredRooms ?? showRooms)?.map((room, index) => <CardHost key={index} {...room} />)
+          (filteredRooms ?? showRooms)?.map((room, index) => <CardHost key={index} {...room} handleDeletePlace={FunctiondeleteHost} />)
         ) : (
           <p className="col-span-full text-center">Nenhum quarto encontrado.</p>
         )}

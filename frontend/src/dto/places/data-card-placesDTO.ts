@@ -10,7 +10,7 @@ export interface CardPlacesDTO {
   photos: Photo[]
   category: "RESTAURANT"| "HOTEL" | "TOURIST_ATTRACTIONS" | "LANDSCAPE"
   cityId: string
-  room?: {
+  rooms?: {
     id: string,
     price: number,
     available: boolean,

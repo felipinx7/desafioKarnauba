@@ -146,7 +146,7 @@ export function placeByCategory(fastify: FastifyInstance) {
                 properties: {
                     category: {
                         type: 'string',
-                        enum: ['RESTAURANT', 'HOTEL', 'TOURIST_ATTRACTIONS', 'LANDSCAPE']
+                        enum: ['RESTAURANT', 'HOTEL', 'TOURIST_ATTRACTIONS', 'LANDSCAPE', 'HOSTING']
                     }
                 },
                 required: ['category']
@@ -173,54 +173,7 @@ export function placeByCategory(fastify: FastifyInstance) {
 }
 
 export function placeFindUnique(fastify: FastifyInstance) {
-    fastify.get('/place/:id', {
-        schema: {
-            params: {
-                type: 'object',
-                properties: {
-                    id: { type: 'string' }
-                },
-                required: ['id']
-            },
-            summary: 'Find a place by ID',
-            description: 'This endpoint allows you to find a specific place by its ID.',
-            tags: ['Place'],
-            response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string', enum: ['Place found successfully'] },
-                        place: {
-                            type: 'object',
-                            properties: {
-                                id: { type: 'string' },
-                                name: { type: 'string' },
-                                description: { type: 'string' },
-                                category: { type: 'string' },
-                                cityId: { type: 'string' },
-                                phone: { type: 'string', nullable: true },
-                                instagram: { type: 'string', nullable: true },
-                                location: { type: 'string' },
-                                photos: { type: 'array', items: { type: 'string' } }
-                            }
-                        }
-                    }
-                },
-                400: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string', enum: ['Bad Request'] },
-                    }
-                },
-                401: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string', enum: ['Unauthorized'] },
-                    }
-                },
-            }
-        }
-    }, (req, res) => placeInstance.findUnique({ req, res }));
+    fastify.get('/place/:id', (req, res) => placeInstance.findUnique({ req, res }));
 }
 
 export function placeFindAll(fastify: FastifyInstance) {

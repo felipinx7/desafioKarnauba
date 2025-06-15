@@ -24,6 +24,7 @@ function gerarLinkWhatsApp(numero: string): string {
 
 export const ModalLocation: FC<ModalLocationProps> = ({
   name,
+  roomValue,
   description,
   location,
   instagram,
@@ -87,6 +88,8 @@ export const ModalLocation: FC<ModalLocationProps> = ({
         {/* Título e descrição */}
         <div className="mt-6">
           <h1 className="text-[2rem] font-bold">{name}</h1>
+          {roomValue ? (<h1 className="text-[2rem] font-bold">R$ {roomValue}</h1>) : ""}
+
           <p className="mt-4 text-[1rem] leading-6 text-gray-700">{description}</p>
         </div>
 

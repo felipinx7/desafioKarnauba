@@ -7,6 +7,7 @@ import { getAllPlaces } from '@/services/routes/places/get-all-places'
 
 export function SectionHotel() {
   const [infoPlaces, setInfoPlaces] = useState<CardPlacesDTO[]>([])
+  const [infoRoom, setInfoRoom] = useState<any>([])
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -35,7 +36,7 @@ export function SectionHotel() {
       <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {Array.isArray(infoPlaces) &&
           infoPlaces
-            .filter((place) => place.category === "HOTEL")
+            .filter((place) => place.category === "HOTEL" || place.category === "HOSTING")
             .map((place) => <CardPLaces key={place.id} {...place} />)}
       </div>
     </section>

@@ -74,7 +74,7 @@ model Room {
   placeId     String
   place       Place    @relation(fields: [placeId], references: [id])
   photoURLs   String[]
-  description String
+  description String?
 }
 
 model Event {

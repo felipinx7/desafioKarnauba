@@ -5,6 +5,7 @@ export interface CardEventPageAdministrative {
   id: string
   name: string
   date: string
+  roomValue: number,
   lastDate: string
   active: boolean
   cityId: string

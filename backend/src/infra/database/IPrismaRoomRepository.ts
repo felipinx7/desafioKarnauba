@@ -30,7 +30,7 @@ export class IPrismaRoomRepository implements IRoomRepository {
                 available: data.available,
                 placeId: data.placeId,
                 photoURLs: data.photoURLs,
-                description: data.description
+                description: data.description 
             }
         });
         return room;

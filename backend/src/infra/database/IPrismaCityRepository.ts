@@ -78,47 +78,59 @@ export class IPrismaCityRepository implements ICityRepository {
         return true;
     }
 
-    async getAllCities(): Promise<City[]> {
-        const cities = await prisma.city.findMany({
-            include: {
-                places: {
-                    include: {
-                        photos: true,
-                        rooms: true
-                    }
-                },
-                events: {
-                    include: {
-                        photos: true
-                    }
-                },
-                photos: true
-            }
-        })
+   async getAllCities(): Promise<City[]> {
+  const cities = await prisma.city.findMany({
+    include: {
+      places: {
+        where: {
+          category: {
+            not: 'HOSTING', 
+          },
+        },
+        include: {
+          photos: true,
+          rooms: true,
+        },
+      },
+      events: {
+        include: {
+          photos: true,
+        },
+      },
+      photos: true,
+    },
+  });
 
-        return cities
-    }
+  return cities;
+}
 
-    async findUnique(id: string): Promise<City | null> {
-        const city = await prisma.city.findUnique({
-            where: {id},
-            include: {
-                places: {
-                    include: {
-                        photos: true
-                    }
-                },
-                events: {
-                    include: {
-                        photos: true
-                    }
-                },
-                photos: true
-            }
-        })
 
-        return city;
-    }
+async findUnique(id: string): Promise<City | null> {
+  const city = await prisma.city.findUnique({
+    where: { id },
+    include: {
+      places: {
+        where: {
+          category: {
+            not: 'HOSTING', // <- Filtra lugares que NÃO são HOSTING
+          },
+        },
+        include: {
+          photos: true,
+        },
+      },
+      events: {
+        include: {
+          photos: true,
+        },
+      },
+      photos: true,
+    },
+  });
+
+  return city;
+}
+
 
     async updatePhoto(photoId: string, photoURLs: string): Promise<Photo> {
         const photo = await prisma.photo.update({

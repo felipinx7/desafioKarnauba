@@ -10,6 +10,6 @@ export const roomSchema = z.object({
         },
         z.boolean().optional().default(true)
     ),
-    description: z.string(),
+    description: z.string().optional(),
     photoURLs: z.array(z.string()).optional()
 });
