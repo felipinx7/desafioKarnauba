@@ -9,18 +9,16 @@ import { DataLoginUser } from '@/dto/admin/data-login-admin-DTO'
 import { loginUserSchema } from '@/schemas/user-schema'
 import { LoginUser } from '@/services/routes/auth/auth'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 export const LoginPage = () => {
   //Manipulate of login User
   const router = useRouter()
   //State for storage value remember me
-  const [rememberMe, setRememberMe] = useState(true)
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors},
   } = useForm<DataLoginUser>({
     resolver: zodResolver(loginUserSchema),
   })
@@ -29,6 +27,7 @@ export const LoginPage = () => {
   async function onSubmit(data: DataLoginUser) {
       const response = await LoginUser(data)
       router.push("/administrative")
+      return response
   }
 
   return (

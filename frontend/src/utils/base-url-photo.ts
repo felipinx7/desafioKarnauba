@@ -1,7 +1,7 @@
 import { backgroundloginpage } from "@/assets/image";
-import { CardEventAndLocationProps } from "@/dto/event/data-card-event-DTO";
+import { CardEventPageAdministrative } from "@/dto/event/data-card-event-DTO";
 
-export function BaseUrl (photoURL: string, props: CardEventAndLocationProps){
+export function BaseUrl (photoURL: string, props: CardEventPageAdministrative){
      const photoUrl =
     props.photos.length > 0
       ? `http://localhost:4444/uploads/${photoURL}`

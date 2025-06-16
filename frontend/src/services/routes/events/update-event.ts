@@ -1,16 +1,27 @@
 import { api } from '@/config/axios'
+import { dataEventDTO } from '@/dto/event/data-create-event-DTO'
 
-export const udpateEvent = async (id: string, data: any) => {
+export const udpateEvent = async (id: string, data: dataEventDTO
+) => {
   try {
     const formData = new FormData()
 
     for (const key in data) {
-      if (key === 'photoURLs' && data[key]) {
-        data[key].forEach((file: File) => {
+      const typedKey = key as keyof dataEventDTO
+
+      if (typedKey === 'photoURLs' && data[typedKey]) {
+        (data[typedKey] as File[]).forEach((file: File) => {
           formData.append('photoURLs', file)
         })
       } else {
-        formData.append(key, data[key])
+        const value = data[typedKey]
+
+        if (value !== undefined && value !== null) {
+          const stringValue =
+            typeof value === 'object' ? JSON.stringify(value) : String(value)
+
+          formData.append(typedKey, stringValue)
+        }
       }
     }
 

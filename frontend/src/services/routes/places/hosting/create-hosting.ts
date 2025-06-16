@@ -1,7 +1,7 @@
 import { api } from "@/config/axios"
 import type { HostingDTO } from "@/dto/places/data-places-DTO"
 
-export async function createHostingWithRoom(data: Omit<HostingDTO, "id" | "cityID">, cityID: string) {
+export async function createHostingWithRoom(data: Omit<HostingDTO, "id" | "cityID">) {
   try {
    const formData = new FormData()
 
