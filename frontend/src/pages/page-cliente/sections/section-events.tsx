@@ -1,30 +1,42 @@
 import { useEffect, useState } from 'react'
 import { getAllEvents } from '@/services/routes/events/get-all-events'
-import { dataEventDTO } from '@/dto/event/data-create-event-DTO'
-import { dataCardEvent } from '@/dto/event/data-card-event-client-page-DTO'
+import { dataCardEventClientPage } from '@/dto/event/data-card-event-client-page-DTO'
 import { CardEvent } from '../components/card-event'
-import { ModalEvents } from '../components/modal-events'
 
 export const SectionEvents = () => {
-  const [infoEvents, setInfoEvents] = useState<dataCardEvent[] | null>(null)
+  const [infoEvents, setInfoEvents] = useState<dataCardEventClientPage[] | null>(null)
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await getAllEvents()
 
-        const eventsArray: dataCardEvent[] = response
-          ? Object.values(response).map((event: any) => ({
-              id: event.id,
-              name: event.name,
-              date: new Date(event.date),
-              lastDate: new Date(event.lastDate),
-              location: event.location,
-              description: event.description,
-              active: event.active === 'true' || event.active === true,
-              photoURLs: event.photos[0].url,
-              instagram: event.instagram || '',
-            }))
+        const eventsArray: dataCardEventClientPage[] = response
+          ? Object.values(response).map((event) => {
+              const typedEvent = event as {
+                id: string
+                name: string
+                date: Date
+                lastDate: Date
+                location: string
+                description: string
+                active: boolean
+                photos: { url: string }[]
+                instagram?: string
+              }
+
+              return {
+                id: typedEvent.id,
+                name: typedEvent.name,
+                date: new Date(typedEvent.date),
+                lastDate: new Date(typedEvent.lastDate),
+                location: typedEvent.location,
+                description: typedEvent.description,
+                active: typedEvent.active,
+                photoURLs: typedEvent.photos[0]?.url || '',
+                instagram: typedEvent.instagram || '',
+              }
+            })
           : []
 
         setInfoEvents(eventsArray)
@@ -45,7 +57,7 @@ export const SectionEvents = () => {
           Participe da cultura da cidade participando dos melhores eventos
         </p>
         <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {infoEvents?.map((card) => <CardEvent key={card.id} {...card}/>)}
+          {infoEvents?.map((card) => <CardEvent key={card.id} {...card} />)}
         </div>
       </div>
     </section>
