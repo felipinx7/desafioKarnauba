@@ -1,4 +1,4 @@
-import { PageCliente } from "@/pages/page-cliente/page-cliente";
+import { PageCliente } from "@/paginas/page-cliente/page-cliente";
 
 export default function ClientePage (){
     return(

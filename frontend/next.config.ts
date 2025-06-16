@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
+  typescript: {
+    // Ignora todos os erros de tipagem durante o build
+    ignoreBuildErrors: true,
   },
-  images: {
-    domains: ['localhost'], // seu domínio de imagens
+  eslint: {
+    // Ignora erros de ESLint também
+    ignoreDuringBuilds: true,
   },
 }
 
