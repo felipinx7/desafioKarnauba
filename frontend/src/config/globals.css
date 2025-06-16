@@ -16,16 +16,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --background: #ffffff;
+    --foreground: #171717;
     --primary-green: #194a99;
     --primary-black-400: rgba(0, 0, 0, 0.62);
     --primary-white-500: #e6e6e6;
-    --primary-gree-700: #3F73C6;
+    --primary-gree-700: #157c4e;
+    --primary-gray: #d9d9d9;
+    --secundary-gray-900: #666;
+    --secundary-black800: #242424;
   }
 }
 
 .line-clamp-4 {
   display: -webkit-box;
-  -webkit-line-clamp: 4; 
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
