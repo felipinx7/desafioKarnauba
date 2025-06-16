@@ -1,9 +1,9 @@
-import Home from './home-page/page'
+import ClientePage from "./client-page/page";
 
 export default function App() {
   return (
     <>
-      <Home />
+      <ClientePage />
     </>
   )
 }
