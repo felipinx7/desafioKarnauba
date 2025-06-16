@@ -3,7 +3,7 @@ import type { roomData } from "@/dto/places/roomData";
 
 export async function getAllRooms(placeId: string) {
     try {
-        const response = await api.get<roomData[]>(`rooms/available/${placeId}`);
+        const response = await api.get<roomData[]>(`rooms/available`);
         console.log("All rooms:", response.data);
         return response.data;
     } catch (error) {
