@@ -7,13 +7,12 @@ import { updateCity } from '@/services/routes/city/update-city'
 import { DataInfoCityDTO } from '@/dto/city/data-info-city-DTO'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
 import { backgroundloginpage } from '@/assets/image'
-import { updateCityImage } from '@/services/routes/city/update-city-image'
 import Image from 'next/image'
 
 export const SectionCity = () => {
   const [bannerPreview, setBannerPreview] = useState<string | null>(null)
   const [bannerFile, setBannerFile] = useState<File | null>(null)
-  const [photourl, setPhotoUrl] = useState<string | null>()
+  const [photourl, setPhotoUrl] = useState<string | null>(null)
   const [infoCity, setInfoCity] = useState<DataInfoCityDTO | null>(null)
   const [form, setForm] = useState({
     name: '',
@@ -22,7 +21,8 @@ export const SectionCity = () => {
     instagram: '',
     adminId: '',
   })
-  // Revogar URL local para liberar memória
+
+  // Revoga URL local para liberar memória
   useEffect(() => {
     return () => {
       if (bannerPreview && bannerPreview.startsWith('blob:')) {
@@ -34,13 +34,14 @@ export const SectionCity = () => {
   const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      // Revoke preview anterior para não vazar memória
+      // Revoga preview anterior para não vazar memória
       if (bannerPreview && bannerPreview.startsWith('blob:')) {
         URL.revokeObjectURL(bannerPreview)
       }
       const previewURL = URL.createObjectURL(file)
       setBannerPreview(previewURL)
       setBannerFile(file)
+      setPhotoUrl(null) // porque agora a preview é local
     }
   }
 
@@ -55,13 +56,13 @@ export const SectionCity = () => {
       adminId: city.adminId,
     })
 
-    const firstPhotoUrl = city.photos && city.photos.length > 0 ? city.photos[0].url : ''
-    const photoURL = baseUrlPhoto('city', firstPhotoUrl)
+    const firstPhotoUrl = city.photoURL && city.photoURL.length > 0 ? city.photoURL[0] : ''
+    const photoURL = firstPhotoUrl ? baseUrlPhoto('city', firstPhotoUrl) : null
     setPhotoUrl(photoURL)
 
-    if (firstPhotoUrl) {
+    if (photoURL) {
       setBannerPreview(photoURL)
-      setBannerFile(null) // Limpa o arquivo local, pois usamos URL remota
+      setBannerFile(null) // limpa arquivo local, pois usamos URL remota
     } else {
       setBannerPreview(null)
       setBannerFile(null)
@@ -93,13 +94,14 @@ export const SectionCity = () => {
 
     try {
       await updateCity(updatedFields)
-      await updateCityImage(infoCity?.photos[0].id, bannerFile)
-      alert('Cidade atualizada com sucesso!')
 
-      // Atualiza o estado e o preview com os dados novos do servidor
+    
+
+      alert('Cidade atualizada com sucesso!')
       await fetchCityInfo()
     } catch (error) {
-      alert('Erro ao atualizar a cidade.', error)
+      alert('Erro ao atualizar a cidade.')
+      console.log(error)
     }
   }
 
@@ -112,13 +114,24 @@ export const SectionCity = () => {
       <form onSubmit={onSubmit}>
         {/* Banner */}
         <div className="relative max-h-[300px] w-full overflow-hidden rounded-xl border">
-          <Image
-            src={photourl ? photourl : backgroundloginpage}
-            width={200}
-            height={200}
-            alt="Banner da cidade"
-            className="h-full w-full object-cover"
-          />
+          {bannerPreview ? (
+            <Image
+              src={bannerPreview}
+              width={200}
+              height={200}
+              alt="Banner da cidade"
+              className="h-full w-full object-cover"
+              unoptimized // para usar URL local blob e evitar erro
+            />
+          ) : (
+            <Image
+              src={backgroundloginpage}
+              width={200}
+              height={200}
+              alt="Banner da cidade"
+              className="h-full w-full object-cover"
+            />
+          )}
 
           <input
             type="file"
@@ -131,7 +144,6 @@ export const SectionCity = () => {
 
         {/* Campos */}
         <div className="mt-4 flex justify-between gap-6 max-md:flex-col">
-          {/* ... campos do formulário ... */}
           <div className="flex w-full flex-col gap-4">
             <div className="flex flex-col">
               <label className="text-[1.2rem] font-medium text-primargreen">Nome da cidade</label>

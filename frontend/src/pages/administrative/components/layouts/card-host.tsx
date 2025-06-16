@@ -24,14 +24,13 @@ export const CardHost = (props: HostingCardData) => {
   const [valuePhone, setValuePhone] = useState('')
   const [previewImages, setPreviewImages] = useState<string[]>([])
 
-
   const {
     control,
     register,
     handleSubmit,
     reset,
-    getValues,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<z.infer<typeof dataHostingSchema>>({
     resolver: zodResolver(dataHostingSchema),
@@ -54,16 +53,15 @@ export const CardHost = (props: HostingCardData) => {
       setValuePhone(props.phone || '')
 
       // Gerar URLs preview para as fotos existentes, que podem ser arquivos ou URLs
-      const urls = (props.photos || []).map((photo) => {
-        if (photo instanceof File) {
-          return URL.createObjectURL(photo)
-        }
-        // photo.url deve existir
-        return baseUrlPhoto('place', (photo as any).url || '')
-      })
-
-
-
+      const urls = (props.photos || [])
+        .map((photo) => {
+          if (photo instanceof File) {
+            return URL.createObjectURL(photo)
+          }
+          // photo.url pode ser null ou undefined, filtrar abaixo
+          return baseUrlPhoto('place', photo.url || '')
+        })
+        .filter((url): url is string => !!url) // filtra nulos, vazios ou falsy
 
       setPreviewImages(urls)
     } else {
@@ -78,7 +76,6 @@ export const CardHost = (props: HostingCardData) => {
   }
 
   const onSubmit = async (data: z.infer<typeof dataHostingSchema>) => {
-    console.log("foi")
     try {
       const response = await updatePlace(props.id, data)
       console.log('Update successful!', response)
@@ -104,24 +101,19 @@ export const CardHost = (props: HostingCardData) => {
     setValue('photoURLs', files, { shouldValidate: true, shouldDirty: true })
   }
 
-
-
   const handleRemovePreviewImage = (indexToRemove: number) => {
     setPreviewImages((prev) => {
       URL.revokeObjectURL(prev[indexToRemove])
       const newPreviews = prev.filter((_, i) => i !== indexToRemove)
 
       // Também remover o arquivo correspondente de photoURLs no form
-      // Pegar os arquivos atuais
-      const currentFiles: File[] = (control.getValues('photoURLs') || []) as File[]
+      const currentFiles: File[] = (getValues('photoURLs') || []) as File[]
       const newFiles = currentFiles.filter((_, i) => i !== indexToRemove)
-      setValue('photoURLs', newFiles)
+      setValue('photoURLs', newFiles, { shouldValidate: true, shouldDirty: true })
 
       return newPreviews
     })
   }
-
-  
 
   const photo = props.photos?.[0]?.url
     ? baseUrlPhoto('place', props.photos[0].url)
@@ -157,7 +149,9 @@ export const CardHost = (props: HostingCardData) => {
       </div>
 
       <div className="flex h-[80%] flex-col p-3 py-1">
-        <h1 className="w-[95%] truncate text-[1.1rem] font-medium text-black">R${props.room.price}</h1>
+        <h1 className="w-[95%] truncate text-[1.1rem] font-medium text-black">
+          R${props.room.price}
+        </h1>
         <h1 className="w-[95%] truncate text-[0.9rem] font-medium text-black">{props.name}</h1>
         <p className="line-clamp-3 h-full text-secundarygray900">{props.description}</p>
       </div>
@@ -307,10 +301,7 @@ export const CardHost = (props: HostingCardData) => {
                 )}
               </div>
 
-              {/* Fotos do quarto */}
-              
-
-              {/* Room price and description */}
+              {/* Room price */}
               <div className="mt-4 flex gap-2">
                 <div className="relative flex-1">
                   <label className="mb-1 block text-sm font-medium text-gray-700">Valor</label>
@@ -323,8 +314,6 @@ export const CardHost = (props: HostingCardData) => {
                   />
                 </div>
               </div>
-
-
 
               <button type="submit" className="w-full rounded bg-primargreen py-2 text-white">
                 Update Place

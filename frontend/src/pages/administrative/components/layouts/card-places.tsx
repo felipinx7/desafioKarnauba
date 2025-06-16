@@ -36,10 +36,14 @@ export const CardPlaces = (props: CardPlacesDTO) => {
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<z.infer<typeof placeSchema>>({
     resolver: zodResolver(placeSchema),
   })
+
+  // Watch the photos field to sync removals and additions
+  const watchedPhotos = watch('photoURLs')
 
   // Toggle modal visibility and initialize/reset form fields and preview images accordingly
   const handleOpenModalUpdate = () => {
@@ -60,10 +64,17 @@ export const CardPlaces = (props: CardPlacesDTO) => {
 
       // Load current photos into previewImages for display
       if (props.photos && props.photos.length > 0) {
-        const urls = props.photos.map((photo) => baseUrlPhoto('place', photo.url))
+        // Cria URLs filtrando possíveis nulls
+        const urls = props.photos
+          .map((photo) => baseUrlPhoto('place', photo.url))
+          .filter((url): url is string => url !== null)
         setPreviewImages(urls)
+
+        // Atualiza o campo photoURLs com os objetos File simulados (não temos arquivos reais, então vazio)
+        setValue('photoURLs', [])
       } else {
         setPreviewImages([])
+        setValue('photoURLs', [])
       }
     } else {
       // Closing modal: clear form and previews
@@ -113,13 +124,20 @@ export const CardPlaces = (props: CardPlacesDTO) => {
   const handleRemovePreviewImage = (indexToRemove: number) => {
     setPreviewImages((prev) => {
       URL.revokeObjectURL(prev[indexToRemove])
-      return prev.filter((_, i) => i !== indexToRemove)
+      const newPreview = prev.filter((_, i) => i !== indexToRemove)
+
+      // Também removemos do campo photoURLs
+      const currentFiles = watchedPhotos instanceof Array ? watchedPhotos : []
+      const newFiles = currentFiles.filter((_, i) => i !== indexToRemove)
+      setValue('photoURLs', newFiles)
+
+      return newPreview
     })
   }
 
   // Main photo to display on the card - either first photo or a placeholder image
   const photo = props.photos?.[0]?.url
-    ? baseUrlPhoto('place', props.photos[0].url)
+    ? baseUrlPhoto('place', props.photos[0].url) || backgroundloginpage
     : backgroundloginpage
 
   return (
@@ -222,7 +240,7 @@ export const CardPlaces = (props: CardPlacesDTO) => {
                           <button
                             type="button"
                             onClick={() => handleRemovePreviewImage(index)}
-                            className="absolute right-2 top-2 z-10 rounded bg-white p-1 text-white"
+                            className="absolute right-2 top-2 z-10 rounded bg-white p-1 text-gray-700 hover:text-red-600"
                             title="Remove image"
                           >
                             <IconTrash />
