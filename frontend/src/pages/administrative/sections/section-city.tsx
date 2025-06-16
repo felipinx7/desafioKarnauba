@@ -7,12 +7,13 @@ import { updateCity } from '@/services/routes/city/update-city'
 import { DataInfoCityDTO } from '@/dto/city/data-info-city-DTO'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
 import { backgroundloginpage } from '@/assets/image'
+import { updateCityImage } from '@/services/routes/city/update-city-image'
 import Image from 'next/image'
 
 export const SectionCity = () => {
   const [bannerPreview, setBannerPreview] = useState<string | null>(null)
   const [bannerFile, setBannerFile] = useState<File | null>(null)
-  const [photourl, setPhotoUrl] = useState<string | null>(null)
+  const [photourl, setPhotoUrl] = useState<string | null>()
   const [infoCity, setInfoCity] = useState<DataInfoCityDTO | null>(null)
   const [form, setForm] = useState({
     name: '',
@@ -21,8 +22,7 @@ export const SectionCity = () => {
     instagram: '',
     adminId: '',
   })
-
-  // Revoga URL local para liberar memória
+  // Revogar URL local para liberar memória
   useEffect(() => {
     return () => {
       if (bannerPreview && bannerPreview.startsWith('blob:')) {
@@ -34,14 +34,13 @@ export const SectionCity = () => {
   const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      // Revoga preview anterior para não vazar memória
+      // Revoke preview anterior para não vazar memória
       if (bannerPreview && bannerPreview.startsWith('blob:')) {
         URL.revokeObjectURL(bannerPreview)
       }
       const previewURL = URL.createObjectURL(file)
       setBannerPreview(previewURL)
       setBannerFile(file)
-      setPhotoUrl(null) // porque agora a preview é local
     }
   }
 
@@ -56,13 +55,13 @@ export const SectionCity = () => {
       adminId: city.adminId,
     })
 
-    const firstPhotoUrl = city.photoURL && city.photoURL.length > 0 ? city.photoURL[0] : ''
-    const photoURL = firstPhotoUrl ? baseUrlPhoto('city', firstPhotoUrl) : null
+    const firstPhotoUrl = city.photos && city.photos.length > 0 ? city.photos[0].url : ''
+    const photoURL = baseUrlPhoto('city', firstPhotoUrl)
     setPhotoUrl(photoURL)
 
-    if (photoURL) {
+    if (firstPhotoUrl) {
       setBannerPreview(photoURL)
-      setBannerFile(null) // limpa arquivo local, pois usamos URL remota
+      setBannerFile(null) // Limpa o arquivo local, pois usamos URL remota
     } else {
       setBannerPreview(null)
       setBannerFile(null)
@@ -73,37 +72,39 @@ export const SectionCity = () => {
     fetchCityInfo()
   }, [])
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!infoCity) return
+ const onSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  if (!infoCity) return
 
-    const updatedFields = new FormData()
+  const updatedFields = new FormData()
 
-    if (form.name !== infoCity.name) updatedFields.append('name', form.name)
-    if (form.location !== infoCity.location) updatedFields.append('location', form.location)
-    if (form.description !== infoCity.description)
-      updatedFields.append('description', form.description)
-    if (form.instagram !== (infoCity.instagram ?? ''))
-      updatedFields.append('instagram', form.instagram)
-    if (bannerFile) updatedFields.append('photo', bannerFile)
+  if (form.name !== infoCity.name) updatedFields.append('name', form.name)
+  if (form.location !== infoCity.location) updatedFields.append('location', form.location)
+  if (form.description !== infoCity.description)
+    updatedFields.append('description', form.description)
+  if (form.instagram !== (infoCity.instagram ?? ''))
+    updatedFields.append('instagram', form.instagram)
+  if (bannerFile) updatedFields.append('photo', bannerFile)
 
-    if ([...updatedFields.keys()].length === 0) {
-      alert('Nenhuma alteração detectada.')
-      return
-    }
-
-    try {
-      await updateCity(updatedFields)
-
-    
-
-      alert('Cidade atualizada com sucesso!')
-      await fetchCityInfo()
-    } catch (error) {
-      alert('Erro ao atualizar a cidade.')
-      console.log(error)
-    }
+  if ([...updatedFields.keys()].length === 0) {
+    alert('Nenhuma alteração detectada.')
+    return
   }
+
+  try {
+    await updateCity(updatedFields)
+
+    if (bannerFile) {
+      // Passa só o arquivo para a função de update da imagem
+      await updateCityImage(bannerFile)
+    }
+
+    alert('Cidade atualizada com sucesso!')
+    await fetchCityInfo()
+  } catch (error) {
+    alert('Erro ao atualizar a cidade.')
+  }
+}
 
   return (
     <section className="flex w-full flex-col justify-center gap-6 px-4 py-6 max-lg:w-full">
@@ -114,24 +115,13 @@ export const SectionCity = () => {
       <form onSubmit={onSubmit}>
         {/* Banner */}
         <div className="relative max-h-[300px] w-full overflow-hidden rounded-xl border">
-          {bannerPreview ? (
-            <Image
-              src={bannerPreview}
-              width={200}
-              height={200}
-              alt="Banner da cidade"
-              className="h-full w-full object-cover"
-              unoptimized // para usar URL local blob e evitar erro
-            />
-          ) : (
-            <Image
-              src={backgroundloginpage}
-              width={200}
-              height={200}
-              alt="Banner da cidade"
-              className="h-full w-full object-cover"
-            />
-          )}
+          <Image
+            src={photourl ? photourl : backgroundloginpage}
+            width={200}
+            height={200}
+            alt="Banner da cidade"
+            className="h-full w-full object-cover"
+          />
 
           <input
             type="file"
@@ -144,6 +134,7 @@ export const SectionCity = () => {
 
         {/* Campos */}
         <div className="mt-4 flex justify-between gap-6 max-md:flex-col">
+          {/* ... campos do formulário ... */}
           <div className="flex w-full flex-col gap-4">
             <div className="flex flex-col">
               <label className="text-[1.2rem] font-medium text-primargreen">Nome da cidade</label>

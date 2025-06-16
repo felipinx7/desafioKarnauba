@@ -44,7 +44,10 @@ export const SectionTaxi = () => {
     formData.append('name', data.name)
     formData.append('phone', data.phone)
     formData.append('workingDescription', data.workingDescription)
-    formData.append('photo', data.photoURLs)
+
+    if (data.photoURLs) {
+      formData.append('photo', data.photoURLs)
+    }
 
     await CreateTaxi(formData)
 

@@ -3,7 +3,6 @@
 import { backgroundclientpage } from '@/assets/image'
 import { useState } from 'react'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
-import { dataCardTaxiDTO } from '@/dto/taxi/data-card-taxi-DTO'
 import Image from 'next/image'
 import { IconTrash } from '@/assets/icons/icon-trash'
 import { IconPencil } from '@/assets/icons/icon-pencil'
@@ -12,6 +11,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { IconClosed } from '@/assets/icons/icone-closed'
+import { dataCardInfoTaxiDTO } from '@/dto/taxi/data-card-info-DTO'
 
 export type UpdateTaxiFormData = {
   name: string
@@ -20,7 +20,7 @@ export type UpdateTaxiFormData = {
   photoURLs: File[]
 }
 
-export function CardTaxi(data: dataCardTaxiDTO) {
+export function CardTaxi(data: dataCardInfoTaxiDTO) {
   const [showModal, setShowModal] = useState(false)
   const [previewImages, setPreviewImages] = useState<string[]>([])
   const [valuePhone, setValuePhone] = useState(data.phone)
