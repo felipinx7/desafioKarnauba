@@ -4,7 +4,7 @@ import { baseUrlPhoto } from '@/utils/base-url-photos'
 import Image from 'next/image'
 
 export const CardTaxi = (props: dataInfoTaxi) => {
-  const photoBaseUrl = baseUrlPhoto('taxiDrivers', props.photoURLs)
+  const photoBaseUrl = baseUrlPhoto('taxiDrivers', props.photoURLs[0])
   const cleanedPhone = props.phone.replace(/\D/g, '')
   const whatsappUrl = `https://wa.me/55${cleanedPhone}`
 

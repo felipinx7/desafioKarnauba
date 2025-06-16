@@ -33,8 +33,8 @@ export const createEvent = async (data: dataEventDTO) => {
 
     console.log('Resposta da API:', response.data.admin)
     return response
-  } catch (error: any) {
-    console.error('Falha ao criar evento:', error.response?.data || error.message)
-    throw error
+  }catch (error) {
+    console.log("Falha ao Criar", error);
+    
   }
 }
