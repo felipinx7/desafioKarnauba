@@ -10,6 +10,15 @@ import { getAllPlaces } from '@/services/routes/places/get-all-places'
 import { baseUrlPhoto } from '@/utils/base-url-photos'
 import { IconArrowLeft } from '@/assets/icons/icon-arrow-left'
 
+import Image from 'next/image'
+import { Navigation, Pagination } from 'swiper/modules'
+
+
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+
 interface ModalLocationProps extends CardEventPageAdministrative {
   onClose: () => void
   showModal: boolean
@@ -77,12 +86,28 @@ export const ModalLocation: FC<ModalLocationProps> = ({
         <div
           className="max-h-[500px] w-full overflow-hidden rounded-xl"
           style={{ height: '500px' }}
-        >
-          <img
-            src={photos ? photos : backgroundloginpage}
-            alt={`Imagem de ${name}`}
-            className="h-full w-full rounded-xl object-cover"
-          />
+          >
+          <Swiper
+            modules={[Pagination]}
+            pagination={{ clickable: true }}
+
+            slidesPerView={1}
+            className="rounded-xl"
+          >
+            {photos.map((photo, index) => (
+              <SwiperSlide key={index}>
+                <div className="h-[500px] w-full overflow-hidden rounded-xl">
+                  <Image
+                    src={photo.url}
+                    alt={`Foto ${index + 1} de Moraújo`}
+                    width={1200}
+                    height={500}
+                    className="h-full w-full rounded-xl object-cover"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
 
         {/* Título e descrição */}
